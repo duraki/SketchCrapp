@@ -140,7 +140,10 @@ signApplication() {
   codesign --deep --force -s "codesign" Sketch.app 
 }
 # Prechecking phase
-[ $# -eq 0 ] && echo "Sketchcrapp require version number as input value.\nUse -h for more information."
+if [ $# -eq 0 ]; then
+  echo "Sketchcrapp require version number as input value.\nUse -h for more information."
+  exit 0
+fi
 if ! command -v openssl &> /dev/null; then
   echo "OpenSSL not install. This should not happend because macOS have build-in."
 fi
