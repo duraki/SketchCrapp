@@ -1,89 +1,102 @@
 #!/bin/zsh
 # Version 63.1
 # Address parameter
-address_param_631[0]="0x4a2a50"
-address_param_631[1]="0x4a1724"
-address_param_631[2]="0x4a1738"
-address_param_631[3]="0x4a173e"
-address_param_631[4]="0x4a1879"
-address_param_631[5]="0x4a1896"
+declare -a address_param_631
+address_param_631+="0x4a2a50"
+address_param_631+="0x4a1724"
+address_param_631+="0x4a1738"
+address_param_631+="0x4a173e"
+address_param_631+="0x4a1879"
+address_param_631+="0x4a1896"
 # Value parameter
-value_param_631[0]=""
-value_param_631[1]=""
-value_param_631[2]=""
-value_param_631[3]=""
+declare -a value_param_631
+value_param_631+=""
+value_param_631+=""
+value_param_631+=""
+value_param_631+=""
 # Version 64
 # Address parameter
-address_param_640[0]="0x4cde70"
-address_param_640[1]="0x4ccb44"
-address_param_640[2]="0x4ccb58"
-address_param_640[3]="0x4ccb5e"
-address_param_640[4]="0x4ccc99"
-address_param_640[5]="0x4cccb6"
+declare -a address_param_640
+address_param_640+="0x4cde70"
+address_param_640+="0x4ccb44"
+address_param_640+="0x4ccb58"
+address_param_640+="0x4ccb5e"
+address_param_640+="0x4ccc99"
+address_param_640+="0x4cccb6"
 # Value parameter
-value_param_640[0]=""
-value_param_640[1]=""
-value_param_640[2]=""
-value_param_640[3]=""
+declare -a value_param_640
+value_param_640+=""
+value_param_640+=""
+value_param_640+=""
+value_param_640+=""
 # Version 65.1
 # Address parameter
-address_param_651[0]="0x4db500"
-address_param_651[1]="0x4da1d4"
-address_param_651[2]="0x4da1e8"
-address_param_651[3]="0x4da1ee"
-address_param_651[4]="0x4da329"
-address_param_651[5]="0x4da346"
+declare -a address_param_651
+address_param_651+="0x4db500"
+address_param_651+="0x4da1d4"
+address_param_651+="0x4da1e8"
+address_param_651+="0x4da1ee"
+address_param_651+="0x4da329"
+address_param_651+="0x4da346"
 # Value parameter
-value_param_651[0]=""
-value_param_651[1]=""
-value_param_651[2]=""
-value_param_651[3]=""
+declare -a value_param_651
+value_param_651+=""
+value_param_651+=""
+value_param_651+=""
+value_param_651+=""
 # Version 661
 # Address parameter
-address_param_661[0]="0x4f3750"
-address_param_661[1]="0x4f2424"
-address_param_661[2]="0x4f2438"
-address_param_661[3]="0x4f243e"
-address_param_661[4]="0x4f2579"
-address_param_661[5]="0x4f2596"
+declare -a address_param_661
+address_param_661+="0x4f3750"
+address_param_661+="0x4f2424"
+address_param_661+="0x4f2438"
+address_param_661+="0x4f243e"
+address_param_661+="0x4f2579"
+address_param_661+="0x4f2596"
 # Value parameter
-value_param_661[0]=""
-value_param_661[1]=""
-value_param_661[2]=""
-value_param_661[3]=""
+declare -a value_param_661
+value_param_661+=""
+value_param_661+=""
+value_param_661+=""
+value_param_661+=""
 # Version 671
 # Address parameter
-address_param_671[0]="0x50a6d0"
-address_param_671[1]="0x509394"
-address_param_671[2]="0x5093a8"
-address_param_671[3]="0x5093ae"
-address_param_671[4]="0x5094e9"
-address_param_671[5]="0x509506"
+declare -a address_param_671
+address_param_671+="0x50a6d0"
+address_param_671+="0x509394"
+address_param_671+="0x5093a8"
+address_param_671+="0x5093ae"
+address_param_671+="0x5094e9"
+address_param_671+="0x509506"
 # Value parameter
-value_param_671[0]=""
-value_param_671[1]=""
-value_param_671[2]=""
-value_param_671[3]=""
+declare -a value_param_671
+value_param_671+=""
+value_param_671+=""
+value_param_671+=""
+value_param_671+=""
+# Version 672
 # Address parameter
-address_param_672[0]=""
-address_param_672[1]=""
-address_param_672[2]=""
-address_param_672[3]=""
-address_param_672[4]=""
-address_param_672[5]=""
+declare -a address_param_672
+address_param_672+=""
+address_param_672+=""
+address_param_672+=""
+address_param_672+=""
+address_param_672+=""
+address_param_672+=""
 # Value parameter
-value_param_672[0]=""
-value_param_672[1]=""
-value_param_672[2]=""
-value_param_672[3]=""
+declare -a value_param_672
+value_param_672+=""
+value_param_672+=""
+value_param_672+=""
+value_param_672+=""
 # Help messages block
 usage() {
   echo "Information block."
   exit 0;
 }
 # Prechecking phase
-[ $# -eq 0 ] && usage
-if ! $(which openssl); then
+[ $# -eq 0 ] && echo "Sketchcrapp require version number as input value.\nUse -h for more information."
+if ! command -v openssl &> /dev/null; then
   echo "OpenSSL not install. This should not happend because macOS have build-in."
 fi
 # Option filter
@@ -119,8 +132,8 @@ case "$version" in
     echo "select 67.1"
     ;;
   "67.2")
-    echo "select 67.2 but not supportd yet."
+    echo "select 67.2 but not support yet."
     ;;  
   *)
-    echo "not supported."
+    echo "not support."
 esac
