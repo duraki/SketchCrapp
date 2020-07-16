@@ -34,6 +34,11 @@ param_671[2]="0x5093a8"
 param_671[3]="0x5093ae"
 param_671[4]="0x5094e9"
 param_671[5]="0x509506"
+# Help messages block
+usage() {
+  echo "Information block."
+  exit 0;
+}
 # Prechecking phase
 [ $# -eq 0 ] && usage
 if ! $(which openssl); then
@@ -49,7 +54,8 @@ while getopts "hv:" argv; do
       version="${OPTARG}"
       ;;
     *)
-      usage
+      echo "Use -h for more information."
+      exit 0;
       ;;
   esac
 done
