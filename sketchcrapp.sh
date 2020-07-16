@@ -39,6 +39,20 @@ param_671[5]="0x509506"
 if ! $(which openssl); then
   echo "OpenSSL not install. This should not happend because macOS have build-in."
 fi
+# Option filter
+while getopts "hv:" argv; do
+  case "${argv}" in
+    h)
+      usage
+      ;;
+    v)
+      version="${OPTARG}"
+      ;;
+    *)
+      usage
+      ;;
+  esac
+done
 #Version Selector
 case "$version" in
   "63.1")
