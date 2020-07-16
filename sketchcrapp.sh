@@ -1,39 +1,81 @@
 #!/bin/zsh
-# Address parameter for the version 63.1
-param_631[0]="0x4a2a50"
-param_631[1]="0x4a1724"
-param_631[2]="0x4a1738"
-param_631[3]="0x4a173e"
-param_631[4]="0x4a1879"
-param_631[5]="0x4a1896"
-# Address parameter for the version 64
-param_640[0]="0x4cde70"
-param_640[1]="0x4ccb44"
-param_640[2]="0x4ccb58"
-param_640[3]="0x4ccb5e"
-param_640[4]="0x4ccc99"
-param_640[5]="0x4cccb6"
-# Address parameter for the version 65.1
-param_651[0]="0x4db500"
-param_651[1]="0x4da1d4"
-param_651[2]="0x4da1e8"
-param_651[3]="0x4da1ee"
-param_651[4]="0x4da329"
-param_651[5]="0x4da346"
-# Address parameter for the version 66.1
-param_661[0]="0x4f3750"
-param_661[1]="0x4f2424"
-param_661[2]="0x4f2438"
-param_661[3]="0x4f243e"
-param_661[4]="0x4f2579"
-param_661[5]="0x4f2596"
-# Address parameter for the version 67.1
-param_671[0]="0x50a6d0"
-param_671[1]="0x509394"
-param_671[2]="0x5093a8"
-param_671[3]="0x5093ae"
-param_671[4]="0x5094e9"
-param_671[5]="0x509506"
+# Version 63.1
+# Address parameter
+address_param_631[0]="0x4a2a50"
+address_param_631[1]="0x4a1724"
+address_param_631[2]="0x4a1738"
+address_param_631[3]="0x4a173e"
+address_param_631[4]="0x4a1879"
+address_param_631[5]="0x4a1896"
+# Value parameter
+value_param_631[0]=""
+value_param_631[1]=""
+value_param_631[2]=""
+value_param_631[3]=""
+# Version 64
+# Address parameter
+address_param_640[0]="0x4cde70"
+address_param_640[1]="0x4ccb44"
+address_param_640[2]="0x4ccb58"
+address_param_640[3]="0x4ccb5e"
+address_param_640[4]="0x4ccc99"
+address_param_640[5]="0x4cccb6"
+# Value parameter
+value_param_640[0]=""
+value_param_640[1]=""
+value_param_640[2]=""
+value_param_640[3]=""
+# Version 65.1
+# Address parameter
+address_param_651[0]="0x4db500"
+address_param_651[1]="0x4da1d4"
+address_param_651[2]="0x4da1e8"
+address_param_651[3]="0x4da1ee"
+address_param_651[4]="0x4da329"
+address_param_651[5]="0x4da346"
+# Value parameter
+value_param_651[0]=""
+value_param_651[1]=""
+value_param_651[2]=""
+value_param_651[3]=""
+# Version 661
+# Address parameter
+address_param_661[0]="0x4f3750"
+address_param_661[1]="0x4f2424"
+address_param_661[2]="0x4f2438"
+address_param_661[3]="0x4f243e"
+address_param_661[4]="0x4f2579"
+address_param_661[5]="0x4f2596"
+# Value parameter
+value_param_661[0]=""
+value_param_661[1]=""
+value_param_661[2]=""
+value_param_661[3]=""
+# Version 671
+# Address parameter
+address_param_671[0]="0x50a6d0"
+address_param_671[1]="0x509394"
+address_param_671[2]="0x5093a8"
+address_param_671[3]="0x5093ae"
+address_param_671[4]="0x5094e9"
+address_param_671[5]="0x509506"
+# Value parameter
+value_param_671[0]=""
+value_param_671[1]=""
+value_param_671[2]=""
+value_param_671[3]=""
+# Address parameter
+address_param_672[0]=""
+address_param_672[1]=""
+address_param_672[2]=""
+address_param_672[3]=""
+address_param_672[4]=""
+address_param_672[5]=""
+# Value parameter
+value_param_672[0]=""
+value_param_672[1]=""
+value_param_672[2]=""
+value_param_672[3]=""
 # Help messages block
 usage() {
   echo "Information block."
@@ -76,6 +118,9 @@ case "$version" in
   "67.1")
     echo "select 67.1"
     ;;
+  "67.2")
+    echo "select 67.2 but not supportd yet."
+    ;;  
   *)
     echo "not supported."
 esac
