@@ -34,3 +34,23 @@ param_671[2]="0x5093a8"
 param_671[3]="0x5093ae"
 param_671[4]="0x5094e9"
 param_671[5]="0x509506"
+#Version Selector
+case "$version" in
+  "63.1")
+    echo "select 63.1"
+    ;;
+  "64")
+    echo "select 64"
+    ;;
+  "65.1")
+    echo "select 65.1"
+    ;;
+  "66.1")
+    echo "select 66.1"
+    ;;
+  "67.1")
+    echo "select 67.1"
+    ;;
+  *)
+    echo "not supported."
+esac
