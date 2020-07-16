@@ -89,10 +89,55 @@ value_param_672+=""
 value_param_672+=""
 value_param_672+=""
 value_param_672+=""
+# OpenSSL configuration 
+CONFIG="
+[ req ]
+distinguished_name=name
+[ name ]
+[ self ]
+keyUsage = critical,digitalSignature
+extendedKeyUsage = codeSigning
+subjectKeyIdentifier = hash
+basicConstraints = critical,CA:false
+"
 # Help messages block
 usage() {
   echo "Information block."
   exit 0;
+}
+# Clean up so not file will be left.
+clean() {
+  if [ -f pk.pem ]; then
+    rm -f pk.pem
+  fi
+  if [ -f crt.pem ]; then
+    rm -f crt.pem
+  fi
+  if [ -f pkcs.p12 ]; then 
+    rm -f pkcs.p12
+  fi
+}
+# Generating Self-Sign Certificate for codesigning
+genSelfSignCert() {
+  openssl req -new -newkey ec:<(openssl ecparam -name secp521r1) \
+   -config <(echo "$CONFIG") \
+   -extensions self -days 3650 -nodes -x509 \
+   -subj "/CN=codesign"\
+   -keyform pem -keyout pk.pem \
+   -outform pem -out crt.pem
+  openssl pkcs12 -export -out pkcs.p12 -in crt.pem -inkey pk.pem \
+  -name "codesign" -nodes -passout pass:1234
+}
+# Import Certificate to keychain
+importSelfSignCert() {
+  sudo security unlock-keychain /Library/Keychains/System.keychain
+  sudo security import pkcs.p12 -k /Library/Keychains/System.keychain -f pkcs12 -P 1234
+  sudo security lock-keychain /Library/Keychains/System.keychain
+}
+# Sign Sketch with certificate 
+signApplication() {
+  # Way to find the application need to discuss.
+  codesign --deep --force -s "codesign" Sketch.app 
 }
 # Prechecking phase
 [ $# -eq 0 ] && echo "Sketchcrapp require version number as input value.\nUse -h for more information."
