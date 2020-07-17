@@ -294,6 +294,7 @@ if [ $# -eq 0 ]; then
     verifyApplication "$HOME/Applications/Sketch.app"
   else 
     echo "Application not found either in /Applications or ~/Applications"
+    echo "Try: ./sketchcrapp -a /Custom/Path/For/Applications/Sketch.app"
   fi
   
   exit 0
