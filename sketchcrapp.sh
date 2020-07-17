@@ -276,6 +276,7 @@ if ! command -v openssl &> /dev/null; then
   echo "[FIX] Try: brew install openssl"
   echo "[FIX] Try: port install openssl"
   echo "[FIX] Try: install openssl manually"
+  exit 1;
 fi
 # Command Line Interface initialization.
 # Script startup point. How about start from banner shell we?
