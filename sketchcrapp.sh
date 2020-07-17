@@ -160,8 +160,6 @@ importSelfSignCert() {
     echo "User default keychain not exist. $userKeyChain"
     exit 1
   fi
-  echo "Please enter your login password."
-  security unlock-keychain "$userKeyChain"
   security import pkcs.p12 -k "$userKeyChain" -f pkcs12 -P 1234
 }
 
