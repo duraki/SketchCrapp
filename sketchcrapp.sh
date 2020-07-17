@@ -141,22 +141,106 @@ signApplication() {
   # Way to find the application need to discuss.
   codesign --deep --force -s "codesign" Sketch.app 
 }
+# Verify the application by using hash value
+verifyApplication() {
+  appPath="$1"
+  execPath=$appPath/Contents/MacOS/Sketch
+  if ! [ -d "$appPath" ]; then
+    echo "The path of application $appPath is incorrect."
+    exit 1
+  fi
+  if ! [ -f "$execPath" ]; then
+    echo "Executeable file seem not under the application folder."
+    exit 1
+  fi
+  appSHA1=$(shasum -a 1 $execPath | cut -f 1 -d ' ')
+  case "$appSHA1" in
+    "db9b88f3aa6abc484be104660fa911275d9f2515")
+      engin "63.1" "$appPath"
+      ;;
+    "a4d16224ebb8caf84c94a6863db183fd306002da")
+      engin "64" "$execPath"
+      ;;
+    "0e7cad9b81284d127d652b3a8c962315770cd905")
+      engin "65.1" "$execPath"
+      ;;
+    "97d6273be93546a9b3caa7c8e1f97fe2246e673b")
+      engin "66.1" "$execPath"
+      ;;
+    "708e9203a8628c5cee767eb75546c6145b69df57")
+      engin "67.1" "$execPath"
+      ;;
+    "empty")
+      engin "67.2" "$execPath"
+      ;;  
+    *)
+      echo "Unable to determent application version, or application has been modify before."
+  esac
+}
+# The heart of script
+engin() {
+  appVersion="$1"
+  execPath="$2"
+  #Version Selector
+  case "$1" in
+    "63.1")
+      echo "select 63.1"
+      # patch area
+      ;;
+    "64")
+      echo "select 64"
+      ;;
+    "65.1")
+      echo "select 65.1"
+      ;;
+    "66.1")
+      echo "select 66.1"
+      ;;
+    "67.1")
+      echo "select 67.1"
+      ;;
+    "67.2")
+      echo "select 67.2 but not support yet."
+      ;;  
+    *)
+      echo "not support."
+  esac
+  # sign area
+
+  # call cleaner to do some housekeeping.
+
+}
 # Prechecking phase
-if [ $# -eq 0 ]; then
-  echo "Sketchcrapp require version number as input value.\nUse -h for more information."
-  exit 0
-fi
 if ! command -v openssl &> /dev/null; then
   echo "OpenSSL not install. This should not happend because macOS have build-in."
 fi
 # Option filter
-while getopts "hv:" argv; do
+if [ $# -eq 0 ]; then
+  echo "Sketchcrapp is finding application location."
+  if [ -d "/Applications/Sketch.app" ]; then
+    # /Application
+    verifyApplication "/Applications/Sketch.app"
+  elif [ -d "$HOME/Applications/Sketch.app" ]; then
+    # ~/Application
+    verifyApplication "$HOME/Applications/Sketch.app"
+  else 
+    echo "Application not found either in /Applications or ~/Applications"
+  fi
+  
+  exit 0
+fi
+while getopts "ha:" argv; do
   case "${argv}" in
     h)
       usage
       ;;
-    v)
-      version="${OPTARG}"
+    a)
+      appPath="${OPTARG}"
+      if [ -d "$appPath" ]; then
+        verifyApplication "$appPath"
+      else
+        "Given directory either invaild or not exist."
+      fi
       ;;
     *)
       echo "Use -h for more information."
@@ -164,26 +248,3 @@ while getopts "hv:" argv; do
       ;;
   esac
 done
-#Version Selector
-case "$version" in
-  "63.1")
-    echo "select 63.1"
-    ;;
-  "64")
-    echo "select 64"
-    ;;
-  "65.1")
-    echo "select 65.1"
-    ;;
-  "66.1")
-    echo "select 66.1"
-    ;;
-  "67.1")
-    echo "select 67.1"
-    ;;
-  "67.2")
-    echo "select 67.2 but not support yet."
-    ;;  
-  *)
-    echo "not support."
-esac
