@@ -2,91 +2,91 @@
 # Version 63.1
 # Address parameter
 declare -a address_param_631
-address_param_631+="0x4a2a4f"
-address_param_631+="0x4a2a52"
-address_param_631+="0x4a173a"
-address_param_631+="0x4a1879"
+address_param_631+=("0x4a2a4f")
+address_param_631+=("0x4a2a52")
+address_param_631+=("0x4a173a")
+address_param_631+=("0x4a1879")
 # Value parameter
 declare -a value_param_631
-value_param_631+="\00"
-value_param_631+="\00"
-value_param_631+="\00\00"
-value_param_631+="\165"
+value_param_631+=("\00")
+value_param_631+=("\00")
+value_param_631+=("\00\00")
+value_param_631+=("\165")
 # Version 64
 # Address parameter
 declare -a address_param_640
-address_param_640+="0x4cde70"
-address_param_640+="0x4ccb44"
-address_param_640+="0x4ccb58"
-address_param_640+="0x4ccb5e"
-address_param_640+="0x4ccc99"
-address_param_640+="0x4cccb6"
+address_param_640+=("0x4cde70")
+address_param_640+=("0x4ccb44")
+address_param_640+=("0x4ccb58")
+address_param_640+=("0x4ccb5e")
+address_param_640+=("0x4ccc99")
+address_param_640+=("0x4cccb6")
 # Value parameter
 declare -a value_param_640
-value_param_640+=""
-value_param_640+=""
-value_param_640+=""
-value_param_640+=""
+value_param_640+=("")
+value_param_640+=("")
+value_param_640+=("")
+value_param_640+=("")
 # Version 65.1
 # Address parameter
 declare -a address_param_651
-address_param_651+="0x4db500"
-address_param_651+="0x4da1d4"
-address_param_651+="0x4da1e8"
-address_param_651+="0x4da1ee"
-address_param_651+="0x4da329"
-address_param_651+="0x4da346"
+address_param_651+=("0x4db500")
+address_param_651+=("0x4da1d4")
+address_param_651+=("0x4da1e8")
+address_param_651+=("0x4da1ee")
+address_param_651+=("0x4da329")
+address_param_651+=("0x4da346")
 # Value parameter
 declare -a value_param_651
-value_param_651+=""
-value_param_651+=""
-value_param_651+=""
-value_param_651+=""
+value_param_651+=("")
+value_param_651+=("")
+value_param_651+=("")
+value_param_651+=("")
 # Version 661
 # Address parameter
 declare -a address_param_661
-address_param_661+="0x4f3750"
-address_param_661+="0x4f2424"
-address_param_661+="0x4f2438"
-address_param_661+="0x4f243e"
-address_param_661+="0x4f2579"
-address_param_661+="0x4f2596"
+address_param_661+=("0x4f3750")
+address_param_661+=("0x4f2424")
+address_param_661+=("0x4f2438")
+address_param_661+=("0x4f243e")
+address_param_661+=("0x4f2579")
+address_param_661+=("0x4f2596")
 # Value parameter
 declare -a value_param_661
-value_param_661+=""
-value_param_661+=""
-value_param_661+=""
-value_param_661+=""
+value_param_661+=("")
+value_param_661+=("")
+value_param_661+=("")
+value_param_661+=("")
 # Version 671
 # Address parameter
 declare -a address_param_671
-address_param_671+="0x50a6d0"
-address_param_671+="0x509394"
-address_param_671+="0x5093a8"
-address_param_671+="0x5093ae"
-address_param_671+="0x5094e9"
-address_param_671+="0x509506"
+address_param_671+=("0x50a6d0")
+address_param_671+=("0x509394")
+address_param_671+=("0x5093a8")
+address_param_671+=("0x5093ae")
+address_param_671+=("0x5094e9")
+address_param_671+=("0x509506")
 # Value parameter
 declare -a value_param_671
-value_param_671+=""
-value_param_671+=""
-value_param_671+=""
-value_param_671+=""
+value_param_671+=("")
+value_param_671+=("")
+value_param_671+=("")
+value_param_671+=("")
 # Version 672
 # Address parameter
 declare -a address_param_672
-address_param_672+=""
-address_param_672+=""
-address_param_672+=""
-address_param_672+=""
-address_param_672+=""
-address_param_672+=""
+address_param_672+=("")
+address_param_672+=("")
+address_param_672+=("")
+address_param_672+=("")
+address_param_672+=("")
+address_param_672+=("")
 # Value parameter
 declare -a value_param_672
-value_param_672+=""
-value_param_672+=""
-value_param_672+=""
-value_param_672+=""
+value_param_672+=("")
+value_param_672+=("")
+value_param_672+=("")
+value_param_672+=("")
 # OpenSSL configuration 
 CONFIG="
 [ req ]
@@ -98,10 +98,11 @@ extendedKeyUsage = codeSigning
 subjectKeyIdentifier = hash
 basicConstraints = critical,CA:false
 "
-# Help messages block
-usage() {
-  $(clear)
+# Banner block
+banner() {
+  clear
   cat <<EOF
+
             __           __         .__                                       
       _____|  | __ _____/  |_  ____ |  |__   ________________  ______ ______  
      /  ___|  |/ _/ __ \   ___/ ___\|  |  \_/ ___\_  __ \__  \ \____  \____ \ 
@@ -110,9 +111,15 @@ usage() {
          \/     \/    \/          \/     \/     \/           \/|__|   |__|    
          Sketch.App Patch Tool (https://github.com/duraki/SketchCrapp)
          by @elijahtsai & @duraki
+
+
 EOF
+}
+# Help messages block
+usage() {
+  banner
   echo "Usage:"
-  echo "./sketchcrapp [-h] [-v] <version>"
+  echo "./sketchcrapp [-h] [-a] <applicationPath>"
   exit 0;
 }
 
@@ -134,6 +141,7 @@ clean() {
 # Generate self-signed certificate for codesign. Required for pass-tru code-signature
 # detection by Sketch. Built-in via MacOS openssl library.
 genSelfSignCert() {
+  echo "[+] Generating self-signed certificate ..."
   openssl req -new -newkey ec:<(openssl ecparam -name secp521r1) \
    -config <(echo "$CONFIG") \
    -extensions self -days 3650 -nodes -x509 \
@@ -160,39 +168,9 @@ importSelfSignCert() {
 # Equivalent to code-signature application in Sketch. Sign Sketch with generated
 # certificate.
 signApplication() {
-  # Way to find the application need to discuss.
   appPath="$1"
   echo "Enter your login password if dialogue pop-up and remember to choose Always allow."
   codesign --deep --force -s "sketchcrapp" "$appPath"
-}
-# All the code and logic flow to patch the Sketch.app binary, do a code-signature 
-# and link-resolve the patched Sketch.app
-# todo: *
-path() {
-  echo "[+] Selected Sketch.app version is $version ... SketchCrapp starting ... OK"
-  echo "[+] Selected Sketch.app path is </Applications> (auto-detected) ... OK"
-  echo "[+] Detecting current binary hash (MD5) ... OK"
-  echo "[+] Patching offset for $version ..."
-  # todo: offset_patch ($offset, $instruction)
-  
-  echo "[+] Generating self-signed certificate ..."
-  # genSelfCert()
-  # importSelfSignCert()
-  # signApplication()
-  # cleanup()
-  
-  echo "[+] SketchCrapp process completed. Sketch.app has been patched :)"
-  # todo: replace <hash> with output of md5sum
-  echo "[+] Binary Hash (before): <hash> [MD5]"
-  echo "[+] Binary Hash  (after): <hash> [MD5]"
-
-  echo ""
-  echo "SketchCrapp (A Sketch.app cracking tool)"
-  echo "https://github.com/duraki/SketchCrapp"
-}
-offset_patch() {
-  # todo: do binary patching here
-  # echo " > now hacking $offset > $offset instruction ... <OK>"
 }
 # Verify the application by using hash value
 verifyApplication() {
@@ -232,23 +210,26 @@ verifyApplication() {
 }
 # Patch process
 patch() {
-  local addressArray=$1
-  local valueArray=$2
-  execPath=$3
-  for i in {1..4}; do
-    printf "${(P)${valueArray}[$i]}" | dd seek="$((${(P)${addressArray}[$i]}))" conv=notrunc bs=1 of="$execPath"
+  local addressArray=(${1})
+  local valueArray=(${2})
+  local execPath=${3}
+  for i in {0..3}; do
+    echo "Patch on address ${addressArray[$i]} with value ${valueArray[$i]}"
+    printf "${valueArray[$i]}" | dd seek="$((${addressArray[$i]}))" conv=notrunc bs=1 of="$execPath"
   done
 }
-# The heart of script
+# All the code and logic flow to patch the Sketch.app binary, do a code-signature 
+# and link-resolve the patched Sketch.app
 engin() {
   appVersion="$1"
   appPath="$2"
   execPath="$3"
   #Version Selector
-  case "$1" in
+  echo "[+] Selected Sketch.app version is $appVersion ... SketchCrapp starting ... OK"
+  echo "[+] Patching offset for $appVersion ..."
+  case "$appVersion" in
     "63.1")
-      echo "select 63.1"
-      patch address_param_631 value_param_631 "$execPath"
+      patch "${address_param_631[*]}" "${value_param_631[*]}" "$execPath"
       ;;
     "64")
       echo "select 64"
@@ -268,37 +249,49 @@ engin() {
     *)
       echo "not support."
   esac
-  # sign area
+  # CodeSigning area
+  # check if sketchcrapp certificate already exist.
   if ! security find-certificate -c "sketchcrapp" 2>&1 >/dev/null; then
+    # certificate not exist, generate one.
     genSelfSignCert
+    # import the certificate.
     importSelfSignCert
   else 
     echo "sketchcrapp certificate already exist. using exist one."
   fi
+  # Sign the application.
   signApplication "$appPath"
   # call cleaner to do some housekeeping.
   clean
-  echo "Patch complete."
-  echo "If dialogue show up said \n\
-  “Sketch 3.app” can’t be opened because Apple cannot check it for malicious software.\
-  Please right-click the application and select open."
+  echo "[+] SketchCrapp process completed. Sketch.app has been patched :)"
+  echo "[+] If dialogue show up said “Sketch 3.app” can’t be opened "
+  echo "[+] because Apple cannot check it for malicious software."
+  echo "[+] Please right-click the application and select open."
+  echo ""
+  echo "SketchCrapp (A Sketch.app cracking tool)"
+  echo "https://github.com/duraki/SketchCrapp"
 }
-## > Missing openssl library
+## > Check if missing openssl library
 if ! command -v openssl &> /dev/null; then
-  echo "OpenSSL is not installed on your system. This should not happen, macOS have openssl built-in."
+  echo "OpenSSL is not installed on your system."
+  echo "This should not happen, macOS have openssl built-in."
   echo "[FIX] Try: brew install openssl"
+  echo "[FIX] Try: port install openssl"
   echo "[FIX] Try: install openssl manually"
 fi
 # Command Line Interface initialization.
-## > Option filter (CLI parser)
-
+# Script startup point. How about start from banner shell we?
+banner
+# If no option was given by default search /Application or ~/Application
 if [ $# -eq 0 ]; then
   echo "Sketchcrapp is finding application location."
   if [ -d "/Applications/Sketch.app" ]; then
     # /Application
+    echo "[+] Selected Sketch.app path is </Applications> (auto-detected) ... OK"
     verifyApplication "/Applications/Sketch.app"
   elif [ -d "$HOME/Applications/Sketch.app" ]; then
     # ~/Application
+    echo "[+] Selected Sketch.app path is <$HOME/Applications> (auto-detected) ... OK"
     verifyApplication "$HOME/Applications/Sketch.app"
   else 
     echo "Application not found either in /Applications or ~/Applications"
@@ -306,6 +299,7 @@ if [ $# -eq 0 ]; then
   
   exit 0
 fi
+## > Option filter (CLI parser)
 while getopts "ha:" argv; do
   case "${argv}" in
     h)
