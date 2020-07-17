@@ -224,16 +224,16 @@ engin() {
       patch "${address_param_631[*]}" "${value_param_631[*]}" "$execPath"
       ;;
     "64")
-      echo "select 64"
+      patch "${address_param_640[*]}" "${value_param_640[*]}" "$execPath"
       ;;
     "65.1")
-      echo "select 65.1"
+      patch "${address_param_651[*]}" "${value_param_651[*]}" "$execPath"
       ;;
     "66.1")
-      echo "select 66.1"
+      patch "${address_param_661[*]}" "${value_param_661[*]}" "$execPath"
       ;;
     "67.1")
-      echo "select 67.1"
+      patch "${address_param_671[*]}" "${value_param_671[*]}" "$execPath"
       ;;
     "67.2")
       echo "select 67.2 but not support yet."
