@@ -194,8 +194,10 @@ verifyApplication() {
     "9762906ced4d5589e27b297012ce862665e65a29")
       engin "67.2" "$appPath" "$execPath"
       ;;  
-    *)
+    *) # todo: This message need more clear for the user. need help.
       echo "Unable to determent application version, or application has been modify before."
+      echo "If you really never modified the executeable remember the hash code: $appSHA1"
+      echo "Open an issue on GitHub repository: https://github.com/duraki/SketchCrapp"
   esac
 }
 # Patch process
