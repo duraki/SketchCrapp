@@ -1,20 +1,17 @@
-#!/bin/zsh
-
+#!/bin/bash
 # Version 63.1
 # Address parameter
 declare -a address_param_631
-address_param_631+="0x4a2a50"
-address_param_631+="0x4a1724"
-address_param_631+="0x4a1738"
-address_param_631+="0x4a173e"
+address_param_631+="0x4a2a4f"
+address_param_631+="0x4a2a52"
+address_param_631+="0x4a173a"
 address_param_631+="0x4a1879"
-address_param_631+="0x4a1896"
 # Value parameter
 declare -a value_param_631
-value_param_631+=""
-value_param_631+=""
-value_param_631+=""
-value_param_631+=""
+value_param_631+="\00"
+value_param_631+="\00"
+value_param_631+="\00\00"
+value_param_631+="\165"
 # Version 64
 # Address parameter
 declare -a address_param_640
@@ -103,24 +100,14 @@ basicConstraints = critical,CA:false
 "
 # Help messages block
 usage() {
-  $(clear)
-  cat <<EOF
-            __           __         .__                                       
-      _____|  | __ _____/  |_  ____ |  |__   ________________  ______ ______  
-     /  ___|  |/ _/ __ \   ___/ ___\|  |  \_/ ___\_  __ \__  \ \____  \____ \ 
-     \___ \|    <\  ___/|  | \  \___|   Y  \  \___|  | \// __ \|  |_> |  |_> >
-    /____  |__|_  \___  |__|  \___  |___|  /\___  |__|  (____  |   __/|   __/ 
-         \/     \/    \/          \/     \/     \/           \/|__|   |__|    
-         Sketch.App Patch Tool (https://github.com/duraki/SketchCrapp)
-         by @elijahtsai & @duraki
-EOF
-  echo "Usage:"
-  echo "./sketchcrapp [-h] [-v] <version>"
+  echo "Information block."
+  echo "Usage: sketchcrapp [-h][-a applicationPath]"
+  echo "Example: sketchcrapp -a /Applications/Sketch.app"
   exit 0;
 }
-
-# Clean up all certificate related files.
+# Clean up so not file will be left.
 clean() {
+  echo "Start cleaning"
   if [ -f pk.pem ]; then
     rm -f pk.pem
   fi
@@ -130,91 +117,157 @@ clean() {
   if [ -f pkcs.p12 ]; then 
     rm -f pkcs.p12
   fi
+  echo "cleaned"
 }
-
-# Generate self-signed certificate for codesign. Required for pass-tru code-signature
-# detection by Sketch. Built-in via MacOS openssl library.
+# Generating Self-Sign Certificate for codesigning
 genSelfSignCert() {
   openssl req -new -newkey ec:<(openssl ecparam -name secp521r1) \
    -config <(echo "$CONFIG") \
    -extensions self -days 3650 -nodes -x509 \
-   -subj "/CN=codesign"\
+   -subj "/CN=sketchcrapp"\
    -keyform pem -keyout pk.pem \
    -outform pem -out crt.pem
   openssl pkcs12 -export -out pkcs.p12 -in crt.pem -inkey pk.pem \
-  -name "codesign" -nodes -passout pass:1234
+  -name "sketchcrapp" -nodes -passout pass:1234
 }
-
-# Import code-signature certificate to keychain. Must be included and trusted by 
-# the OS internals.
+# Import Certificate to keychain
 importSelfSignCert() {
-  sudo security unlock-keychain /Library/Keychains/System.keychain
-  sudo security import pkcs.p12 -k /Library/Keychains/System.keychain -f pkcs12 -P 1234
-  sudo security lock-keychain /Library/Keychains/System.keychain
+  userKeyChain="$(security default-keychain -d user | sed -e 's/^[ ]*//g' -e 's/\"//g')"
+  if ! [ -f "$userKeyChain" ]; then
+    echo "User default keychain not exist. $userKeyChain"
+    exit 1
+  fi
+  echo "Please enter your login password."
+  security unlock-keychain "$userKeyChain"
+  security import pkcs.p12 -k "$userKeyChain" -f pkcs12 -P 1234
 }
-
-# Equivalent to code-signature application in Sketch. Sign Sketch with generated
-# certificate.
+# Sign Sketch with certificate 
 signApplication() {
   # Way to find the application need to discuss.
-  # todo: Sketch.app can be found in ~/Applications/Sketch.app or /Applications/Sketch.app
-  codesign --deep --force -s "codesign" Sketch.app 
+  appPath="$1"
+  echo "Enter your login password if dialogue pop-up and remember to choose Always allow."
+  codesign --deep --force -s "sketchcrapp" "$appPath"
 }
-
-# All the code and logic flow to patch the Sketch.app binary, do a code-signature 
-# and link-resolve the patched Sketch.app
-# todo: *
-path() {
-  echo "[+] Selected Sketch.app version is $version ... SketchCrapp starting ... OK"
-  echo "[+] Selected Sketch.app path is </Applications> (auto-detected) ... OK"
-  echo "[+] Detecting current binary hash (MD5) ... OK"
-  echo "[+] Patching offset for $version ..."
-  # todo: offset_patch ($offset, $instruction)
-  
-  echo "[+] Generating self-signed certificate ..."
-  # genSelfCert()
-  # importSelfSignCert()
-  # signApplication()
-  # cleanup()
-  
-  echo "[+] SketchCrapp process completed. Sketch.app has been patched :)"
-  # todo: replace <hash> with output of md5sum
-  echo "[+] Binary Hash (before): <hash> [MD5]"
-  echo "[+] Binary Hash  (after): <hash> [MD5]"
-
-  echo ""
-  echo "SketchCrapp (A Sketch.app cracking tool)"
-  echo "https://github.com/duraki/SketchCrapp"
+# Verify the application by using hash value
+verifyApplication() {
+  appPath="$1"
+  execPath="$appPath/Contents/MacOS/Sketch"
+  if ! [ -d "$appPath" ]; then
+    echo "The path of application $appPath is incorrect."
+    exit 1
+  fi
+  if ! [ -f "$execPath" ]; then
+    echo "Executeable file seem not under the application folder."
+    exit 1
+  fi
+  appSHA1=$(shasum -a 1 "$execPath" | cut -f 1 -d ' ')
+  case "$appSHA1" in
+    "db9b88f3aa6abc484be104660fa911275d9f2515")
+      engin "63.1" "$appPath" "$execPath"
+      ;;
+    "a4d16224ebb8caf84c94a6863db183fd306002da")
+      engin "64" "$appPath" "$execPath"
+      ;;
+    "0e7cad9b81284d127d652b3a8c962315770cd905")
+      engin "65.1" "$appPath" "$execPath"
+      ;;
+    "97d6273be93546a9b3caa7c8e1f97fe2246e673b")
+      engin "66.1" "$appPath" "$execPath"
+      ;;
+    "708e9203a8628c5cee767eb75546c6145b69df57")
+      engin "67.1" "$appPath" "$execPath"
+      ;;
+    "empty")
+      engin "67.2" "$appPath" "$execPath"
+      ;;  
+    *)
+      echo "Unable to determent application version, or application has been modify before."
+  esac
 }
-
-offset_patch() {
-  # todo: do binary patching here
-  # echo " > now hacking $offset > $offset instruction ... <OK>"
+# Patch process
+patch() {
+  local addressArray=$1
+  local valueArray=$2
+  execPath=$3
+  for i in {1..4}; do
+    printf "${(P)${valueArray}[$i]}" | dd seek="$((${(P)${addressArray}[$i]}))" conv=notrunc bs=1 of="$execPath"
+  done
 }
-
-# Command Line Interface initialization.
-## > Missing command arg: Version
+# The heart of script
+engin() {
+  appVersion="$1"
+  appPath="$2"
+  execPath="$3"
+  #Version Selector
+  case "$1" in
+    "63.1")
+      echo "select 63.1"
+      patch address_param_631 value_param_631 "$execPath"
+      ;;
+    "64")
+      echo "select 64"
+      ;;
+    "65.1")
+      echo "select 65.1"
+      ;;
+    "66.1")
+      echo "select 66.1"
+      ;;
+    "67.1")
+      echo "select 67.1"
+      ;;
+    "67.2")
+      echo "select 67.2 but not support yet."
+      ;;  
+    *)
+      echo "not support."
+  esac
+  # sign area
+  if ! security find-certificate -c "sketchcrapp" 2>&1 >/dev/null; then
+    genSelfSignCert
+    importSelfSignCert
+  else 
+    echo "sketchcrapp certificate already exist. using exist one."
+  fi
+  signApplication "$appPath"
+  # call cleaner to do some housekeeping.
+  clean
+  echo "Patch complete."
+  echo "If dialogue show up said \n\
+  “Sketch 3.app” can’t be opened because Apple cannot check it for malicious software.\
+  Please right-click the application and select open."
+}
+# Prechecking phase
+if ! command -v openssl &> /dev/null; then
+  echo "OpenSSL not install. This should not happend because macOS have build-in."
+fi
+# Option filter
 if [ $# -eq 0 ]; then
-  echo "SketchCrapp requires Sketch version as an input value."
-  echo "Use -h for more information."
+  echo "Sketchcrapp is finding application location."
+  if [ -d "/Applications/Sketch.app" ]; then
+    # /Application
+    verifyApplication "/Applications/Sketch.app"
+  elif [ -d "$HOME/Applications/Sketch.app" ]; then
+    # ~/Application
+    verifyApplication "$HOME/Applications/Sketch.app"
+  else 
+    echo "Application not found either in /Applications or ~/Applications"
+  fi
+  
   exit 0
 fi
-
-## > Missing openssl library
-if ! command -v openssl &> /dev/null; then
-  echo "OpenSSL is not installed on your system. This should not happen, macOS have openssl built-in."
-  echo "[FIX] Try: brew install openssl"
-  echo "[FIX] Try: install openssl manually"
-fi
-
-## > Option filter (CLI parser)
-while getopts "hv:" argv; do
+while getopts "ha:" argv; do
   case "${argv}" in
     h)
       usage
       ;;
-    v)
-      version="${OPTARG}"
+    a)
+      appPath="${OPTARG}"
+      if [ -d "$appPath" ]; then
+        verifyApplication "$appPath"
+      else
+        "Given directory either invaild or not exist."
+      fi
       ;;
     *)
       echo "Use -h for more information."
@@ -222,28 +275,3 @@ while getopts "hv:" argv; do
       ;;
   esac
 done
-
-## > Version Selector
-case "$version" in
-  "63.1")
-    echo "select 63.1" # todo: Move this to seperate function
-    ;;
-  "64")
-    echo "select 64"
-    ;;
-  "65.1")
-    echo "select 65.1"
-    ;;
-  "66.1")
-    echo "select 66.1"
-    ;;
-  "67.1")
-    echo "select 67.1"
-    ;;
-  "67.2")
-    echo "select 67.2 but not support yet."
-    ;;  
-  *)
-    echo "The requested version $version is not supported." 
-    echo "Open an issue on GitHub repository: https://github.com/duraki/SketchCrapp"
-esac
