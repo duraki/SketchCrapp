@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 # Version 63.1
 # Address parameter
 declare -a address_param_631
@@ -151,7 +151,7 @@ signApplication() {
 # Verify the application by using hash value
 verifyApplication() {
   appPath="$1"
-  execPath=$appPath/Contents/MacOS/Sketch
+  execPath="$appPath/Contents/MacOS/Sketch"
   if ! [ -d "$appPath" ]; then
     echo "The path of application $appPath is incorrect."
     exit 1
@@ -160,7 +160,7 @@ verifyApplication() {
     echo "Executeable file seem not under the application folder."
     exit 1
   fi
-  appSHA1=$(shasum -a 1 $execPath | cut -f 1 -d ' ')
+  appSHA1=$(shasum -a 1 "$execPath" | cut -f 1 -d ' ')
   case "$appSHA1" in
     "db9b88f3aa6abc484be104660fa911275d9f2515")
       engin "63.1" "$appPath" "$execPath"
