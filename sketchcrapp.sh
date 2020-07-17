@@ -3,17 +3,15 @@
 # Address parameter
 declare -a address_param_631
 address_param_631+="0x4a2a4f"
-address_param_631+=""
-address_param_631+=""
-address_param_631+=""
-address_param_631+=""
-address_param_631+=""
+address_param_631+="0x4a2a52"
+address_param_631+="0x4a173a"
+address_param_631+="0x4a1879"
 # Value parameter
 declare -a value_param_631
 value_param_631+="\00"
-value_param_631+=""
-value_param_631+=""
-value_param_631+=""
+value_param_631+="\00"
+value_param_631+="\00\00"
+value_param_631+="\165"
 # Version 64
 # Address parameter
 declare -a address_param_640
@@ -109,6 +107,7 @@ usage() {
 }
 # Clean up so not file will be left.
 clean() {
+  echo "Start cleaning"
   if [ -f pk.pem ]; then
     rm -f pk.pem
   fi
@@ -118,28 +117,36 @@ clean() {
   if [ -f pkcs.p12 ]; then 
     rm -f pkcs.p12
   fi
+  echo "cleaned"
 }
 # Generating Self-Sign Certificate for codesigning
 genSelfSignCert() {
   openssl req -new -newkey ec:<(openssl ecparam -name secp521r1) \
    -config <(echo "$CONFIG") \
    -extensions self -days 3650 -nodes -x509 \
-   -subj "/CN=codesign"\
+   -subj "/CN=sketchcrapp"\
    -keyform pem -keyout pk.pem \
    -outform pem -out crt.pem
   openssl pkcs12 -export -out pkcs.p12 -in crt.pem -inkey pk.pem \
-  -name "codesign" -nodes -passout pass:1234
+  -name "sketchcrapp" -nodes -passout pass:1234
 }
 # Import Certificate to keychain
 importSelfSignCert() {
-  sudo security unlock-keychain /Library/Keychains/System.keychain
-  sudo security import pkcs.p12 -k /Library/Keychains/System.keychain -f pkcs12 -P 1234
-  sudo security lock-keychain /Library/Keychains/System.keychain
+  userKeyChain="$(security default-keychain -d user | sed -e 's/^[ ]*//g' -e 's/\"//g')"
+  if ! [ -f "$userKeyChain" ]; then
+    echo "User default keychain not exist. $userKeyChain"
+    exit 1
+  fi
+  echo "Please enter your login password."
+  security unlock-keychain "$userKeyChain"
+  security import pkcs.p12 -k "$userKeyChain" -f pkcs12 -P 1234
 }
 # Sign Sketch with certificate 
 signApplication() {
   # Way to find the application need to discuss.
-  codesign --deep --force -s "codesign" Sketch.app 
+  appPath="$1"
+  echo "Enter your login password if dialogue pop-up and remember to choose Always allow."
+  codesign --deep --force -s "sketchcrapp" "$appPath"
 }
 # Verify the application by using hash value
 verifyApplication() {
@@ -156,36 +163,46 @@ verifyApplication() {
   appSHA1=$(shasum -a 1 $execPath | cut -f 1 -d ' ')
   case "$appSHA1" in
     "db9b88f3aa6abc484be104660fa911275d9f2515")
-      engin "63.1" "$appPath"
+      engin "63.1" "$appPath" "$execPath"
       ;;
     "a4d16224ebb8caf84c94a6863db183fd306002da")
-      engin "64" "$execPath"
+      engin "64" "$appPath" "$execPath"
       ;;
     "0e7cad9b81284d127d652b3a8c962315770cd905")
-      engin "65.1" "$execPath"
+      engin "65.1" "$appPath" "$execPath"
       ;;
     "97d6273be93546a9b3caa7c8e1f97fe2246e673b")
-      engin "66.1" "$execPath"
+      engin "66.1" "$appPath" "$execPath"
       ;;
     "708e9203a8628c5cee767eb75546c6145b69df57")
-      engin "67.1" "$execPath"
+      engin "67.1" "$appPath" "$execPath"
       ;;
     "empty")
-      engin "67.2" "$execPath"
+      engin "67.2" "$appPath" "$execPath"
       ;;  
     *)
       echo "Unable to determent application version, or application has been modify before."
   esac
 }
+# Patch process
+patch() {
+  local addressArray=$1
+  local valueArray=$2
+  execPath=$3
+  for i in {1..4}; do
+    printf "${(P)${valueArray}[$i]}" | dd seek="$((${(P)${addressArray}[$i]}))" conv=notrunc bs=1 of="$execPath"
+  done
+}
 # The heart of script
 engin() {
   appVersion="$1"
-  execPath="$2"
+  appPath="$2"
+  execPath="$3"
   #Version Selector
   case "$1" in
     "63.1")
       echo "select 63.1"
-      # patch area
+      patch address_param_631 value_param_631 "$execPath"
       ;;
     "64")
       echo "select 64"
@@ -206,11 +223,19 @@ engin() {
       echo "not support."
   esac
   # sign area
-  genSelfSignCert
-  importSelfSignCert
-  signApplication
+  if ! security find-certificate -c "sketchcrapp" 2>&1 >/dev/null; then
+    genSelfSignCert
+    importSelfSignCert
+  else 
+    echo "sketchcrapp certificate already exist. using exist one."
+  fi
+  signApplication "$appPath"
   # call cleaner to do some housekeeping.
   clean
+  echo "Patch complete."
+  echo "If dialogue show up said \n\
+  “Sketch 3.app” can’t be opened because Apple cannot check it for malicious software.\
+  Please right-click the application and select open."
 }
 # Prechecking phase
 if ! command -v openssl &> /dev/null; then
