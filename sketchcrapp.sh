@@ -15,63 +15,57 @@ value_param_631+=("\165")
 # Version 64
 # Address parameter
 declare -a address_param_640
-address_param_640+=("0x4cde70")
-address_param_640+=("0x4ccb44")
-address_param_640+=("0x4ccb58")
-address_param_640+=("0x4ccb5e")
+address_param_640+=("0x4cde6e")
+address_param_640+=("0x4cde72")
+address_param_640+=("0x4ccb5a")
 address_param_640+=("0x4ccc99")
-address_param_640+=("0x4cccb6")
 # Value parameter
 declare -a value_param_640
-value_param_640+=("")
-value_param_640+=("")
-value_param_640+=("")
-value_param_640+=("")
+value_param_640+=("\00")
+value_param_640+=("\00")
+value_param_640+=("\00\00")
+value_param_631+=("\165")
 # Version 65.1
 # Address parameter
 declare -a address_param_651
-address_param_651+=("0x4db500")
-address_param_651+=("0x4da1d4")
-address_param_651+=("0x4da1e8")
-address_param_651+=("0x4da1ee")
+address_param_651+=("0x4db4ff")
+address_param_651+=("0x4db502")
+address_param_651+=("0x4da1ea")
 address_param_651+=("0x4da329")
-address_param_651+=("0x4da346")
+address_param_651+=("")
+address_param_651+=("")
 # Value parameter
 declare -a value_param_651
-value_param_651+=("")
-value_param_651+=("")
-value_param_651+=("")
-value_param_651+=("")
+value_param_651+=("\00")
+value_param_651+=("\00")
+value_param_651+=("\00\00")
+value_param_651+=("\165")
 # Version 661
 # Address parameter
 declare -a address_param_661
-address_param_661+=("0x4f3750")
-address_param_661+=("0x4f2424")
-address_param_661+=("0x4f2438")
-address_param_661+=("0x4f243e")
+address_param_661+=("0x4f374f")
+address_param_661+=("0x4f3752")
+address_param_661+=("0x4f243a")
 address_param_661+=("0x4f2579")
-address_param_661+=("0x4f2596")
 # Value parameter
 declare -a value_param_661
-value_param_661+=("")
-value_param_661+=("")
-value_param_661+=("")
-value_param_661+=("")
+value_param_661+=("\00")
+value_param_661+=("\00")
+value_param_661+=("\00\00")
+value_param_661+=("\165")
 # Version 671
 # Address parameter
 declare -a address_param_671
-address_param_671+=("0x50a6d0")
-address_param_671+=("0x509394")
-address_param_671+=("0x5093a8")
-address_param_671+=("0x5093ae")
+address_param_671+=("0x50a6cf")
+address_param_671+=("0x50a6d2")
+address_param_671+=("0x5093aa")
 address_param_671+=("0x5094e9")
-address_param_671+=("0x509506")
 # Value parameter
 declare -a value_param_671
-value_param_671+=("")
-value_param_671+=("")
-value_param_671+=("")
-value_param_671+=("")
+value_param_671+=("\00")
+value_param_671+=("\00")
+value_param_671+=("\00\00")
+value_param_671+=("\165")
 # Version 672
 # Address parameter
 declare -a address_param_672
