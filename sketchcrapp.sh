@@ -206,9 +206,11 @@ engin() {
       echo "not support."
   esac
   # sign area
-
+  genSelfSignCert
+  importSelfSignCert
+  signApplication
   # call cleaner to do some housekeeping.
-
+  clean
 }
 # Prechecking phase
 if ! command -v openssl &> /dev/null; then
