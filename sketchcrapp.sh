@@ -1,4 +1,5 @@
 #!/bin/zsh
+
 # Version 63.1
 # Address parameter
 declare -a address_param_631
@@ -102,10 +103,23 @@ basicConstraints = critical,CA:false
 "
 # Help messages block
 usage() {
-  echo "Information block."
+  $(clear)
+  cat <<EOF
+            __           __         .__                                       
+      _____|  | __ _____/  |_  ____ |  |__   ________________  ______ ______  
+     /  ___|  |/ _/ __ \   ___/ ___\|  |  \_/ ___\_  __ \__  \ \____  \____ \ 
+     \___ \|    <\  ___/|  | \  \___|   Y  \  \___|  | \// __ \|  |_> |  |_> >
+    /____  |__|_  \___  |__|  \___  |___|  /\___  |__|  (____  |   __/|   __/ 
+         \/     \/    \/          \/     \/     \/           \/|__|   |__|    
+         Sketch.App Patch Tool (https://github.com/duraki/SketchCrapp)
+         by @elijahtsai & @duraki
+EOF
+  echo "Usage:"
+  echo "./sketchcrapp [-h] [-v] <version>"
   exit 0;
 }
-# Clean up so not file will be left.
+
+# Clean up all certificate related files.
 clean() {
   if [ -f pk.pem ]; then
     rm -f pk.pem
@@ -117,7 +131,9 @@ clean() {
     rm -f pkcs.p12
   fi
 }
-# Generating Self-Sign Certificate for codesigning
+
+# Generate self-signed certificate for codesign. Required for pass-tru code-signature
+# detection by Sketch. Built-in via MacOS openssl library.
 genSelfSignCert() {
   openssl req -new -newkey ec:<(openssl ecparam -name secp521r1) \
    -config <(echo "$CONFIG") \
@@ -128,26 +144,70 @@ genSelfSignCert() {
   openssl pkcs12 -export -out pkcs.p12 -in crt.pem -inkey pk.pem \
   -name "codesign" -nodes -passout pass:1234
 }
-# Import Certificate to keychain
+
+# Import code-signature certificate to keychain. Must be included and trusted by 
+# the OS internals.
 importSelfSignCert() {
   sudo security unlock-keychain /Library/Keychains/System.keychain
   sudo security import pkcs.p12 -k /Library/Keychains/System.keychain -f pkcs12 -P 1234
   sudo security lock-keychain /Library/Keychains/System.keychain
 }
-# Sign Sketch with certificate 
+
+# Equivalent to code-signature application in Sketch. Sign Sketch with generated
+# certificate.
 signApplication() {
   # Way to find the application need to discuss.
+  # todo: Sketch.app can be found in ~/Applications/Sketch.app or /Applications/Sketch.app
   codesign --deep --force -s "codesign" Sketch.app 
 }
-# Prechecking phase
+
+# All the code and logic flow to patch the Sketch.app binary, do a code-signature 
+# and link-resolve the patched Sketch.app
+# todo: *
+path() {
+  echo "[+] Selected Sketch.app version is $version ... SketchCrapp starting ... OK"
+  echo "[+] Selected Sketch.app path is </Applications> (auto-detected) ... OK"
+  echo "[+] Detecting current binary hash (MD5) ... OK"
+  echo "[+] Patching offset for $version ..."
+  # todo: offset_patch ($offset, $instruction)
+  
+  echo "[+] Generating self-signed certificate ..."
+  # genSelfCert()
+  # importSelfSignCert()
+  # signApplication()
+  # cleanup()
+  
+  echo "[+] SketchCrapp process completed. Sketch.app has been patched :)"
+  # todo: replace <hash> with output of md5sum
+  echo "[+] Binary Hash (before): <hash> [MD5]"
+  echo "[+] Binary Hash  (after): <hash> [MD5]"
+
+  echo ""
+  echo "SketchCrapp (A Sketch.app cracking tool)"
+  echo "https://github.com/duraki/SketchCrapp"
+}
+
+offset_patch() {
+  # todo: do binary patching here
+  # echo " > now hacking $offset > $offset instruction ... <OK>"
+}
+
+# Command Line Interface initialization.
+## > Missing command arg: Version
 if [ $# -eq 0 ]; then
-  echo "Sketchcrapp require version number as input value.\nUse -h for more information."
+  echo "SketchCrapp requires Sketch version as an input value."
+  echo "Use -h for more information."
   exit 0
 fi
+
+## > Missing openssl library
 if ! command -v openssl &> /dev/null; then
-  echo "OpenSSL not install. This should not happend because macOS have build-in."
+  echo "OpenSSL is not installed on your system. This should not happen, macOS have openssl built-in."
+  echo "[FIX] Try: brew install openssl"
+  echo "[FIX] Try: install openssl manually"
 fi
-# Option filter
+
+## > Option filter (CLI parser)
 while getopts "hv:" argv; do
   case "${argv}" in
     h)
@@ -162,10 +222,11 @@ while getopts "hv:" argv; do
       ;;
   esac
 done
-#Version Selector
+
+## > Version Selector
 case "$version" in
   "63.1")
-    echo "select 63.1"
+    echo "select 63.1" # todo: Move this to seperate function
     ;;
   "64")
     echo "select 64"
@@ -183,5 +244,6 @@ case "$version" in
     echo "select 67.2 but not support yet."
     ;;  
   *)
-    echo "not support."
+    echo "The requested version $version is not supported." 
+    echo "Open an issue on GitHub repository: https://github.com/duraki/SketchCrapp"
 esac
