@@ -69,18 +69,16 @@ value_param_671+=("\165")
 # Version 672
 # Address parameter
 declare -a address_param_672
-address_param_672+=("")
-address_param_672+=("")
-address_param_672+=("")
-address_param_672+=("")
-address_param_672+=("")
-address_param_672+=("")
+address_param_672+=("0x50a78f")
+address_param_672+=("0x50a792")
+address_param_672+=("0x50946a")
+address_param_672+=("0x5095a9")
 # Value parameter
 declare -a value_param_672
-value_param_672+=("")
-value_param_672+=("")
-value_param_672+=("")
-value_param_672+=("")
+value_param_672+=("\00")
+value_param_672+=("\00")
+value_param_672+=("\00\00")
+value_param_672+=("\165")
 # OpenSSL configuration 
 CONFIG="
 [ req ]
@@ -193,7 +191,7 @@ verifyApplication() {
     "708e9203a8628c5cee767eb75546c6145b69df57")
       engin "67.1" "$appPath" "$execPath"
       ;;
-    "empty")
+    "9762906ced4d5589e27b297012ce862665e65a29")
       engin "67.2" "$appPath" "$execPath"
       ;;  
     *)
@@ -236,10 +234,10 @@ engin() {
       patch "${address_param_671[*]}" "${value_param_671[*]}" "$execPath"
       ;;
     "67.2")
-      echo "select 67.2 but not support yet."
+      patch "${address_param_672[*]}" "${value_param_672[*]}" "$execPath"
       ;;  
     *)
-      echo "not support."
+      echo "Something is wrong. this line should never execute."
   esac
   # CodeSigning area
   # check if sketchcrapp certificate already exist.
