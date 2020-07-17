@@ -103,6 +103,8 @@ basicConstraints = critical,CA:false
 # Help messages block
 usage() {
   echo "Information block."
+  echo "Usage: sketchcrapp [-h][-a applicationPath]"
+  echo "Example: sketchcrapp -a /Applications/Sketch.app"
   exit 0;
 }
 # Clean up so not file will be left.
