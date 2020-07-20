@@ -79,7 +79,7 @@ value_param_672+=("\00")
 value_param_672+=("\00")
 value_param_672+=("\00\00")
 value_param_672+=("\165")
-# OpenSSL configuration 
+# OpenSSL configuration
 CONFIG="
 [ req ]
 distinguished_name=name
@@ -92,15 +92,12 @@ basicConstraints = critical,CA:false
 "
 # Banner block
 banner() {
-  clear
-  cat <<EOF
-
-            __           __         .__                                       
-      _____|  | __ _____/  |_  ____ |  |__   ________________  ______ ______  
-     /  ___|  |/ _/ __ \   ___/ ___\|  |  \_/ ___\_  __ \__  \ \____  \____ \ 
-     \___ \|    <\  ___/|  | \  \___|   Y  \  \___|  | \// __ \|  |_> |  |_> >
-    /____  |__|_  \___  |__|  \___  |___|  /\___  |__|  (____  |   __/|   __/ 
-         \/     \/    \/          \/     \/     \/           \/|__|   |__|    
+  cat <<"EOF"
+           __       __      __
+      ___ / /_____ / /_____/ /  ___________ ____  ___
+    ( _-</  '_/ -_) __/ __/ _ \/ __/ __/ _ `/ _ \/ _ \
+    /___/_/\_\\__/\__/\__/_//_/\__/_/  \_,_/ .__/ .__/
+                                          /_/  /_/
          Sketch.App Patch Tool (https://github.com/duraki/SketchCrapp)
          by @elijahtsai & @duraki
 
@@ -109,9 +106,9 @@ EOF
 }
 # Help messages block
 usage() {
-  banner
   echo "Usage:"
   echo "./sketchcrapp [-h] [-a] <applicationPath>"
+  echo "Supported versions: v63.1, v64.0, v65.1, v66.1, v67.1, [soon: v67.2]"
   exit 0;
 }
 
@@ -124,7 +121,7 @@ clean() {
   if [ -f crt.pem ]; then
     rm -f crt.pem
   fi
-  if [ -f pkcs.p12 ]; then 
+  if [ -f pkcs.p12 ]; then
     rm -f pkcs.p12
   fi
   echo "cleaned"
@@ -144,12 +141,12 @@ genSelfSignCert() {
   -name "sketchcrapp" -nodes -passout pass:1234
 }
 
-# Import code-signature certificate to keychain. Must be included and trusted by 
+# Import code-signature certificate to keychain. Must be included and trusted by
 # the OS internals.
 importSelfSignCert() {
   userKeyChain="$(security default-keychain -d user | sed -e 's/^[ ]*//g' -e 's/\"//g')"
   if ! [ -f "$userKeyChain" ]; then
-    echo "User default keychain not exist. $userKeyChain"
+    echo "User default Keychain does not exist: $userKeyChain"
     exit 1
   fi
   security import pkcs.p12 -k "$userKeyChain" -f pkcs12 -P 1234
@@ -159,7 +156,8 @@ importSelfSignCert() {
 # certificate.
 signApplication() {
   appPath="$1"
-  echo "Enter your login password if dialogue pop-up and remember to choose Always allow."
+  echo "Signing the patched *.app bundle. This may require sudo."
+  echo "Enter your Login password if a dialogue pops-up, and remember to choose Always allow."
   codesign --deep --force -s "sketchcrapp" "$appPath"
 }
 # Verify the application by using hash value
@@ -168,36 +166,45 @@ verifyApplication() {
   execPath="$appPath/Contents/MacOS/Sketch"
   if ! [ -d "$appPath" ]; then
     echo "The path of application $appPath is incorrect."
+    echo "[ERR] Couldn't find: $appPath"
     exit 1
   fi
   if ! [ -f "$execPath" ]; then
-    echo "Executeable file seem not under the application folder."
+    echo "Executable file does not exists under the given application folder."
+    echo "[ERR] Couldn't find: $execPath"
     exit 1
   fi
   appSHA1=$(shasum -a 1 "$execPath" | cut -f 1 -d ' ')
   case "$appSHA1" in
-    "db9b88f3aa6abc484be104660fa911275d9f2515")
+    "db9b88f3aa6abc484be104660fa911275d9f2515") # 63.1
       engin "63.1" "$appPath" "$execPath"
       ;;
-    "a4d16224ebb8caf84c94a6863db183fd306002da")
+    "a4d16224ebb8caf84c94a6863db183fd306002da") # 64
       engin "64" "$appPath" "$execPath"
       ;;
-    "0e7cad9b81284d127d652b3a8c962315770cd905")
+    "0e7cad9b81284d127d652b3a8c962315770cd905") # 65.1
       engin "65.1" "$appPath" "$execPath"
       ;;
-    "97d6273be93546a9b3caa7c8e1f97fe2246e673b")
+    "97d6273be93546a9b3caa7c8e1f97fe2246e673b") # 66.1
       engin "66.1" "$appPath" "$execPath"
       ;;
-    "708e9203a8628c5cee767eb75546c6145b69df57")
+    "708e9203a8628c5cee767eb75546c6145b69df57") # 67.1
       engin "67.1" "$appPath" "$execPath"
       ;;
-    "9762906ced4d5589e27b297012ce862665e65a29")
+    "9762906ced4d5589e27b297012ce862665e65a29") # 67.2
       engin "67.2" "$appPath" "$execPath"
-      ;;  
+      ;;
     *) # todo: This message need more clear for the user. need help.
-      echo "Unable to determent application version, or application has been modify before."
-      echo "If you really never modified the executeable remember the hash code: $appSHA1"
-      echo "Open an issue on GitHub repository: https://github.com/duraki/SketchCrapp"
+      echo "Unable to detect Sketch.app version, or application has been modified before."
+      echo "Copy the details below and open a new issue on GitHub repository: https://github.com/duraki/SketchCrapp"
+      echo "+==================================================================="
+      echo "+ Issue details ‹s:sketchcrapp›"
+      echo "+ Application Path  : $appPath"
+      echo "+ Application Binary: $execPath"
+      echo "+ Passed version    : ‹nil›"
+      echo "+ Binary SHA1       : $appSHA1"
+      echo "+ Error             : binaryerr››"
+      echo "+==================================================================="
   esac
 }
 # Patch process
@@ -206,11 +213,12 @@ patch() {
   local valueArray=(${2})
   local execPath=${3}
   for i in {0..3}; do
-    echo "Patch on address ${addressArray[$i]} with value ${valueArray[$i]}"
+    echo "Patching address at offset: ${addressArray[$i]} with value: ${valueArray[$i]}"
     printf "${valueArray[$i]}" | dd seek="$((${addressArray[$i]}))" conv=notrunc bs=1 of="$execPath"
   done
 }
-# All the code and logic flow to patch the Sketch.app binary, do a code-signature 
+
+# All the code and logic flow to patch the Sketch.app binary, do a code-signature
 # and link-resolve the patched Sketch.app
 engin() {
   appVersion="$1"
@@ -218,7 +226,7 @@ engin() {
   execPath="$3"
   #Version Selector
   echo "[+] Selected Sketch.app version is $appVersion ... SketchCrapp starting ... OK"
-  echo "[+] Patching offset for $appVersion ..."
+  echo "[+] Patching offsets for $appVersion ..."
   case "$appVersion" in
     "63.1")
       patch "${address_param_631[*]}" "${value_param_631[*]}" "$execPath"
@@ -237,32 +245,43 @@ engin() {
       ;;
     "67.2")
       patch "${address_param_672[*]}" "${value_param_672[*]}" "$execPath"
-      ;;  
+      ;;
     *)
-      echo "Something is wrong. this line should never execute."
+      echo "Something went wrong, this line should never execute."
+      echo "Copy the details below and open a new issue on GitHub repository: https://github.com/duraki/SketchCrapp"
+      echo "+==================================================================="
+      echo "+ Issue details ‹s:sketchcrapp›"
+      echo "+ Application Path  : $appPath"
+      echo "+ Application Binary: $execPath"
+      echo "+ Passed version    : ‹nil›"
+      echo "+ Binary SHA1       : $appSHA1"
+      echo "+ Error             : patcherr››"
+      echo "+==================================================================="
   esac
   # CodeSigning area
-  # check if sketchcrapp certificate already exist.
+  # Check if sketchcrapp certificate already exist.
   if ! security find-certificate -c "sketchcrapp" 2>&1 >/dev/null; then
-    # certificate not exist, generate one.
+    # Certificate does not exist, generate one.
     genSelfSignCert
-    # import the certificate.
+    # Import the certificate.
     importSelfSignCert
-  else 
-    echo "sketchcrapp certificate already exist. using exist one."
+  else
+    echo "SketchCrapp certificate already exists. Skipping certificate creation ... OK"
   fi
   # Sign the application.
   signApplication "$appPath"
-  # call cleaner to do some housekeeping.
+  # Call cleaner to do some housekeeping.
   clean
   echo "[+] SketchCrapp process completed. Sketch.app has been patched :)"
-  echo "[+] If dialogue show up said “Sketch 3.app” can’t be opened "
-  echo "[+] because Apple cannot check it for malicious software."
-  echo "[+] Please right-click the application and select open."
+  echo "[+] -- Notice: "
+  echo "    If a dialogue shows up with message: “Sketch 3.app” can’t be opened"
+  echo "    please right-click the application and select open, or go to Settings -› Security"
+  echo "    and allow opening Sketch.app application."
   echo ""
   echo "SketchCrapp (A Sketch.app cracking tool)"
-  echo "https://github.com/duraki/SketchCrapp"
+  echo "https://github.com/duraki/SketchCrapp [by @elijahtsai & @duraki]"
 }
+
 ## > Check if missing openssl library
 if ! command -v openssl &> /dev/null; then
   echo "OpenSSL is not installed on your system."
@@ -272,12 +291,14 @@ if ! command -v openssl &> /dev/null; then
   echo "[FIX] Try: install openssl manually"
   exit 1;
 fi
+
 # Command Line Interface initialization.
-# Script startup point. How about start from banner shell we?
+# Script startup point. How about we start from banner shell we?
 banner
+
 # If no option was given by default search /Application or ~/Application
 if [ $# -eq 0 ]; then
-  echo "Sketchcrapp is finding application location."
+  echo "SketchCrapp is finding application bundle path ..."
   if [ -d "/Applications/Sketch.app" ]; then
     # /Application
     echo "[+] Selected Sketch.app path is </Applications> (auto-detected) ... OK"
@@ -286,13 +307,15 @@ if [ $# -eq 0 ]; then
     # ~/Application
     echo "[+] Selected Sketch.app path is <$HOME/Applications> (auto-detected) ... OK"
     verifyApplication "$HOME/Applications/Sketch.app"
-  else 
-    echo "Application not found either in /Applications or ~/Applications"
+  else
+    echo "Application not found in /Applications or ~/Applications"
     echo "Try: ./sketchcrapp -a /Custom/Path/For/Applications/Sketch.app"
+    exit 1 # Forceful :)
   fi
-  
+
   exit 0
 fi
+
 ## > Option filter (CLI parser)
 while getopts "ha:" argv; do
   case "${argv}" in
@@ -304,7 +327,7 @@ while getopts "ha:" argv; do
       if [ -d "$appPath" ]; then
         verifyApplication "$appPath"
       else
-        "Given directory either invaild or not exist."
+        "Given directory is either invaild or not exist."
       fi
       ;;
     *)
