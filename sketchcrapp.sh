@@ -114,7 +114,7 @@ usage() {
 
 # Clean up all certificate related files.
 clean() {
-  echo "[+] Start cleaning"
+  echo "[+] Cleaning up certificate file(s)"
   if [ -f pk.pem ]; then
     rm -f pk.pem
   fi
