@@ -128,7 +128,7 @@ clean() {
 }
 
 # Diagnosis massage 
-diagnosisMsg() {
+err() {
   error="$1"
   echo "[+] Copy the details below and open a new issue on GitHub repository: https://github.com/duraki/SketchCrapp"
   echo "+==================================================================="
@@ -211,7 +211,7 @@ verifyApplication() {
       engin "67.2" "$appPath" "$execPath"
       ;;
     *)
-      diagnosisMsg "binaryerr››"
+      err "binaryerr››"
   esac
 }
 # Patch process
@@ -255,7 +255,7 @@ engin() {
       ;;
     *)
       echo "Something went wrong, this line should never execute."
-      diagnosisMsg "patcherr››"
+      err "patcherr››"
   esac
   # CodeSigning area
   # Check if sketchcrapp certificate already exist.
