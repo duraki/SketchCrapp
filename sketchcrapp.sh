@@ -173,7 +173,7 @@ importSelfSignCert() {
 signApplication() {
   appPath="$1"
   echo "[+] Signing the patched *.app bundle. This may require sudo."
-  echo "[+] Enter your Login password if a dialogue pops-up, and remember to choose Always allow."
+  echo "[+] If asked, enter your login password. Choose \"Always Allow\" to not be asked again."
   codesign --deep --force -s "sketchcrapp" "$appPath"
 }
 # Verify the application by using hash value
