@@ -106,9 +106,9 @@ EOF
 }
 # Help messages block
 usage() {
-  echo "[+] Usage:"
-  echo "[+] ./sketchcrapp [-h] [-a] <applicationPath>"
-  echo "[+] Supported versions: v63.1, v64.0, v65.1, v66.1, v67.1, v67.2"
+  echo "Usage:"
+  echo "./sketchcrapp [-h] [-a] <applicationPath>"
+  echo "Supported versions: v63.1, v64.0, v65.1, v66.1, v67.1, v67.2"
   exit 0;
 }
 
