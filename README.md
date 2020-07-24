@@ -31,7 +31,6 @@ Supported versions: v63.1, v64.0, v65.1, v66.1, v67.1, v67.2
 ```
 
 ```
-
 crackb0x:SketchCrapp duraki$ ./sketchcrapp.sh
            __       __      __
       ___ / /_____ / /_____/ /  ___________ ____  ___
