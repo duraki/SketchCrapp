@@ -2,7 +2,7 @@
 
 Sketch.App Patch Tool, brought to you by [@duraki](https://github.com/duraki) & [@elijahtsai](https://github.com/elijahtsai). This script provides you a quick and dirty way to patch Sketch.app for Unlimited Trial. You can always patch manually using Ghidra by following [this tutorial](https://duraki.github.io/posts/o/20200214-sketch.app-patch-in-ghidra.html). Offsets available [here](https://gist.github.com/Bhavdip/76c581d7ac03bdce6d226a2e8c522df4#gistcomment-3370035).
 
-Original idea and thread: https://gist.github.com/Bhavdip/76c581d7ac03bdce6d226a2e8c522df4
+**Download Sketch.App version of your choice here:** https://www.sketch.com/updates/
 
 ## Usage
 
@@ -33,3 +33,9 @@ Supported versions: v63.1, v64.0, v65.1, v66.1, v67.1, [soon: v67.2]
 ## Issues
 
 If you have troubles using the script, please contact the team via GitHub Issues.
+
+---
+
+**Build with ❤️ by [@elijahtsai](https://twitter.com/elijahtsai_) & [@duraki](https://twitter.com/0xduraki)**
+
+> [Original idea and thread](https://gist.github.com/Bhavdip/76c581d7ac03bdce6d226a2e8c522df4)
