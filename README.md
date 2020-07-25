@@ -1,3 +1,7 @@
+<p align="center">
+  <img height="200" src="https://i.imgur.com/laXau20.png">
+</p>
+
 ## SketchCrapp
 
 Sketch.App Patch Tool, brought to you by [@duraki](https://github.com/duraki) & [@elijahtsai](https://github.com/elijahtsai). This script provides you a quick and dirty way to patch Sketch.app for Unlimited Trial. You can always patch manually using Ghidra by following [this tutorial](https://duraki.github.io/posts/o/20200214-sketch.app-patch-in-ghidra.html). Offsets available [here](https://gist.github.com/Bhavdip/76c581d7ac03bdce6d226a2e8c522df4#gistcomment-3370035).
