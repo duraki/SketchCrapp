@@ -1,8 +1,8 @@
 ---
-name: Bug report
+name: Issue report
 about: Create a report to help us improve SketchCrapp
 title: ''
-labels: bug
+labels: issue, new
 assignees: ''
 
 ---
@@ -19,8 +19,8 @@ Ex: macOS Catalina 10.15.6
 What is the Sketch version you want to patch?
 Ex: 67.2
 
-**Terminal error message**
-Please copy the error message from the terminal.
+**Terminal error message [required]**
+Please copy the error message from the terminal if there has any.
 
 **Additional context [optional]**
 Add any other context about the problem here.
