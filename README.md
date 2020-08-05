@@ -10,6 +10,8 @@ Sketch.App Patch Tool, brought to you by [@duraki](https://github.com/duraki) & 
 
 ## Usage
 
+* Open your MacOS Terminal (`Cmd+Space`, type **Terminal**)
+* Type the commands below
 * Download or clone this repository
   * `cd $HOME && git clone https://github.com/duraki/sketchcrapp`
 * Make script executable
