@@ -36,6 +36,13 @@ address_param_672+=("0x50a78f")
 address_param_672+=("0x50a792")
 address_param_672+=("0x50946a")
 address_param_672+=("0x5095a9")
+# Version 67.2
+declare -a address_param_680
+address_param_680+=("0x54d2af")
+address_param_680+=("0x54d2b2")
+address_param_680+=("0x54bf8a")
+address_param_680+=("0x54c0c9")
+
 
 # Value parameter array.
 declare -a value_param
@@ -75,7 +82,8 @@ EOF
 usage() {
   echo "Usage:"
   echo "./sketchcrapp [-h] [-a] <applicationPath>"
-  echo "Supported versions: v63.1, v64.0, v65.1, v66.1, v67.1, v67.2"
+  echo "Supported versions: v63.1, v64.0, v65.1, v66.1, v67.1, v67.2,\
+ v68"
   exit 0;
 }
 
@@ -201,6 +209,10 @@ verifyApplication() {
     "9762906ced4d5589e27b297012ce862665e65a29")
       engin "67.2" "$appPath" "$execPath"
       ;;
+    # The version of application executable is 68
+    "ad9ccdce3ac270b2441f0efb8f3233935fb1900a")
+      engin "68" "$appPath" "$execPath"
+      ;;
     *)
       err "binaryerr››"
   esac
@@ -257,6 +269,9 @@ engin() {
       ;;
     "67.2")
       patch "${address_param_672[*]}" "$execPath"
+      ;;
+    "68")
+      patch "${address_param_680[*]}" "$execPath"
       ;;
     *)
       echo "Something went wrong, this line should never execute."
