@@ -82,7 +82,8 @@ EOF
 usage() {
   echo "Usage:"
   echo "./sketchcrapp [-h] [-a] <applicationPath>"
-  echo "Supported versions: v63.1, v64.0, v65.1, v66.1, v67.1, v67.2"
+  echo "Supported versions: v63.1, v64.0, v65.1, v66.1, v67.1, v67.2,\
+ v68"
   exit 0;
 }
 
