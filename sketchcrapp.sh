@@ -201,10 +201,11 @@ getCFBundleShortVersionString() {
     echo "[ERR] Couldn't find value of CFBundleShortVersionString"
     exit 1
   fi
-  checkVersionSupport "$bundleVersionString"
-  if [ "$?" -eq 0 ]; them
+  
+  if [ "$(checkVersionSupport "$bundleVersionString")" -eq 0 ]; then
     echo "$bundleVersionString"  
   else 
+    "[ERR] This version of application is not supported."
     exit 1;
   fi
 }
@@ -217,7 +218,7 @@ checkVersionSupport() {
 
   for versionElement in "${version_list[@]}"
   do
-    if [ "$bundleVersionString" -eq "$versionElement" ]; then
+    if [ "$bundleVersionString" = "$versionElement" ]; then
       ticket=1
     fi
   done
@@ -230,41 +231,45 @@ checkVersionSupport() {
 }
 
 verifyApplication() {
-  case "$appSHA1" in
+
+  local hash="$1"
+
+  case "$hash" in
     # The version of application executable is 63.1
     "$exe_hash_631")
-      engin "63.1" "$appPath" "$execPath"
+      echo "63.1"
       ;;
     # The version of application executable is 64
     "$exe_hash_640")
-      engin "64" "$appPath" "$execPath"
+      echo "64"
       ;;
     # The version of application executable is 65.1
     "$exe_hash_651")
-      engin "65.1" "$appPath" "$execPath"
+      echo "65.1"
       ;;
     # The version of application executable is 66.1
     "$exe_hash_661")
-      engin "66.1" "$appPath" "$execPath"
+      echo "66.1"
       ;;
     # The version of application executable is 67.1
     "$exe_hash_671")
-      engin "67.1" "$appPath" "$execPath"
+      echo "67.1"
       ;;
     # The version of application executable is 67.2
     "$exe_hash_672")
-      engin "67.2" "$appPath" "$execPath"
+      echo "67.2"
       ;;
     # The version of application executable is 68
     "$exe_hash_680")
-      engin "68" "$appPath" "$execPath"
+      echo "68"
       ;;
     # The version of application executable is 68.1  
     "$exe_hash_681")
-      engin "68.1" "$appPath" "$execPath"
+      echo "68.1"
       ;;
     *)
       err "binaryerr››"
+      exit 1
   esac
 }
 
@@ -295,25 +300,24 @@ analysisApplication() {
 
   if ! [ -f "$infoPath.plist" ]; then
     echo "[-] Executable file does not exists under the given application folder."
-    echo "[ERR] Couldn't find: $execPath"
+    echo "[ERR] Couldn't find: $infoPath.plist"
     exit 1
   fi
 
   # Get the CFBundleShortVersionString from info plist.
-  local bundleVersionString="$(getCFBundleShortVersionString)"
+  local bundleVersionString="$(getCFBundleShortVersionString "$infoPath")"
 
   # Get the hash of application executable
   local appSHA1="$(shasum -a 1 "$execPath" | cut -f 1 -d ' ')"
   
   local testBundleVersionString="$(verifyApplication "$appSHA1")"
 
-  if [ "$bundleVersionString" -eq "$testBundleVersionString" ]; then
+  if [ "$bundleVersionString" = "$testBundleVersionString" ]; then
     engin "$bundleVersionString" "$appPath" "$execPath"
+  else 
+    echo "[ERR] Executable SHA1 hash does not equal to the CFBundleShortVersionString"
   fi
 }
-
-
-
 
 # Patch process.
 # - Parameters:
@@ -421,11 +425,11 @@ if [ $# -eq 0 ]; then
   if [ -d "/Applications/Sketch.app" ]; then
     # Sketch is found in /Application .
     echo "[+] Selected Sketch.app path is </Applications> (auto-detected) ... OK"
-    verifyApplication "/Applications/Sketch.app"
+    analysisApplication "/Applications/Sketch.app"
   elif [ -d "$HOME/Applications/Sketch.app" ]; then
     # Sketch is found in ~/Application .
     echo "[+] Selected Sketch.app path is <$HOME/Applications> (auto-detected) ... OK"
-    verifyApplication "$HOME/Applications/Sketch.app"
+    analysisApplication "$HOME/Applications/Sketch.app"
   else
     echo "Application not found in /Applications or ~/Applications"
     echo "Try: ./sketchcrapp -a /Custom/Path/For/Applications/Sketch.app"
@@ -443,9 +447,9 @@ while getopts "ha:" argv; do
     a)
       appPath="${OPTARG}"
       if [ -d "$appPath" ]; then
-        verifyApplication "$appPath"
+        analysisApplication "$appPath"
       else
-        "Given directory is either invaild or not exist."
+        echo "[ERR] Given directory is either invaild or not exist."
       fi
       ;;
     *)
