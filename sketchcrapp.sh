@@ -193,23 +193,6 @@ signApplication() {
   codesign --deep --force -s "sketchcrapp" "$appPath"
 }
 
-# Determine the CFBundleShortVersionString.
-getCFBundleShortVersionString() {
-  local infoPath="$1"
-  local bundleVersionString="$(defaults read $infoPath CFBundleShortVersionString)"
-  if [ $? != 0 ]; then
-    echo "[ERR] Couldn't find value of CFBundleShortVersionString"
-    exit 1
-  fi
-  
-  if [ "$(checkVersionSupport "$bundleVersionString")" -eq 0 ]; then
-    echo "$bundleVersionString"  
-  else 
-    "[ERR] This version of application is not supported."
-    exit 1;
-  fi
-}
-
 checkVersionSupport() {
 
   local ticket=0
@@ -235,35 +218,27 @@ verifyApplication() {
   local hash="$1"
 
   case "$hash" in
-    # The version of application executable is 63.1
     "$exe_hash_631")
       echo "63.1"
       ;;
-    # The version of application executable is 64
     "$exe_hash_640")
       echo "64"
       ;;
-    # The version of application executable is 65.1
     "$exe_hash_651")
       echo "65.1"
       ;;
-    # The version of application executable is 66.1
     "$exe_hash_661")
       echo "66.1"
       ;;
-    # The version of application executable is 67.1
     "$exe_hash_671")
       echo "67.1"
       ;;
-    # The version of application executable is 67.2
     "$exe_hash_672")
       echo "67.2"
       ;;
-    # The version of application executable is 68
     "$exe_hash_680")
       echo "68"
       ;;
-    # The version of application executable is 68.1  
     "$exe_hash_681")
       echo "68.1"
       ;;
@@ -299,13 +274,25 @@ analysisApplication() {
   local infoPath="$appPath/Contents/Info"
 
   if ! [ -f "$infoPath.plist" ]; then
-    echo "[-] Executable file does not exists under the given application folder."
+    echo "[-] Info file does not exists under the given application folder."
     echo "[ERR] Couldn't find: $infoPath.plist"
     exit 1
   fi
 
   # Get the CFBundleShortVersionString from info plist.
-  local bundleVersionString="$(getCFBundleShortVersionString "$infoPath")"
+  local bundleVersionString="$(defaults read $infoPath CFBundleShortVersionString)"
+
+  if [ -z "$bundleVersionString" ]; then
+    echo "[ERR] Couldn't find value of CFBundleShortVersionString"
+    exit 1
+  fi
+  
+  if [ "$(checkVersionSupport "$bundleVersionString")" -eq 0 ]; then
+    echo "$bundleVersionString"  
+  else 
+    echo "[ERR] This version of application is not supported."
+    exit 1;
+  fi
 
   # Get the hash of application executable
   local appSHA1="$(shasum -a 1 "$execPath" | cut -f 1 -d ' ')"
