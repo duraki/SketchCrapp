@@ -1,48 +1,77 @@
 #!/bin/bash
-# Address parameter array for each version.
+# Binary pattern
+# eb ?? 41 b4 ?? 4c 89
+# 85 db 0f 85 ?? ?? 00 00 49 89 c7
+# 84 db ?? 1b 4c 89
+
+# Support version list.
+declare -a version_list
+
+# Address parameter array and other parameters for each version.
 # Version 63.1 
 declare -a address_param_631
+version_list+=("63.1")
 address_param_631+=("0x4a2a4f")
 address_param_631+=("0x4a2a52")
 address_param_631+=("0x4a173a")
 address_param_631+=("0x4a1879")
+exe_hash_631="db9b88f3aa6abc484be104660fa911275d9f2515"
 # Version 64
 declare -a address_param_640
+version_list+=("64")
 address_param_640+=("0x4cde6e")
 address_param_640+=("0x4cde72")
 address_param_640+=("0x4ccb5a")
 address_param_640+=("0x4ccc99")
+exe_hash_640="a4d16224ebb8caf84c94a6863db183fd306002da"
 # Version 65.1
 declare -a address_param_651
+version_list+=("65.1")
 address_param_651+=("0x4db4ff")
 address_param_651+=("0x4db502")
 address_param_651+=("0x4da1ea")
 address_param_651+=("0x4da329")
+exe_hash_651="0e7cad9b81284d127d652b3a8c962315770cd905"
 # Version 66.1
 declare -a address_param_661
+version_list+=("66.1")
 address_param_661+=("0x4f374f")
 address_param_661+=("0x4f3752")
 address_param_661+=("0x4f243a")
 address_param_661+=("0x4f2579")
+exe_hash_661="97d6273be93546a9b3caa7c8e1f97fe2246e673b"
 # Version 67.1
 declare -a address_param_671
+version_list+=("67.1")
 address_param_671+=("0x50a6cf")
 address_param_671+=("0x50a6d2")
 address_param_671+=("0x5093aa")
 address_param_671+=("0x5094e9")
+exe_hash_671="708e9203a8628c5cee767eb75546c6145b69df57"
 # Version 67.2
 declare -a address_param_672
+version_list+=("67.2")
 address_param_672+=("0x50a78f")
 address_param_672+=("0x50a792")
 address_param_672+=("0x50946a")
 address_param_672+=("0x5095a9")
-# Version 67.2
+exe_hash_672="9762906ced4d5589e27b297012ce862665e65a29"
+# Version 68
 declare -a address_param_680
+version_list+=("68")
 address_param_680+=("0x54d2af")
 address_param_680+=("0x54d2b2")
 address_param_680+=("0x54bf8a")
 address_param_680+=("0x54c0c9")
-
+exe_hash_680="ad9ccdce3ac270b2441f0efb8f3233935fb1900a"
+# Version 68.1
+declare -a address_param_681
+version_list+=("68.1")
+address_param_681+=("0x54d34f")
+address_param_681+=("0x54d352")
+address_param_681+=("0x54c02a")
+address_param_681+=("0x54c169")
+exe_hash_681="bc22987f7b3a7580aba1ac260c59d66d0a3622e7"
 
 # Value parameter array.
 declare -a value_param
@@ -83,7 +112,7 @@ usage() {
   echo "Usage:"
   echo "./sketchcrapp [-h] [-a] <applicationPath>"
   echo "Supported versions: v63.1, v64.0, v65.1, v66.1, v67.1, v67.2,\
- v68"
+ v68 v68.1"
   exit 0;
 }
 
@@ -104,10 +133,13 @@ clean() {
 
 # Diagnosis massage.
 # - Parameters:
-#     - First: AN error identifier can help to know what error occurred.
+#     - First: An error identifier can help to know what error occurred.
 err() {
-
-  error="$1"
+  local appPath="$1"
+  local execPath="$2"
+  local bundleVersionString="$3"
+  local appSHA1="$4"
+  local error="$5"
   
   echo "[+] Copy the details below and open a new issue on GitHub repository: \
   https://github.com/duraki/SketchCrapp"
@@ -115,7 +147,7 @@ err() {
   echo "+ Issue details ‹s:sketchcrapp›"
   echo "+ Application Path  : $appPath"
   echo "+ Application Binary: $execPath"
-  echo "+ Passed version    : ‹nil›"
+  echo "+ Passed version    : $bundleVersionString"
   echo "+ Binary SHA1       : $appSHA1"
   echo "+ Error             : $error"
   echo "+==================================================================="
@@ -161,61 +193,117 @@ signApplication() {
   codesign --deep --force -s "sketchcrapp" "$appPath"
 }
 
+checkVersionSupport() {
+
+  local ticket=0
+  
+  local bundleVersionString="$1"
+
+  for versionElement in "${version_list[@]}"
+  do
+    if [ "$bundleVersionString" = "$versionElement" ]; then
+      ticket=1
+    fi
+  done
+
+  if [ "$ticket" -eq 1 ]; then
+    echo 0
+  else 
+    echo 1
+  fi
+}
+
+verifyApplication() {
+
+  local hash="$1"
+
+  case "$hash" in
+    "$exe_hash_631")
+      echo "63.1"
+      ;;
+    "$exe_hash_640")
+      echo "64"
+      ;;
+    "$exe_hash_651")
+      echo "65.1"
+      ;;
+    "$exe_hash_661")
+      echo "66.1"
+      ;;
+    "$exe_hash_671")
+      echo "67.1"
+      ;;
+    "$exe_hash_672")
+      echo "67.2"
+      ;;
+    "$exe_hash_680")
+      echo "68"
+      ;;
+    "$exe_hash_681")
+      echo "68.1"
+      ;;
+    *)
+      err "binaryerr››"
+      exit 1
+  esac
+}
+
 # Verify the application by using hash value.
 # - Parameters:
 #     - First: The application bundle path.
-verifyApplication() {
+analysisApplication() {
 
-  appPath="$1"
-  
-  # Get the path of application executable.
-  execPath="$appPath/Contents/MacOS/Sketch"
-  
+  local appPath="$1"
+    
   if ! [ -d "$appPath" ]; then
     echo "[-] The path of application $appPath is incorrect."
     echo "[ERR] Couldn't find: $appPath"
     exit 1
   fi
+
+  # Get the path of application executable.
+  local execPath="$appPath/Contents/MacOS/Sketch"
+
   if ! [ -f "$execPath" ]; then
     echo "[-] Executable file does not exists under the given application folder."
     echo "[ERR] Couldn't find: $execPath"
     exit 1
   fi
+
+  # Get the path of application info plist.
+  local infoPath="$appPath/Contents/Info"
+
+  if ! [ -f "$infoPath.plist" ]; then
+    echo "[-] Info file does not exists under the given application folder."
+    echo "[ERR] Couldn't find: $infoPath.plist"
+    exit 1
+  fi
+
+  # Get the CFBundleShortVersionString from info plist.
+  local bundleVersionString="$(defaults read $infoPath CFBundleShortVersionString)"
+
+  if [ -z "$bundleVersionString" ]; then
+    echo "[ERR] Couldn't find value of CFBundleShortVersionString"
+    exit 1
+  fi
+  
+  if [ "$(checkVersionSupport "$bundleVersionString")" -eq 0 ]; then
+    echo "$bundleVersionString"  
+  else 
+    echo "[ERR] This version of application is not supported."
+    exit 1;
+  fi
+
   # Get the hash of application executable
-  appSHA1=$(shasum -a 1 "$execPath" | cut -f 1 -d ' ')
-  # Determine the version.
-  case "$appSHA1" in
-    # The version of application executable is 63.1
-    "db9b88f3aa6abc484be104660fa911275d9f2515")
-      engin "63.1" "$appPath" "$execPath"
-      ;;
-    # The version of application executable is 64
-    "a4d16224ebb8caf84c94a6863db183fd306002da")
-      engin "64" "$appPath" "$execPath"
-      ;;
-    # The version of application executable is 65.1
-    "0e7cad9b81284d127d652b3a8c962315770cd905")
-      engin "65.1" "$appPath" "$execPath"
-      ;;
-    # The version of application executable is 66.1
-    "97d6273be93546a9b3caa7c8e1f97fe2246e673b")
-      engin "66.1" "$appPath" "$execPath"
-      ;;
-    # The version of application executable is 67.1
-    "708e9203a8628c5cee767eb75546c6145b69df57")
-      engin "67.1" "$appPath" "$execPath"
-      ;;
-    # The version of application executable is 67.2
-    "9762906ced4d5589e27b297012ce862665e65a29")
-      engin "67.2" "$appPath" "$execPath"
-      ;;
-    # The version of application executable is 68
-    "ad9ccdce3ac270b2441f0efb8f3233935fb1900a")
-      engin "68" "$appPath" "$execPath"
-      ;;
-    *)
-      err "binaryerr››"
-  esac
+  local appSHA1="$(shasum -a 1 "$execPath" | cut -f 1 -d ' ')"
+  
+  local testBundleVersionString="$(verifyApplication "$appSHA1")"
+
+  if [ "$bundleVersionString" = "$testBundleVersionString" ]; then
+    engin "$bundleVersionString" "$appPath" "$execPath"
+  else 
+    echo "[ERR] Executable SHA1 hash does not equal to the CFBundleShortVersionString"
+  fi
 }
 
 # Patch process.
@@ -273,6 +361,9 @@ engin() {
     "68")
       patch "${address_param_680[*]}" "$execPath"
       ;;
+    "68.1")
+      patch "${address_param_681[*]}" "$execPath"
+      ;;
     *)
       echo "Something went wrong, this line should never execute."
       err "patcherr››"
@@ -305,10 +396,10 @@ engin() {
 # Script startup point. How about we start from banner shell we?
 banner
 
-# Check if missing openssl library
+# Check if missing OpenSSL library
 if ! command -v openssl &> /dev/null; then
   echo "OpenSSL is not installed on your system."
-  echo "This should not happen, macOS have openssl built-in."
+  echo "This should not happen, macOS have OpenSSL built-in."
   echo "[FIX] Try: brew install openssl"
   echo "[FIX] Try: port install openssl"
   echo "[FIX] Try: install openssl manually"
@@ -321,11 +412,11 @@ if [ $# -eq 0 ]; then
   if [ -d "/Applications/Sketch.app" ]; then
     # Sketch is found in /Application .
     echo "[+] Selected Sketch.app path is </Applications> (auto-detected) ... OK"
-    verifyApplication "/Applications/Sketch.app"
+    analysisApplication "/Applications/Sketch.app"
   elif [ -d "$HOME/Applications/Sketch.app" ]; then
     # Sketch is found in ~/Application .
     echo "[+] Selected Sketch.app path is <$HOME/Applications> (auto-detected) ... OK"
-    verifyApplication "$HOME/Applications/Sketch.app"
+    analysisApplication "$HOME/Applications/Sketch.app"
   else
     echo "Application not found in /Applications or ~/Applications"
     echo "Try: ./sketchcrapp -a /Custom/Path/For/Applications/Sketch.app"
@@ -343,9 +434,9 @@ while getopts "ha:" argv; do
     a)
       appPath="${OPTARG}"
       if [ -d "$appPath" ]; then
-        verifyApplication "$appPath"
+        analysisApplication "$appPath"
       else
-        "Given directory is either invaild or not exist."
+        echo "[ERR] Given directory is either invaild or not exist."
       fi
       ;;
     *)
