@@ -4,7 +4,7 @@
 
 ## SketchCrapp
 
-Sketch.App Patch Tool, brought to you by [@duraki](https://github.com/duraki) & [@elijahtsai](https://github.com/elijahtsai). This script provides you a quick and dirty way to patch Sketch.app for Unlimited Trial. You can always patch manually using Ghidra by following [this tutorial](https://duraki.github.io/posts/o/20200214-sketch.app-patch-in-ghidra.html). Offsets available [here](https://gist.github.com/Bhavdip/76c581d7ac03bdce6d226a2e8c522df4#gistcomment-3370035).
+Sketch.App Patch Tool, brought to you by [@duraki](https://github.com/duraki) & [@elijahtsai](https://github.com/elijahtsai). This script provides you a quick and dirty way to patch Sketch.app for Unlimited Trial. You can always patch manually using Ghidra by following [this tutorial](https://duraki.github.io/posts/o/20200214-sketch.app-patch-in-ghidra.html). Offsets available [here](https://github.com/duraki/SketchCrapp/blob/master/README.md#offset-table).
 
 **Download Sketch.App version of your choice here:** https://www.sketch.com/updates/
 
@@ -98,3 +98,13 @@ If you have troubles using the script, please contact the team via GitHub Issues
 **Build with ❤️ by [@elijahtsai](https://twitter.com/elijahtsai_) & [@duraki](https://twitter.com/0xduraki)**
 
 > [Original idea and thread](https://gist.github.com/Bhavdip/76c581d7ac03bdce6d226a2e8c522df4)
+
+### Offset Table
+|63.1|64|65.1|66.1|67.1|
+|----|--|----|----|----|
+|0x1004a2a50|0x1004cde70|0x1004db500|0x1004f3750|0x10050a6d0|
+|0x1004a1724|0x1004ccb44|0x1004da1d4|0x1004f2424|0x100509394|
+|0x1004a1738|0x1004ccb58|0x1004da1e8|0x1004f2438|0x1005093a8|
+|0x1004a173e|0x1004ccb5e|0x1004da1ee|0x1004f243e|0x1005093ae|
+|0x1004a1879|0x1004ccc99|0x1004da329|0x1004f2579|0x1005094e9|
+|0x1004a1896|0x1004cccb6|0x1004da346|0x1004f2596|0x100509506|
