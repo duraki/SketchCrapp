@@ -101,8 +101,7 @@ banner() {
     /___/_/\_\\__/\__/\__/_//_/\__/_/  \_,_/ .__/ .__/
                                           /_/  /_/
          Sketch.App Patch Tool (https://github.com/duraki/SketchCrapp)
-         by @elijahtsai & @duraki
-
+         by @duraki & @elijahtsai
 
 EOF
 }
@@ -111,8 +110,8 @@ EOF
 usage() {
   echo "Usage:"
   echo "./sketchcrapp [-h] [-a] <applicationPath>"
-  echo "Supported versions: v63.1, v64.0, v65.1, v66.1, v67.1, v67.2,\
- v68 v68.1"
+  echo "Supported versions: v63.1, v64.0, v65.1, v66.1, v67.1, v67.2, \
+v68, v68.1"
   exit 0;
 }
 
@@ -171,6 +170,43 @@ signApplication() {
   codesign --deep --force -s "sketchcrapp" "$appPath"
 }
 
+#Get binary hash from CFBundleShortVersionString
+# - Parameters:
+#     - First: The application bundle CFBundleShortVersionString.
+getHashFromVersionString() {
+  
+  local bundleVersionString="$1"
+
+  case "$bundleVersionString" in
+    "63.1")
+      echo "$exe_hash_631"
+      ;;
+    "64")
+      echo "$exe_hash_640"
+      ;;
+    "65.1")
+      echo "$exe_hash_651"
+      ;;
+    "66.1")
+      echo "$exe_hash_661"
+      ;;
+    "67.1")
+      echo "$exe_hash_671"
+      ;;
+    "67.2")
+      echo "$exe_hash_672"
+      ;;
+    "68")
+      echo "$exe_hash_680"
+      ;;
+    "68.1")
+      echo "$exe_hash_681"
+      ;;
+    *)
+      echo "Input version string invaild, cannot lookup correct hash value."
+  esac
+}
+
 # Verify the application by using hash value.
 # - Parameters:
 #     - First: The application bundle path.
@@ -180,7 +216,7 @@ analysisApplication() {
     
   if ! [ -d "$appPath" ]; then
     echo "[-] The path of application $appPath is incorrect."
-    echo "[ERR] Couldn't find: $appPath"
+    echo "[ERR] Couldn't find application at $appPath"
     exit 1
   fi
 
@@ -189,7 +225,8 @@ analysisApplication() {
 
   if ! [ -f "$execPath" ]; then
     echo "[-] Executable file does not exists under the given application folder."
-    echo "[ERR] Couldn't find: $execPath"
+    echo "[ERR] Couldn't find executable file at $execPath"
+    echo "[INFO] Please make sure you pass clean app to script."
     exit 1
   fi
 
@@ -198,7 +235,8 @@ analysisApplication() {
 
   if ! [ -f "$infoPath.plist" ]; then
     echo "[-] Info file does not exists under the given application folder."
-    echo "[ERR] Couldn't find: $infoPath.plist"
+    echo "[ERR] Couldn't find Info.plist at $infoPath.plist"
+    echo "[INFO] Please make sure you pass clean app to script."
     exit 1
   fi
 
@@ -207,8 +245,13 @@ analysisApplication() {
 
   if [ -z "$bundleVersionString" ]; then
     echo "[ERR] Couldn't find value of CFBundleShortVersionString"
+    echo "[INFO] Please make sure you pass clean app to script."
     exit 1
   fi
+
+  # Get the hash of application executable
+  local appSHA1="$(shasum -a 1 "$execPath" | cut -f 1 -d ' ')"
+  
   
   local ticket=0
 
@@ -219,9 +262,9 @@ analysisApplication() {
     fi
   done
 
-  if ! [ "$ticket" -eq 1 ]; then
+  if [ "$ticket" -eq 0 ]; then
     echo "[+] Copy the details below and open a new issue on GitHub repository: \
-    https://github.com/duraki/SketchCrapp"
+https://github.com/duraki/SketchCrapp"
     echo "+==================================================================="
     echo "+ Issue details ‹s:sketchcrapp›"
     echo "+ Application Path  : $appPath"
@@ -233,9 +276,6 @@ analysisApplication() {
     exit 1
   fi
 
-  # Get the hash of application executable
-  local appSHA1="$(shasum -a 1 "$execPath" | cut -f 1 -d ' ')"
-  
   local testBundleVersionString=""
 
   case "$appSHA1" in
@@ -265,12 +305,13 @@ analysisApplication() {
       ;;
     *)
       echo "[+] Copy the details below and open a new issue on GitHub repository: \
-      https://github.com/duraki/SketchCrapp"
+https://github.com/duraki/SketchCrapp"
       echo "+==================================================================="
       echo "+ Issue details ‹s:sketchcrapp›"
       echo "+ Application Path  : $appPath"
       echo "+ Application Binary: $execPath"
       echo "+ Passed version    : $bundleVersionString"
+      echo "+ Correct hash      : $(getHashFromVersionString "$bundleVersionString")"
       echo "+ Binary SHA1       : $appSHA1"
       echo "+ Error             : Can’t look up version from hash."
       echo "+==================================================================="
@@ -345,7 +386,7 @@ engin() {
     *)
       echo "Something went wrong, this line should never execute."
       echo "[+] Copy the details below and open a new issue on GitHub repository: \
-      https://github.com/duraki/SketchCrapp"
+https://github.com/duraki/SketchCrapp"
       echo "+==================================================================="
       echo "+ Issue details ‹s:sketchcrapp›"
       echo "+ Application Path  : $appPath"
@@ -354,6 +395,7 @@ engin() {
       echo "+ Binary SHA1       : $appSHA1"
       echo "+ Error             : patcherr››"
       echo "+==================================================================="
+      exit 1
   esac
   # CodeSigning area.
   # Check if sketchcrapp certificate already exist.
@@ -424,11 +466,12 @@ while getopts "ha:" argv; do
         analysisApplication "$appPath"
       else
         echo "[ERR] Given directory is either invaild or not exist."
+        exit 1
       fi
       ;;
     *)
       echo "Use -h for more information."
-      exit 0;
+      exit 0
       ;;
   esac
 done
