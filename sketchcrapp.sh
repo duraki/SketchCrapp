@@ -41,12 +41,14 @@ address_param_661+=("0x4f243a")
 address_param_661+=("0x4f2579")
 exe_hash_661="97d6273be93546a9b3caa7c8e1f97fe2246e673b"
 # Version 67.1
-declare -a address_param_671
+declare -a address_param_670
+version_list+=("67")
+address_param_670+=("0x50a6cf")
+address_param_670+=("0x50a6d2")
+address_param_670+=("0x5093aa")
+address_param_670+=("0x5094e9")
+exe_hash_670="b9866183ded9573aea6be0a004f31c8941059f3f"
 version_list+=("67.1")
-address_param_671+=("0x50a6cf")
-address_param_671+=("0x50a6d2")
-address_param_671+=("0x5093aa")
-address_param_671+=("0x5094e9")
 exe_hash_671="708e9203a8628c5cee767eb75546c6145b69df57"
 # Version 67.2
 declare -a address_param_672
@@ -110,7 +112,7 @@ EOF
 usage() {
   echo "Usage:"
   echo "./sketchcrapp [-h] [-a] <applicationPath>"
-  echo "Supported versions: v63.1, v64.0, v65.1, v66.1, v67.1, v67.2, \
+  echo "Supported versions: v63.1, v64.0, v65.1, v66.1, v67, v67.1, v67.2, \
 v68, v68.1"
   exit 0;
 }
@@ -189,6 +191,9 @@ getHashFromVersionString() {
       ;;
     "66.1")
       echo "$exe_hash_661"
+      ;;
+    "67")
+      echo "$exe_hash_670"
       ;;
     "67.1")
       echo "$exe_hash_671"
@@ -291,6 +296,9 @@ https://github.com/duraki/SketchCrapp"
     "$exe_hash_661")
       testBundleVersionString="66.1"
       ;;
+    "$exe_hash_670")
+      testBundleVersionString="67"
+      ;;
     "$exe_hash_671")
       testBundleVersionString="67.1"
       ;;
@@ -371,8 +379,8 @@ engin() {
     "66.1")
       patch "${address_param_661[*]}" "$execPath"
       ;;
-    "67.1")
-      patch "${address_param_671[*]}" "$execPath"
+    "67"|"67.1")
+      patch "${address_param_670[*]}" "$execPath"
       ;;
     "67.2")
       patch "${address_param_672[*]}" "$execPath"
