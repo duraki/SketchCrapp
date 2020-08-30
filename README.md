@@ -48,24 +48,24 @@ crackb0x:SketchCrapp duraki$ ./sketchcrapp.sh
 
 SketchCrapp is finding application bundle path ...
 [+] Selected Sketch.app path is </Applications> (auto-detected) ... OK
-[+] Selected Sketch.app version is 68 ... SketchCrapp starting ... OK
-[+] Patching offsets for 68 ...
-[+] Patching address at offset: 0x54d2af with value: \00
+[+] Selected Sketch.app version is 68.1 ... SketchCrapp starting ... OK
+[+] Patching offsets for 68.1 ...
+[+] Patching address at offset: 0x54d34f with value: \00
 1+0 records in
 1+0 records out
-1 bytes transferred in 0.000026 secs (38480 bytes/sec)
-[+] Patching address at offset: 0x54d2b2 with value: \00
+1 bytes transferred in 0.000028 secs (35545 bytes/sec)
+[+] Patching address at offset: 0x54d352 with value: \00
 1+0 records in
 1+0 records out
-1 bytes transferred in 0.000029 secs (34664 bytes/sec)
-[+] Patching address at offset: 0x54bf8a with value: \00\00
+1 bytes transferred in 0.000018 secs (55188 bytes/sec)
+[+] Patching address at offset: 0x54c02a with value: \00\00
 2+0 records in
 2+0 records out
-2 bytes transferred in 0.000029 secs (68759 bytes/sec)
-[+] Patching address at offset: 0x54c0c9 with value: \165
+2 bytes transferred in 0.000023 secs (86480 bytes/sec)
+[+] Patching address at offset: 0x54c169 with value: \165
 1+0 records in
 1+0 records out
-1 bytes transferred in 0.000021 secs (47663 bytes/sec)
+1 bytes transferred in 0.001926 secs (519 bytes/sec)
 security: SecKeychainSearchCopyNext: The specified item could not be found in the keychain.
 [+] Generating self-signed certificate ...
 Generating a 521 bit EC private key
