@@ -131,28 +131,6 @@ clean() {
   echo "[+] Cleaned"
 }
 
-# Diagnosis massage.
-# - Parameters:
-#     - First: An error identifier can help to know what error occurred.
-err() {
-  local appPath="$1"
-  local execPath="$2"
-  local bundleVersionString="$3"
-  local appSHA1="$4"
-  local error="$5"
-  
-  echo "[+] Copy the details below and open a new issue on GitHub repository: \
-  https://github.com/duraki/SketchCrapp"
-  echo "+==================================================================="
-  echo "+ Issue details ‹s:sketchcrapp›"
-  echo "+ Application Path  : $appPath"
-  echo "+ Application Binary: $execPath"
-  echo "+ Passed version    : $bundleVersionString"
-  echo "+ Binary SHA1       : $appSHA1"
-  echo "+ Error             : $error"
-  echo "+==================================================================="
-}
-
 # Generate self-signed certificate for codesign. Required for pass-tru code-signature
 # detection by Sketch. Built-in via MacOS openssl library.
 genSelfSignCert() {
@@ -191,61 +169,6 @@ signApplication() {
   echo "[+] Signing the patched *.app bundle. This may require sudo."
   echo "[+] If asked, enter your login password. Choose \"Always Allow\" to not be asked again."
   codesign --deep --force -s "sketchcrapp" "$appPath"
-}
-
-checkVersionSupport() {
-
-  local ticket=0
-  
-  local bundleVersionString="$1"
-
-  for versionElement in "${version_list[@]}"
-  do
-    if [ "$bundleVersionString" = "$versionElement" ]; then
-      ticket=1
-    fi
-  done
-
-  if [ "$ticket" -eq 1 ]; then
-    echo 0
-  else 
-    echo 1
-  fi
-}
-
-verifyApplication() {
-
-  local hash="$1"
-
-  case "$hash" in
-    "$exe_hash_631")
-      echo "63.1"
-      ;;
-    "$exe_hash_640")
-      echo "64"
-      ;;
-    "$exe_hash_651")
-      echo "65.1"
-      ;;
-    "$exe_hash_661")
-      echo "66.1"
-      ;;
-    "$exe_hash_671")
-      echo "67.1"
-      ;;
-    "$exe_hash_672")
-      echo "67.2"
-      ;;
-    "$exe_hash_680")
-      echo "68"
-      ;;
-    "$exe_hash_681")
-      echo "68.1"
-      ;;
-    *)
-      err "binaryerr››"
-      exit 1
-  esac
 }
 
 # Verify the application by using hash value.
@@ -287,17 +210,72 @@ analysisApplication() {
     exit 1
   fi
   
-  if [ "$(checkVersionSupport "$bundleVersionString")" -eq 0 ]; then
-    echo "$bundleVersionString"  
-  else 
-    echo "[ERR] This version of application is not supported."
-    exit 1;
+  local ticket=0
+
+  for versionElement in "${version_list[@]}"
+  do
+    if [ "$bundleVersionString" = "$versionElement" ]; then
+      ticket=1
+    fi
+  done
+
+  if ! [ "$ticket" -eq 1 ]; then
+    echo "[+] Copy the details below and open a new issue on GitHub repository: \
+    https://github.com/duraki/SketchCrapp"
+    echo "+==================================================================="
+    echo "+ Issue details ‹s:sketchcrapp›"
+    echo "+ Application Path  : $appPath"
+    echo "+ Application Binary: $execPath"
+    echo "+ Passed version    : $bundleVersionString"
+    echo "+ Binary SHA1       : $appSHA1"
+    echo "+ Error             : Version not supported, review README file and try again."
+    echo "+==================================================================="
+    exit 1
   fi
 
   # Get the hash of application executable
   local appSHA1="$(shasum -a 1 "$execPath" | cut -f 1 -d ' ')"
   
-  local testBundleVersionString="$(verifyApplication "$appSHA1")"
+  local testBundleVersionString=""
+
+  case "$appSHA1" in
+    "$exe_hash_631")
+      testBundleVersionString="63.1"
+      ;;
+    "$exe_hash_640")
+      testBundleVersionString="64"
+      ;;
+    "$exe_hash_651")
+      testBundleVersionString="65.1"
+      ;;
+    "$exe_hash_661")
+      testBundleVersionString="66.1"
+      ;;
+    "$exe_hash_671")
+      testBundleVersionString="67.1"
+      ;;
+    "$exe_hash_672")
+      testBundleVersionString="67.2"
+      ;;
+    "$exe_hash_680")
+      testBundleVersionString="68"
+      ;;
+    "$exe_hash_681")
+      testBundleVersionString="68.1"
+      ;;
+    *)
+      echo "[+] Copy the details below and open a new issue on GitHub repository: \
+      https://github.com/duraki/SketchCrapp"
+      echo "+==================================================================="
+      echo "+ Issue details ‹s:sketchcrapp›"
+      echo "+ Application Path  : $appPath"
+      echo "+ Application Binary: $execPath"
+      echo "+ Passed version    : $bundleVersionString"
+      echo "+ Binary SHA1       : $appSHA1"
+      echo "+ Error             : Can’t look up version from hash."
+      echo "+==================================================================="
+      exit 1
+  esac
 
   if [ "$bundleVersionString" = "$testBundleVersionString" ]; then
     engin "$bundleVersionString" "$appPath" "$execPath"
@@ -366,7 +344,16 @@ engin() {
       ;;
     *)
       echo "Something went wrong, this line should never execute."
-      err "patcherr››"
+      echo "[+] Copy the details below and open a new issue on GitHub repository: \
+      https://github.com/duraki/SketchCrapp"
+      echo "+==================================================================="
+      echo "+ Issue details ‹s:sketchcrapp›"
+      echo "+ Application Path  : $appPath"
+      echo "+ Application Binary: $execPath"
+      echo "+ Passed version    : $bundleVersionString"
+      echo "+ Binary SHA1       : $appSHA1"
+      echo "+ Error             : patcherr››"
+      echo "+==================================================================="
   esac
   # CodeSigning area.
   # Check if sketchcrapp certificate already exist.
