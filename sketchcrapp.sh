@@ -268,7 +268,8 @@ analysisApplication() {
   done
 
   if [ "$ticket" -eq 0 ]; then
-    echo "[+] Copy the details below and open a new issue on GitHub repository: \
+    echo "[ERR] Version not supported, please carefully review README file again."
+    echo "[INFO] Copy the details below and open a new issue on GitHub repository: \
 https://github.com/duraki/SketchCrapp"
     echo "+==================================================================="
     echo "+ Issue details ‹s:sketchcrapp›"
@@ -276,7 +277,7 @@ https://github.com/duraki/SketchCrapp"
     echo "+ Application Binary: $execPath"
     echo "+ Passed version    : $bundleVersionString"
     echo "+ Binary SHA1       : $appSHA1"
-    echo "+ Error             : Version not supported, review README file and try again."
+    echo "+ Error             : Version not supported."
     echo "+==================================================================="
     exit 1
   fi
@@ -312,16 +313,18 @@ https://github.com/duraki/SketchCrapp"
       testBundleVersionString="68.1"
       ;;
     *)
-      echo "[+] Copy the details below and open a new issue on GitHub repository: \
+      testBundleVersionString="binaryerr››"
+      echo "[ERR] Hash invaild, can’t look up version from hash."
+      echo "[INFO] Carefully review README file again"
+      echo "[INFO] If you still have problem copy the details below and open a new issue on GitHub repository: \
 https://github.com/duraki/SketchCrapp"
       echo "+==================================================================="
-      echo "+ Issue details ‹s:sketchcrapp›"
       echo "+ Application Path  : $appPath"
       echo "+ Application Binary: $execPath"
       echo "+ Passed version    : $bundleVersionString"
       echo "+ Correct hash      : $(getHashFromVersionString "$bundleVersionString")"
       echo "+ Binary SHA1       : $appSHA1"
-      echo "+ Error             : Can’t look up version from hash."
+      echo "+ Error             : Hash invaild" 
       echo "+==================================================================="
       exit 1
   esac
@@ -330,6 +333,9 @@ https://github.com/duraki/SketchCrapp"
     engin "$bundleVersionString" "$appPath" "$execPath"
   else 
     echo "[ERR] Executable SHA1 hash does not equal to the CFBundleShortVersionString"
+    echo "[INFO] Carefully review README file again, if you still have problem"
+    echo "[INFO] open a new issue on GitHub repository: https://github.com/duraki/SketchCrapp"
+    exit 1
   fi
 }
 
@@ -393,7 +399,7 @@ engin() {
       ;;
     *)
       echo "Something went wrong, this line should never execute."
-      echo "[+] Copy the details below and open a new issue on GitHub repository: \
+      echo "[INFO] Copy the details below and open a new issue on GitHub repository: \
 https://github.com/duraki/SketchCrapp"
       echo "+==================================================================="
       echo "+ Issue details ‹s:sketchcrapp›"
