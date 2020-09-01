@@ -2,7 +2,7 @@
 name: Lower version request
 about: Create a report to help us improve SketchCrapp
 title: ''
-labels: issue, new
+labels: feature, new
 assignees: ''
 
 ---
