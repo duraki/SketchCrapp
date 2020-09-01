@@ -29,7 +29,7 @@ crackb0x:SketchCrapp duraki$ ./sketchcrapp.sh -h
     /___/_/\_\\__/\__/\__/_//_/\__/_/  \_,_/ .__/ .__/
                                           /_/  /_/
          Sketch.App Patch Tool (https://github.com/duraki/SketchCrapp)
-         by @elijahtsai & @duraki
+         by @duraki & @elijahtsai 
 
 Usage:
 ./sketchcrapp [-h] [-a] <applicationPath>
@@ -44,7 +44,7 @@ crackb0x:SketchCrapp duraki$ ./sketchcrapp.sh
     /___/_/\_\\__/\__/\__/_//_/\__/_/  \_,_/ .__/ .__/
                                           /_/  /_/
          Sketch.App Patch Tool (https://github.com/duraki/SketchCrapp)
-         by @elijahtsai & @duraki
+         by @duraki & @elijahtsai 
 
 SketchCrapp is finding application bundle path ...
 [+] Selected Sketch.app path is </Applications> (auto-detected) ... OK
