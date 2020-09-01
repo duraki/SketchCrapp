@@ -314,7 +314,7 @@ https://github.com/duraki/SketchCrapp"
       ;;
     *)
       testBundleVersionString="binaryerr››"
-      echo "[ERR] Hash invaild, can’t look up version from hash."
+      echo "[ERR] Can't find Sketch with that signature. Hash is invalid."
       echo "[INFO] Carefully review README file again"
       echo "[INFO] If you still have problem copy the details below and open a new issue on GitHub repository: \
 https://github.com/duraki/SketchCrapp"
@@ -324,7 +324,7 @@ https://github.com/duraki/SketchCrapp"
       echo "+ Passed version    : $bundleVersionString"
       echo "+ Correct hash      : $(getHashFromVersionString "$bundleVersionString")"
       echo "+ Binary SHA1       : $appSHA1"
-      echo "+ Error             : Hash invaild" 
+      echo "+ Error             : Can't find Sketch with that signature. Hash is invalid." 
       echo "+==================================================================="
       exit 1
   esac
@@ -332,7 +332,7 @@ https://github.com/duraki/SketchCrapp"
   if [ "$bundleVersionString" = "$testBundleVersionString" ]; then
     engin "$bundleVersionString" "$appPath" "$execPath"
   else 
-    echo "[ERR] Executable SHA1 hash does not equal to the CFBundleShortVersionString"
+    echo "[ERR] Executable SHA1 hash returned version value does not equal to the CFBundleShortVersionString"
     echo "[INFO] Carefully review README file again, if you still have problem"
     echo "[INFO] open a new issue on GitHub repository: https://github.com/duraki/SketchCrapp"
     exit 1
