@@ -268,7 +268,7 @@ analysisApplication() {
   done
 
   if [ "$ticket" -eq 0 ]; then
-    echo "[ERR] Version not supported, please carefully review README file again."
+    echo "[ERR] Version $bundleVersionString is not supported, please carefully review README file again."
     echo "[INFO] Copy the details below and open a new issue on GitHub repository: \
 https://github.com/duraki/SketchCrapp"
     echo "+==================================================================="
