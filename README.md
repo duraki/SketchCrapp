@@ -94,6 +94,16 @@ writing new private key to 'pk.pem'
 If you have troubles using the script, please contact the team via GitHub Issues.
 
 ---
+## Version Request
+
+#### Higher Version 
+
+If version you are using is much higher than we support, please notify the team via GitHub Issues.
+
+#### Lower Version 
+
+If you really need specific version you can contact the team via GitHub Issues, but we can only do our best to help you.
+
 
 **Build with ❤️ by [@elijahtsai](https://twitter.com/elijahtsai_) & [@duraki](https://twitter.com/0xduraki)**
 
