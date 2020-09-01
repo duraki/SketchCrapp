@@ -277,7 +277,7 @@ https://github.com/duraki/SketchCrapp"
     echo "+ Application Binary: $execPath"
     echo "+ Passed version    : $bundleVersionString"
     echo "+ Binary SHA1       : $appSHA1"
-    echo "+ Error             : Version not supported."
+    echo "+ Error             : Version $bundleVersionString is not supported."
     echo "+==================================================================="
     exit 1
   fi
