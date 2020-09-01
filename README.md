@@ -98,7 +98,7 @@ If you have troubles using the script, please contact the team via GitHub Issues
 
 #### Higher Version 
 
-If version you are using is much higher than we support, please notify the team via GitHub Issues.
+If the version you are trying to patch is higher than supported, please notify the team via GitHub Issues.
 
 #### Lower Version 
 
