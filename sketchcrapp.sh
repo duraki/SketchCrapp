@@ -40,7 +40,7 @@ address_param_661+=("0x4f3752")
 address_param_661+=("0x4f243a")
 address_param_661+=("0x4f2579")
 exe_hash_661="97d6273be93546a9b3caa7c8e1f97fe2246e673b"
-# Version 67.1
+# Version 67 & 67.1
 declare -a address_param_670
 version_list+=("67")
 address_param_670+=("0x50a6cf")
@@ -217,13 +217,11 @@ getHashFromVersionString() {
 #     - First: The application bundle path.
 analysisApplication() {
 
+  echo "[+] Analysing application bundle ... Starting"
+
   local appPath="$1"
-    
-  if ! [ -d "$appPath" ]; then
-    echo "[-] The path of application $appPath is incorrect."
-    echo "[ERR] Couldn't find application at $appPath"
-    exit 1
-  fi
+
+  echo -n "[+] Finding executable file ... "
 
   # Get the path of application executable.
   local execPath="$appPath/Contents/MacOS/Sketch"
@@ -235,6 +233,10 @@ analysisApplication() {
     exit 1
   fi
 
+  echo "OK"
+
+  echo -n "[+] Finding Info.plist ... "
+
   # Get the path of application info plist.
   local infoPath="$appPath/Contents/Info"
 
@@ -245,6 +247,10 @@ analysisApplication() {
     exit 1
   fi
 
+  echo "OK"
+
+  echo -n "[+] Checking Info.plist for CFBundleShortVersionString ... "
+
   # Get the CFBundleShortVersionString from info plist.
   local bundleVersionString="$(defaults read $infoPath CFBundleShortVersionString)"
 
@@ -254,9 +260,10 @@ analysisApplication() {
     exit 1
   fi
 
+  echo "OK"
+
   # Get the hash of application executable
   local appSHA1="$(shasum -a 1 "$execPath" | cut -f 1 -d ' ')"
-  
   
   local ticket=0
 
@@ -268,7 +275,8 @@ analysisApplication() {
   done
 
   if [ "$ticket" -eq 0 ]; then
-    echo "[+] Copy the details below and open a new issue on GitHub repository: \
+    echo "[ERR] Version $bundleVersionString is not supported, please carefully review README file again."
+    echo "[INFO] Copy the details below and open a new issue on GitHub repository: \
 https://github.com/duraki/SketchCrapp"
     echo "+==================================================================="
     echo "+ Issue details ‹s:sketchcrapp›"
@@ -276,10 +284,12 @@ https://github.com/duraki/SketchCrapp"
     echo "+ Application Binary: $execPath"
     echo "+ Passed version    : $bundleVersionString"
     echo "+ Binary SHA1       : $appSHA1"
-    echo "+ Error             : Version not supported, review README file and try again."
+    echo "+ Error             : Version $bundleVersionString is not supported."
     echo "+==================================================================="
     exit 1
   fi
+
+  echo -n "[+] Validating executable file ... "
 
   local testBundleVersionString=""
 
@@ -312,24 +322,32 @@ https://github.com/duraki/SketchCrapp"
       testBundleVersionString="68.1"
       ;;
     *)
-      echo "[+] Copy the details below and open a new issue on GitHub repository: \
+      testBundleVersionString="binaryerr››"
+      echo "Error"
+      echo "[ERR] Can't find Sketch with that signature. Hash is invalid."
+      echo "[INFO] Carefully review README file again"
+      echo "[INFO] If you still have problem copy the details below and open a new issue on GitHub repository: \
 https://github.com/duraki/SketchCrapp"
       echo "+==================================================================="
-      echo "+ Issue details ‹s:sketchcrapp›"
       echo "+ Application Path  : $appPath"
       echo "+ Application Binary: $execPath"
       echo "+ Passed version    : $bundleVersionString"
       echo "+ Correct hash      : $(getHashFromVersionString "$bundleVersionString")"
       echo "+ Binary SHA1       : $appSHA1"
-      echo "+ Error             : Can’t look up version from hash."
+      echo "+ Error             : Can't find Sketch with that signature. Hash is invalid." 
       echo "+==================================================================="
       exit 1
   esac
 
   if [ "$bundleVersionString" = "$testBundleVersionString" ]; then
+    echo "OK"
     engin "$bundleVersionString" "$appPath" "$execPath"
   else 
-    echo "[ERR] Executable SHA1 hash does not equal to the CFBundleShortVersionString"
+    echo "Error"
+    echo "[FATAL] Executable SHA1 hash returned version value does not equal to the CFBundleShortVersionString"
+    echo "[INFO] Carefully review README file again, if you still have problem"
+    echo "[INFO] open a new issue on GitHub repository: https://github.com/duraki/SketchCrapp"
+    exit 1
   fi
 }
 
@@ -339,6 +357,8 @@ https://github.com/duraki/SketchCrapp"
 #     - Second: A path of application executable to patch.
 patch() {
 
+  echo "Starting"
+
   local addressArray=(${1})
   
   local execPath=${2}
@@ -346,6 +366,12 @@ patch() {
   for i in {0..3}; do
     echo "[+] Patching address at offset: ${addressArray[$i]} with value: ${value_param[$i]}"
     printf "${value_param[$i]}" | dd seek="$((${addressArray[$i]}))" conv=notrunc bs=1 of="$execPath"
+    if ! [ "$?" -eq "0" ]; then 
+      echo "[FATAL] Patch process result fail. That's all we know."
+      echo "[INFO] Open a new issue and tell us about this on GitHub repository: \
+https://github.com/duraki/SketchCrapp"
+      exit 1
+    fi
   done
 }
 
@@ -365,7 +391,7 @@ engin() {
   
   # Version Selector.
   echo "[+] Selected Sketch.app version is $appVersion ... SketchCrapp starting ... OK"
-  echo "[+] Patching offsets for $appVersion ..."
+  echo -n "[+] Patching offsets for $appVersion ... "
   case "$appVersion" in
     "63.1")
       patch "${address_param_631[*]}" "$execPath"
@@ -392,8 +418,9 @@ engin() {
       patch "${address_param_681[*]}" "$execPath"
       ;;
     *)
+      echo "Error"
       echo "Something went wrong, this line should never execute."
-      echo "[+] Copy the details below and open a new issue on GitHub repository: \
+      echo "[INFO] Copy the details below and open a new issue on GitHub repository: \
 https://github.com/duraki/SketchCrapp"
       echo "+==================================================================="
       echo "+ Issue details ‹s:sketchcrapp›"

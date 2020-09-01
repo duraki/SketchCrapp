@@ -29,7 +29,7 @@ crackb0x:SketchCrapp duraki$ ./sketchcrapp.sh -h
     /___/_/\_\\__/\__/\__/_//_/\__/_/  \_,_/ .__/ .__/
                                           /_/  /_/
          Sketch.App Patch Tool (https://github.com/duraki/SketchCrapp)
-         by @elijahtsai & @duraki
+         by @duraki & @elijahtsai 
 
 Usage:
 ./sketchcrapp [-h] [-a] <applicationPath>
@@ -44,7 +44,7 @@ crackb0x:SketchCrapp duraki$ ./sketchcrapp.sh
     /___/_/\_\\__/\__/\__/_//_/\__/_/  \_,_/ .__/ .__/
                                           /_/  /_/
          Sketch.App Patch Tool (https://github.com/duraki/SketchCrapp)
-         by @elijahtsai & @duraki
+         by @duraki & @elijahtsai 
 
 SketchCrapp is finding application bundle path ...
 [+] Selected Sketch.app path is </Applications> (auto-detected) ... OK
@@ -94,6 +94,16 @@ writing new private key to 'pk.pem'
 If you have troubles using the script, please contact the team via GitHub Issues.
 
 ---
+## Version Request
+
+#### Higher Version 
+
+If the version you are trying to patch is higher than supported, please notify the team via GitHub Issues.
+
+#### Lower Version 
+
+If you really need specific version you can contact the team via GitHub Issues, but we can only do our best to help you.
+
 
 **Build with ❤️ by [@elijahtsai](https://twitter.com/elijahtsai_) & [@duraki](https://twitter.com/0xduraki)**
 
