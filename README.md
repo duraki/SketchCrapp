@@ -32,7 +32,7 @@ crackb0x:SketchCrapp duraki$ ./sketchcrapp.sh -h
          by @duraki & @elijahtsai 
 
 Usage:
-./sketchcrapp [-h] [-a] <applicationPath>
+./sketchcrapp [-h] [-a] <applicationPath> [-m]
 Supported versions: v63.1, v64, v65.1, v66.1, v67, v67.1, v67.2, v68, v68.1, v68.2
 ```
 
