@@ -391,11 +391,11 @@ https://github.com/duraki/SketchCrapp"
 #     - Third: A path of application executable to patch.
 engin() {
 
-  appVersion="$1"
+  local appVersion="$1"
   
-  appPath="$2"
+  local appPath="$2"
   
-  execPath="$3"
+  local execPath="$3"
   
   # Version Selector.
   echo "[+] Selected Sketch.app version is $appVersion ... SketchCrapp starting ... OK"
