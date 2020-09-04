@@ -523,6 +523,7 @@ magicFunction() {
 
   if ! [ "$?" -eq "0" ]; then
     echo "Fail to download latest application."
+    echo "Are you up to the Internet??"
     exit 1
   fi 
 
