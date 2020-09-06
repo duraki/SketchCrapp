@@ -7,6 +7,7 @@
 # Support version list.
 declare -a version_list
 
+# RUP Review every time when new verison update part.
 # Address parameter array and other parameters for each version.
 # Version 63.1 
 declare -a address_param_631
@@ -110,6 +111,7 @@ banner() {
 EOF
 }
 
+# RUP Review every time when new verison update part.
 # Help messages block.
 usage() {
   echo "Usage:"
@@ -197,6 +199,7 @@ getHashFromVersionString() {
   
   local bundleVersionString="$1"
 
+  # RUP Review every time when new verison update part.
   case "$bundleVersionString" in
     "63.1")
       echo "$exe_hash_631"
@@ -313,7 +316,7 @@ https://github.com/duraki/SketchCrapp"
   echo -n "[+] Validating executable file ... "
 
   local testBundleVersionString=""
-
+  # RUP Review every time when new verison update part.
   case "$appSHA1" in
     "$exe_hash_631")
       testBundleVersionString="63.1"
@@ -416,6 +419,7 @@ engin() {
   # Version Selector.
   echo "[+] Selected Sketch.app version is $appVersion ... SketchCrapp starting ... OK"
   echo -n "[+] Patching offsets for $appVersion ... "
+  # RUP Review every time when new verison update part.
   case "$appVersion" in
     "63.1")
       patch "${address_param_631[*]}" "$execPath"
@@ -486,6 +490,7 @@ https://github.com/duraki/SketchCrapp"
 # An auto function to patch latest app.
 magicFunction() {
   
+  # RUP Review every time when new verison update part.
   local latestBundleURLPath="https://download.sketchapp.com/sketch-68.2-102594.zip"
 
   # Check if missing cURL
