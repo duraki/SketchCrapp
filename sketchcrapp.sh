@@ -519,7 +519,7 @@ magicFunction() {
   echo "OK"
 
 
-  curl "https://download.sketchapp.com/sketch-68.2-102594.zip" --output "/tmp/latest.zip"
+  curl "$latestBundleURLPath" --output "/tmp/latest.zip"
 
   if ! [ "$?" -eq "0" ]; then
     echo "Fail to download latest application."
