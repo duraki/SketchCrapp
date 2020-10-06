@@ -77,6 +77,14 @@ address_param_681+=("0x54c169")
 exe_hash_681="bc22987f7b3a7580aba1ac260c59d66d0a3622e7"
 version_list+=("68.2")
 exe_hash_682="651f3263305e004133253c2706fcdf5b16e20558"
+# Version 69
+declare -a address_param_690
+version_list+=("69")
+address_param_690+=("0x5cf76f")
+address_param_690+=("0x5cf772")
+address_param_690+=("0x5ce44a")
+address_param_690+=("0x5ce589")
+exe_hash_690="2d4027890e2b72175c4a562f59c5d1adb2655b8c"
 
 # Value parameter array.
 declare -a value_param
@@ -117,7 +125,7 @@ usage() {
   echo "Usage:"
   echo "./sketchcrapp [-h] [-a] <applicationPath> [-m]"
   echo "Supported versions: v63.1, v64.0, v65.1, v66.1, v67, v67.1, v67.2, \
-v68, v68.1, v68.2"
+v68, v68.1, v68.2, v69"
   exit 0;
 }
 
@@ -137,7 +145,7 @@ clean() {
     rm -f "/tmp/latest.zip"
     if ! [ "$?" -eq "0" ]; then
       echo "Error"
-      echo "Fail to remove zip file of latest application. remove by yourself."
+      echo "[-] Fail to remove zip file of latest application. remove by yourself."
       exit 1
     fi
   fi
@@ -145,7 +153,7 @@ clean() {
     rm -f "/tmp/Sketch.app"
     if ! [ "$?" -eq "0" ]; then
       echo "Error"
-      echo "Fail to remove application bundle. remove by yourself."
+      echo "[-] Fail to remove application bundle. remove by yourself."
       exit 1
     fi
   fi
@@ -229,6 +237,9 @@ getHashFromVersionString() {
       echo "$exe_hash_681"
       ;;
     "68.2")
+      echo "$exe_hash_682"
+      ;;
+    "69")
       echo "$exe_hash_682"
       ;;
     *)
@@ -348,6 +359,9 @@ https://github.com/duraki/SketchCrapp"
     "$exe_hash_682")
       testBundleVersionString="68.2"
       ;;
+    "$exe_hash_690")
+      testBundleVersionString="69"
+      ;;
     *)
       testBundleVersionString="binaryerr››"
       echo "Error"
@@ -448,6 +462,9 @@ engin() {
     "68.2")
       patch "${address_param_681[*]}" "$execPath"
       ;;
+    "69")
+      patch "${address_param_690[*]}" "$execPath"
+      ;;
     *)
       echo "Error"
       echo "Something went wrong, this line should never execute."
@@ -491,7 +508,7 @@ https://github.com/duraki/SketchCrapp"
 magicFunction() {
   
   # RUP Review every time when new verison update part.
-  local latestBundleURLPath="https://download.sketchapp.com/sketch-68.2-102594.zip"
+  local latestBundleURLPath="https://download.sketchapp.com/sketch-69-107357.zip"
 
   # Check if missing cURL
   if ! command -v curl &> /dev/null; then
@@ -527,8 +544,9 @@ magicFunction() {
   curl "$latestBundleURLPath" --output "/tmp/latest.zip"
 
   if ! [ "$?" -eq "0" ]; then
-    echo "Fail to download latest application."
-    echo "Are you up to the Internet??"
+    echo "[-] Fail to download latest application."
+    echo "[-] Are you up to the Internet??"
+    clean
     exit 1
   fi 
 
@@ -537,7 +555,7 @@ magicFunction() {
     echo "Exist. Removing."
     rm -rf "/tmp/Sketch.app"
     if ! [ "$?" -eq "0" ]; then
-      echo "Fail to remove exist Sketch.app in /tmp directory."
+      echo "[-] Fail to remove exist Sketch.app in /tmp directory."
       clean
       exit 1
     fi
@@ -548,7 +566,7 @@ magicFunction() {
   unzip -q "/tmp/latest.zip" -d "/tmp"
 
   if ! [ "$?" -eq "0" ]; then
-    echo "Fail to unzip zip file of latest application."
+    echo "[-] Fail to unzip zip file of latest application."
     clean
     exit 1
   fi 
@@ -572,7 +590,7 @@ magicFunction() {
 
   if ! [ "$?" -eq "0" ]; then
     echo "Fail"
-    echo "Fail to moving /tmp/Sketch.app to /Applications directory."
+    echo "[-] Fail to moving /tmp/Sketch.app to /Applications directory."
     clean
     exit 1
   fi
@@ -630,8 +648,7 @@ while getopts "ha:m" argv; do
         exit 1
       fi
       ;;
-    m)
-      echo "[+] This function still in experiment. you should take all the consequences." 
+    m) 
       magicFunction
       ;;
     *)

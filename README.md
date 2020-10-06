@@ -33,7 +33,7 @@ crackb0x:SketchCrapp duraki$ ./sketchcrapp.sh -h
 
 Usage:
 ./sketchcrapp [-h] [-a] <applicationPath> [-m]
-Supported versions: v63.1, v64, v65.1, v66.1, v67, v67.1, v67.2, v68, v68.1, v68.2
+Supported versions: v63.1, v64, v65.1, v66.1, v67, v67.1, v67.2, v68, v68.1, v68.2, v69
 ```
 
 ```
@@ -51,24 +51,24 @@ crackb0x:SketchCrapp duraki$ ./sketchcrapp.sh
 [+] Finding Info.plist ... OK
 [+] Checking Info.plist for CFBundleShortVersionString ... OK
 [+] Validating executable file ... OK
-[+] Selected Sketch.app version is 68.2 ... SketchCrapp starting ... OK
-[+] Patching offsets for 68.2 ... Starting
-[+] Patching address at offset: 0x54d34f with value: \00
+[+] Selected Sketch.app version is 69 ... SketchCrapp starting ... OK
+[+] Patching offsets for 69 ... Starting
+[+] Patching address at offset: 0x5cf76f with value: \00
 1+0 records in
 1+0 records out
-1 bytes transferred in 0.000032 secs (31069 bytes/sec)
-[+] Patching address at offset: 0x54d352 with value: \00
+1 bytes transferred in 0.000047 secs (21183 bytes/sec)
+[+] Patching address at offset: 0x5cf772 with value: \00
 1+0 records in
 1+0 records out
-1 bytes transferred in 0.000019 secs (52429 bytes/sec)
-[+] Patching address at offset: 0x54c02a with value: \00\00
+1 bytes transferred in 0.000029 secs (34664 bytes/sec)
+[+] Patching address at offset: 0x5ce44a with value: \00\00
 2+0 records in
 2+0 records out
-2 bytes transferred in 0.000020 secs (99864 bytes/sec)
-[+] Patching address at offset: 0x54c169 with value: \165
+2 bytes transferred in 0.000023 secs (86480 bytes/sec)
+[+] Patching address at offset: 0x5ce589 with value: \165
 1+0 records in
 1+0 records out
-1 bytes transferred in 0.000016 secs (62602 bytes/sec)
+1 bytes transferred in 0.000017 secs (58254 bytes/sec)
 [+] SketchCrapp certificate already exists. Skipping certificate creation ... OK
 [+] Signing the patched *.app bundle. This may require sudo.
 [+] If asked, enter your login password. Choose "Always Allow" to not be asked again.
@@ -115,11 +115,11 @@ If you really need specific version you can contact the team via GitHub Issues, 
 |0x1004a1879|0x1004ccc99|0x1004da329|0x1004f2579|0x1005094e9|0x1005095a9|
 |0x1004a1896|0x1004cccb6|0x1004da346|0x1004f2596|0x100509506|0x1005095c6|
 
-|68|68.1 & 68.2|
-|----|----|
-|0x10054d2b0|0x10054d350|
-|0x10054bf74|0x10054c014|
-|0x10054bf88|0x10054c028|
-|0x10054bf8e|0x10054c02e|
-|0x10054c0c9|0x10054c169|
-|0x10054c0e6|0x10054c186|
+|68|68.1 & 68.2|69|
+|----|----|----|
+|0x10054d2b0|0x10054d350|Stay tuned|
+|0x10054bf74|0x10054c014|Stay tuned|
+|0x10054bf88|0x10054c028|Stay tuned|
+|0x10054bf8e|0x10054c02e|Stay tuned|
+|0x10054c0c9|0x10054c169|Stay tuned|
+|0x10054c0e6|0x10054c186|Stay tuned|
