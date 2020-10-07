@@ -544,8 +544,8 @@ magicFunction() {
   curl "$latestBundleURLPath" --output "/tmp/latest.zip"
 
   if ! [ "$?" -eq "0" ]; then
-    echo "[-] Fail to download latest application."
-    echo "[-] Are you up to the Internet??"
+    echo "[-] Failed while downloading latest application version!"
+    echo "[-] Are you connected to the internet? Check your network connection."
     clean
     exit 1
   fi 
@@ -555,7 +555,7 @@ magicFunction() {
     echo "Exist. Removing."
     rm -rf "/tmp/Sketch.app"
     if ! [ "$?" -eq "0" ]; then
-      echo "[-] Fail to remove exist Sketch.app in /tmp directory."
+      echo "[-] Can't remove existing Sketch.app from /tmp directory."
       clean
       exit 1
     fi
@@ -566,7 +566,7 @@ magicFunction() {
   unzip -q "/tmp/latest.zip" -d "/tmp"
 
   if ! [ "$?" -eq "0" ]; then
-    echo "[-] Fail to unzip zip file of latest application."
+    echo "[-] Can't unzip downloaded archived file of the latest application version."
     clean
     exit 1
   fi 
@@ -590,7 +590,7 @@ magicFunction() {
 
   if ! [ "$?" -eq "0" ]; then
     echo "Fail"
-    echo "[-] Fail to moving /tmp/Sketch.app to /Applications directory."
+    echo "[-] Failed while moving /tmp/Sketch.app to /Applications directory."
     clean
     exit 1
   fi
