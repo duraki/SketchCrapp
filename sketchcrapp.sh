@@ -7,6 +7,7 @@
 # Support version list.
 declare -a version_list
 
+# RUP Review every time when new verison update part.
 # Address parameter array and other parameters for each version.
 # Version 63.1 
 declare -a address_param_631
@@ -76,6 +77,14 @@ address_param_681+=("0x54c169")
 exe_hash_681="bc22987f7b3a7580aba1ac260c59d66d0a3622e7"
 version_list+=("68.2")
 exe_hash_682="651f3263305e004133253c2706fcdf5b16e20558"
+# Version 69
+declare -a address_param_690
+version_list+=("69")
+address_param_690+=("0x5cf76f")
+address_param_690+=("0x5cf772")
+address_param_690+=("0x5ce44a")
+address_param_690+=("0x5ce589")
+exe_hash_690="2d4027890e2b72175c4a562f59c5d1adb2655b8c"
 
 # Value parameter array.
 declare -a value_param
@@ -110,18 +119,19 @@ banner() {
 EOF
 }
 
+# RUP Review every time when new verison update part.
 # Help messages block.
 usage() {
   echo "Usage:"
-  echo "./sketchcrapp [-h] [-a] <applicationPath>"
+  echo "./sketchcrapp [-h] [-a] <applicationPath> [-m]"
   echo "Supported versions: v63.1, v64.0, v65.1, v66.1, v67, v67.1, v67.2, \
-v68, v68.1, v68.2"
+v68, v68.1, v68.2, v69"
   exit 0;
 }
 
-# Clean up all certificate related files.
+# Clean up all related files.
 clean() {
-  echo "[+] Cleaning up certificate file(s)"
+  echo -n "[+] Cleaning up file(s) ... "
   if [ -f pk.pem ]; then
     rm -f pk.pem
   fi
@@ -131,7 +141,23 @@ clean() {
   if [ -f pkcs.p12 ]; then
     rm -f pkcs.p12
   fi
-  echo "[+] Cleaned"
+  if [ -f "/tmp/latest.zip" ]; then
+    rm -f "/tmp/latest.zip"
+    if ! [ "$?" -eq "0" ]; then
+      echo "Error"
+      echo "[-] Fail to remove zip file of latest application. remove by yourself."
+      exit 1
+    fi
+  fi
+  if [ -f "/tmp/Sketch.app" ]; then
+    rm -f "/tmp/Sketch.app"
+    if ! [ "$?" -eq "0" ]; then
+      echo "Error"
+      echo "[-] Fail to remove application bundle. remove by yourself."
+      exit 1
+    fi
+  fi
+  echo "Cleaned"
 }
 
 # Generate self-signed certificate for codesign. Required for pass-tru code-signature
@@ -181,6 +207,7 @@ getHashFromVersionString() {
   
   local bundleVersionString="$1"
 
+  # RUP Review every time when new verison update part.
   case "$bundleVersionString" in
     "63.1")
       echo "$exe_hash_631"
@@ -210,6 +237,9 @@ getHashFromVersionString() {
       echo "$exe_hash_681"
       ;;
     "68.2")
+      echo "$exe_hash_682"
+      ;;
+    "69")
       echo "$exe_hash_682"
       ;;
     *)
@@ -297,7 +327,7 @@ https://github.com/duraki/SketchCrapp"
   echo -n "[+] Validating executable file ... "
 
   local testBundleVersionString=""
-
+  # RUP Review every time when new verison update part.
   case "$appSHA1" in
     "$exe_hash_631")
       testBundleVersionString="63.1"
@@ -328,6 +358,9 @@ https://github.com/duraki/SketchCrapp"
       ;;
     "$exe_hash_682")
       testBundleVersionString="68.2"
+      ;;
+    "$exe_hash_690")
+      testBundleVersionString="69"
       ;;
     *)
       testBundleVersionString="binaryerr››"
@@ -400,6 +433,7 @@ engin() {
   # Version Selector.
   echo "[+] Selected Sketch.app version is $appVersion ... SketchCrapp starting ... OK"
   echo -n "[+] Patching offsets for $appVersion ... "
+  # RUP Review every time when new verison update part.
   case "$appVersion" in
     "63.1")
       patch "${address_param_631[*]}" "$execPath"
@@ -427,6 +461,9 @@ engin() {
       ;;
     "68.2")
       patch "${address_param_681[*]}" "$execPath"
+      ;;
+    "69")
+      patch "${address_param_690[*]}" "$execPath"
       ;;
     *)
       echo "Error"
@@ -467,6 +504,102 @@ https://github.com/duraki/SketchCrapp"
   echo "[+] https://github.com/duraki/SketchCrapp [by @duraki & @elijahtsai]"
 }
 
+# An auto function to patch latest app.
+magicFunction() {
+  
+  # RUP Review every time when new verison update part.
+  local latestBundleURLPath="https://download.sketchapp.com/sketch-69-107357.zip"
+
+  # Check if missing cURL
+  if ! command -v curl &> /dev/null; then
+    echo "cURL is not installed on your system."
+    echo "This should not happen, macOS have cURL built-in."
+    echo "[FIX] Try: brew install curl"
+    echo "[FIX] Try: port install curl"
+    echo "[FIX] Try: install cURL manually"
+    exit 1;
+  fi
+
+  # Check if missing UNZIP
+  if ! command -v unzip &> /dev/null; then
+    echo "UNZIP is not installed on your system."
+    echo "This should not happen, macOS have UNZIP built-in."
+    echo "[FIX] Try: brew install unzip"
+    echo "[FIX] Try: port install unzip"
+    echo "[FIX] Try: install UNZIP manually"
+    exit 1;
+  fi
+
+  echo -n "[+] Checking directory tmp existence ... "
+  
+  if ! [ -d /tmp ]; then
+    echo "Error"
+    echo "Directory tmp does not exist."
+    exit 1
+  fi
+
+  echo "OK"
+
+
+  curl "$latestBundleURLPath" --output "/tmp/latest.zip"
+
+  if ! [ "$?" -eq "0" ]; then
+    echo "[-] Failed while downloading latest application version!"
+    echo "[-] Are you connected to the internet? Check your network connection."
+    clean
+    exit 1
+  fi 
+
+  echo -n "Checking if Sketch.app exist in /tmp ... "
+  if [ -d "/tmp/Sketch.app" ]; then
+    echo "Exist. Removing."
+    rm -rf "/tmp/Sketch.app"
+    if ! [ "$?" -eq "0" ]; then
+      echo "[-] Can't remove existing Sketch.app from /tmp directory."
+      clean
+      exit 1
+    fi
+  else 
+    echo "Not exist. Continuous."
+  fi 
+
+  unzip -q "/tmp/latest.zip" -d "/tmp"
+
+  if ! [ "$?" -eq "0" ]; then
+    echo "[-] Can't unzip downloaded archived file of the latest application version."
+    clean
+    exit 1
+  fi 
+
+  echo -n "[+] Checking if Sketch.app exist in /Applications ... "
+  if [ -d "/Applications/Sketch.app" ]; then
+    echo "Exist. Removing."
+    rm -rf "/Applications/Sketch.app"
+    if ! [ "$?" -eq "0" ]; then
+      echo "Fail to remove exist Sketch.app in /Applications directory."
+      clean
+      exit 1
+    fi
+  else 
+    echo "Not exist. Continuous."
+  fi 
+
+  echo -n "[+] Moving Sketch.app to /Applications directory ... "
+
+  mv "/tmp/Sketch.app" "/Applications" 
+
+  if ! [ "$?" -eq "0" ]; then
+    echo "Fail"
+    echo "[-] Failed while moving /tmp/Sketch.app to /Applications directory."
+    clean
+    exit 1
+  fi
+
+  echo "Successfully."
+
+  analysisApplication "/Applications/Sketch.app"
+}
+
 # Command Line Interface initialization.
 # Script startup point. How about we start from banner shell we?
 banner
@@ -501,7 +634,7 @@ if [ $# -eq 0 ]; then
 fi
 
 # Option filter (Command-Line Interface parser).
-while getopts "ha:" argv; do
+while getopts "ha:m" argv; do
   case "${argv}" in
     h)
       usage
@@ -515,9 +648,14 @@ while getopts "ha:" argv; do
         exit 1
       fi
       ;;
+    m) 
+      magicFunction
+      ;;
     *)
       echo "Use -h for more information."
       exit 0
       ;;
   esac
 done
+
+exit 0
