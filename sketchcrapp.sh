@@ -240,7 +240,7 @@ getHashFromVersionString() {
       echo "$exe_hash_682"
       ;;
     "69")
-      echo "$exe_hash_682"
+      echo "$exe_hash_690"
       ;;
     *)
       echo "Input version string invaild, cannot lookup correct hash value."
