@@ -121,5 +121,5 @@ If you really need specific version you can contact the team via GitHub Issues, 
 |0x10054bf74|0x10054c014|Stay tuned|
 |0x10054bf88|0x10054c028|Stay tuned|
 |0x10054bf8e|0x10054c02e|Stay tuned|
-|0x10054c0c9|0x10054c169|Stay tuned|
+|0x10054c0c9|0x10054c169|0x1005ce589|
 |0x10054c0e6|0x10054c186|Stay tuned|
