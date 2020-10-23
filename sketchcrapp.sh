@@ -160,8 +160,8 @@ clean() {
   echo "Cleaned"
 }
 
-# Generate self-signed certificate for codesign. Required for pass-tru code-signature
-# detection by Sketch. Built-in via MacOS openssl library.
+# Generate self-signed certificate for codesign. Required for pass-tru 
+# code-signature detection by Sketch. Built-in via MacOS openssl library.
 genSelfSignCert() {
   echo "[+] Generating self-signed certificate ..."
   openssl req -new -newkey ec:<(openssl ecparam -name secp521r1) \
@@ -175,7 +175,8 @@ genSelfSignCert() {
   -name "sketchcrapp" -nodes -passout pass:1234
 }
 
-# Import code-signature certificate to keychain. Must be included and trusted by the OS internals.
+# Import code-signature certificate to keychain. Must be included and trusted 
+# by the OS internals.
 importSelfSignCert() {
   # Get the path of user default keychain.
   userKeyChain="$(security default-keychain -d user | sed -e 's/^[ ]*//g' -e 's/\"//g')"
@@ -188,15 +189,17 @@ importSelfSignCert() {
   security import pkcs.p12 -k "$userKeyChain" -f pkcs12 -P 1234
 }
 
-# Equivalent to code-signature application in Sketch. Sign Sketch with generated certificate.
+# Equivalent to code-signature application in Sketch.
+# Sign Sketch with generated certificate.
 # - Parameters:
 #     - First: The application bundle path.
 signApplication() {
 
   appPath="$1"
   
-  echo "[+] Signing the patched *.app bundle. This may require sudo."
-  echo "[+] If asked, enter your login password. Choose \"Always Allow\" to not be asked again."
+  echo "[+] Signing the patched *.app bundle. This may require root privilege."
+  echo "[+] If asked, enter your login password. Choose \"Always Allow\" to \
+not be asked again."
   codesign --deep --force -s "sketchcrapp" "$appPath"
 }
 
@@ -310,9 +313,10 @@ analysisApplication() {
   done
 
   if [ "$ticket" -eq 0 ]; then
-    echo "[ERR] Version $bundleVersionString is not supported, please carefully review README file again."
-    echo "[INFO] Copy the details below and open a new issue on GitHub repository: \
-https://github.com/duraki/SketchCrapp"
+    echo "[ERR] Version $bundleVersionString is not supported, \
+please carefully review README file again."
+    echo "[INFO] Copy the details below and open a new issue on GitHub \
+repository: https://github.com/duraki/SketchCrapp"
     echo "+==================================================================="
     echo "+ Issue details ‹s:sketchcrapp›"
     echo "+ Application Path  : $appPath"
@@ -367,8 +371,8 @@ https://github.com/duraki/SketchCrapp"
       echo "Error"
       echo "[ERR] Can't find Sketch with that signature. Hash is invalid."
       echo "[INFO] Carefully review README file again"
-      echo "[INFO] If you still have problem copy the details below and open a new issue on GitHub repository: \
-https://github.com/duraki/SketchCrapp"
+      echo "[INFO] If you still have problem copy the details below and open a new issue"
+      echo "[INFO] on GitHub repository: https://github.com/duraki/SketchCrapp"
       echo "+==================================================================="
       echo "+ Application Path  : $appPath"
       echo "+ Application Binary: $execPath"
@@ -385,7 +389,8 @@ https://github.com/duraki/SketchCrapp"
     engin "$bundleVersionString" "$appPath" "$execPath"
   else 
     echo "Error"
-    echo "[FATAL] Executable SHA1 hash returned version value does not equal to the CFBundleShortVersionString"
+    echo "[FATAL] Executable SHA1 hash returned version value does not \
+equal to the CFBundleShortVersionString"
     echo "[INFO] Carefully review README file again, if you still have problem"
     echo "[INFO] open a new issue on GitHub repository: https://github.com/duraki/SketchCrapp"
     exit 1
@@ -405,12 +410,13 @@ patch() {
   local execPath=${2}
   
   for i in {0..3}; do
-    echo "[+] Patching address at offset: ${addressArray[$i]} with value: ${value_param[$i]}"
+    echo "[+] Patching address at offset: ${addressArray[$i]} \
+with value: ${value_param[$i]}"
     printf "${value_param[$i]}" | dd seek="$((${addressArray[$i]}))" conv=notrunc bs=1 of="$execPath"
     if ! [ "$?" -eq "0" ]; then 
       echo "[FATAL] Patch process result fail. That's all we know."
-      echo "[INFO] Open a new issue and tell us about this on GitHub repository: \
-https://github.com/duraki/SketchCrapp"
+      echo "[INFO] Open a new issue and tell us about this \
+on GitHub repository: https://github.com/duraki/SketchCrapp"
       exit 1
     fi
   done
@@ -488,7 +494,8 @@ https://github.com/duraki/SketchCrapp"
     # Import the certificate.
     importSelfSignCert
   else
-    echo "[+] SketchCrapp certificate already exists. Skipping certificate creation ... OK"
+    echo "[+] SketchCrapp certificate already exists."
+    echo "[+] Skipping certificate creation ... OK"
   fi
   # Sign the application.
   signApplication "$appPath"
@@ -497,8 +504,8 @@ https://github.com/duraki/SketchCrapp"
   echo "[+] SketchCrapp process completed. Sketch.app has been patched :)"
   echo "[+] -- Notice: "
   echo "[+] If a dialogue shows up with message: “Sketch 3.app” can’t be opened"
-  echo "[+] please right-click the application and select open, or go to Settings -› Security"
-  echo "[+] and allow opening Sketch.app application."
+  echo "[+] please right-click the application and select open, "
+  echo "[+] or go to Settings -› Security and allow opening Sketch.app application."
   echo ""
   echo "[+] SketchCrapp (A Sketch.app cracking tool)"
   echo "[+] https://github.com/duraki/SketchCrapp [by @duraki & @elijahtsai]"
