@@ -8,8 +8,8 @@ assignees: ''
 ---
 
 **Sketch version [required]**
-What is the Sketch version you want to patch?
-Ex: 67.2
+Which version Sketch had release but we haven't supported?
+Ex: 69.2
 
 **Additional context [optional]**
 Add any other context about the request here.
