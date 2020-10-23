@@ -117,9 +117,9 @@ If you really need specific version you can contact the team via GitHub Issues, 
 
 |68|68.1 & 68.2|69|
 |----|----|----|
-|0x10054d2b0|0x10054d350|Stay tuned|
-|0x10054bf74|0x10054c014|Stay tuned|
-|0x10054bf88|0x10054c028|Stay tuned|
-|0x10054bf8e|0x10054c02e|Stay tuned|
+|0x10054d2b0|0x10054d350|0x1005cf770|
+|0x10054bf74|0x10054c014|0x10054bf74|
+|0x10054bf88|0x10054c028|0x1005ce448|
+|0x10054bf8e|0x10054c02e|0x1005ce44e|
 |0x10054c0c9|0x10054c169|0x1005ce589|
-|0x10054c0e6|0x10054c186|Stay tuned|
+|0x10054c0e6|0x10054c186|0x1005ce5a6|
