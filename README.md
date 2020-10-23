@@ -33,7 +33,7 @@ crackb0x:SketchCrapp duraki$ ./sketchcrapp.sh -h
 
 Usage:
 ./sketchcrapp [-h] [-a] <applicationPath> [-m]
-Supported versions: v63.1, v64, v65.1, v66.1, v67, v67.1, v67.2, v68, v68.1, v68.2, v69
+Supported versions: v63.1, v64, v65.1, v66.1, v67, v67.1, v67.2, v68, v68.1, v68.2, v69, v69.1
 ```
 
 ```
@@ -117,9 +117,9 @@ If you really need specific version you can contact the team via GitHub Issues, 
 
 |67.2|68|68.1 & 68.2|69|69.1|
 |----|----|----|----|----|
-|0x10050a790|0x10054d2b0|0x10054d350|0x1005cf770|Stay tuned|
-|0x100509454|0x10054bf74|0x10054c014|0x10054bf74|Stay tuned|
-|0x100509468|0x10054bf88|0x10054c028|0x1005ce448|Stay tuned|
-|0x10050946e|0x10054bf8e|0x10054c02e|0x1005ce44e|Stay tuned|
-|0x1005095a9|0x10054c0c9|0x10054c169|0x1005ce589|Stay tuned|
-|0x1005095c6|0x10054c0e6|0x10054c186|0x1005ce5a6|Stay tuned|
+|0x10050a790|0x10054d2b0|0x10054d350|0x1005cf770|0x1005d09e0|
+|0x100509454|0x10054bf74|0x10054c014|0x1005ce434|0x1005cf564|
+|0x100509468|0x10054bf88|0x10054c028|0x1005ce448|0x1005cf57c|
+|0x10050946e|0x10054bf8e|0x10054c02e|0x1005ce44e|0x1005cf582|
+|0x1005095a9|0x10054c0c9|0x10054c169|0x1005ce589|0x1005cf6ae|
+|0x1005095c6|0x10054c0e6|0x10054c186|0x1005ce5a6|0x1005cf6d2|

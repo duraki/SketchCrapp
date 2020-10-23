@@ -20,7 +20,7 @@ exe_hash_631="db9b88f3aa6abc484be104660fa911275d9f2515"
 # Version 64
 declare -a address_param_640
 version_list+=("64")
-address_param_640+=("0x4cde6e")
+address_param_640+=("0x4cde6f")
 address_param_640+=("0x4cde72")
 address_param_640+=("0x4ccb5a")
 address_param_640+=("0x4ccc99")
@@ -85,6 +85,14 @@ address_param_690+=("0x5cf772")
 address_param_690+=("0x5ce44a")
 address_param_690+=("0x5ce589")
 exe_hash_690="2d4027890e2b72175c4a562f59c5d1adb2655b8c"
+# Version 69.1
+declare -a address_param_691
+version_list+=("69.1")
+address_param_691+=("0x5d09df")
+address_param_691+=("0x5d09e2")
+address_param_691+=("0x5cf57e")
+address_param_691+=("0x5cf6ae")
+exe_hash_691="4ce06aa34c40040244c60608a02c152186f23c32"
 
 # Value parameter array.
 declare -a value_param
@@ -125,7 +133,7 @@ usage() {
   echo "Usage:"
   echo "./sketchcrapp [-h] [-a] <applicationPath> [-m]"
   echo "Supported versions: v63.1, v64.0, v65.1, v66.1, v67, v67.1, v67.2, \
-v68, v68.1, v68.2, v69"
+v68, v68.1, v68.2, v69, v69.1"
   exit 0;
 }
 
@@ -244,6 +252,9 @@ getHashFromVersionString() {
       ;;
     "69")
       echo "$exe_hash_690"
+      ;;
+    "69.1")
+      echo "$exe_hash_691"
       ;;
     *)
       echo "Input version string invaild, cannot lookup correct hash value."
@@ -366,6 +377,9 @@ repository: https://github.com/duraki/SketchCrapp"
     "$exe_hash_690")
       testBundleVersionString="69"
       ;;
+    "$exe_hash_691")
+      testBundleVersionString="69.1"
+      ;;
     *)
       testBundleVersionString="binaryerr››"
       echo "Error"
@@ -471,6 +485,9 @@ engin() {
     "69")
       patch "${address_param_690[*]}" "$execPath"
       ;;
+    "69.1")
+      patch "${address_param_691[*]}" "$execPath"
+      ;;
     *)
       echo "Error"
       echo "Something went wrong, this line should never execute."
@@ -515,7 +532,7 @@ https://github.com/duraki/SketchCrapp"
 magicFunction() {
   
   # RUP Review every time when new verison update part.
-  local latestBundleURLPath="https://download.sketchapp.com/sketch-69-107357.zip"
+  local latestBundleURLPath="https://download.sketchapp.com/sketch-69.1-107496.zip"
 
   # Check if missing cURL
   if ! command -v curl &> /dev/null; then
@@ -546,7 +563,7 @@ magicFunction() {
   fi
 
   echo "OK"
-
+  echo "[+] Fetching $latestBundleURLPath ... "
 
   curl "$latestBundleURLPath" --output "/tmp/latest.zip"
 
