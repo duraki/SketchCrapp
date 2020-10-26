@@ -101,7 +101,7 @@ If the version you are trying to patch is higher than supported, please notify t
 If you really need specific version you can contact the team via GitHub Issues, but we can only do our best to help you.
 
 
-**Build with ❤️ by [@elijahtsai](https://twitter.com/elijahtsai_) & [@duraki](https://twitter.com/0xduraki)**
+**Build with ❤️ by [@duraki](https://twitter.com/0xduraki) & [@elijahtsai](https://twitter.com/elijahtsai_)**
 
 > [Original idea and thread](https://gist.github.com/Bhavdip/76c581d7ac03bdce6d226a2e8c522df4)
 
