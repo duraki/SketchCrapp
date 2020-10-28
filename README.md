@@ -33,7 +33,8 @@ crackb0x:SketchCrapp duraki$ ./sketchcrapp.sh -h
 
 Usage:
 ./sketchcrapp [-h] [-a] <applicationPath> [-m]
-Supported versions: v63.1, v64, v65.1, v66.1, v67, v67.1, v67.2, v68, v68.1, v68.2, v69, v69.1
+Supported versions: v58, v63.1, v64.0, v65.1, v66.1, v67, v67.1, v67.2,
+v68, v68.1, v68.2, v69, v69.1
 ```
 
 ```
@@ -51,35 +52,39 @@ crackb0x:SketchCrapp duraki$ ./sketchcrapp.sh
 [+] Finding Info.plist ... OK
 [+] Checking Info.plist for CFBundleShortVersionString ... OK
 [+] Validating executable file ... OK
-[+] Selected Sketch.app version is 69 ... SketchCrapp starting ... OK
-[+] Patching offsets for 69 ... Starting
-[+] Patching address at offset: 0x5cf76f with value: \00
+[+] Selected Sketch.app version is 69.1 ... SketchCrapp starting ... OK
+[+] Patching offsets for 69.1 ... Starting
+[+] Patching address at offset: 0x5d09df with value: \00
 1+0 records in
 1+0 records out
-1 bytes transferred in 0.000047 secs (21183 bytes/sec)
-[+] Patching address at offset: 0x5cf772 with value: \00
+1 bytes transferred in 0.000026 secs (38480 bytes/sec)
+[+] Patching address at offset: 0x5d09e2 with value: \00
 1+0 records in
 1+0 records out
-1 bytes transferred in 0.000029 secs (34664 bytes/sec)
-[+] Patching address at offset: 0x5ce44a with value: \00\00
+1 bytes transferred in 0.000018 secs (55188 bytes/sec)
+[+] Patching address at offset: 0x5cf57e with value: \00\00
 2+0 records in
 2+0 records out
-2 bytes transferred in 0.000023 secs (86480 bytes/sec)
-[+] Patching address at offset: 0x5ce589 with value: \165
+2 bytes transferred in 0.000025 secs (79892 bytes/sec)
+[+] Patching address at offset: 0x5cf6ae with value: \165
 1+0 records in
 1+0 records out
-1 bytes transferred in 0.000017 secs (58254 bytes/sec)
-[+] SketchCrapp certificate already exists. Skipping certificate creation ... OK
-[+] Signing the patched *.app bundle. This may require sudo.
+1 bytes transferred in 0.000018 secs (55188 bytes/sec)
+[+] SketchCrapp certificate already exists.
+[+] Skipping certificate creation ... OK
+[+] Signing the patched *.app bundle. This may require root privilege.
 [+] If asked, enter your login password. Choose "Always Allow" to not be asked again.
-    @/Applications/Sketch.app: replacing existing signature
-[+] Cleaning up certificate file(s)
-[+] Cleaned
+/Applications/Sketch.app: replacing existing signature
+[+] Cleaning up file(s) ... Cleaned
 [+] SketchCrapp process completed. Sketch.app has been patched :)
 [+] -- Notice: 
 [+] If a dialogue shows up with message: “Sketch 3.app” can’t be opened
-[+] please right-click the application and select open, or go to Settings -› Security
-[+] and allow opening Sketch.app application.
+[+] please right-click the application and select open, 
+[+] or go to Settings -› Security and allow opening Sketch.app application.
+[+] 
+[+] If you are using old version and a dialogue shows up asking for password
+[+] about "com.bohemiancoding.sketch3.HockeySDK"
+[+] please enter your login password. Choose "Always Allow" to not be asked again.
 
 [+] SketchCrapp (A Sketch.app cracking tool)
 [+] https://github.com/duraki/SketchCrapp [by @duraki & @elijahtsai]
@@ -108,12 +113,12 @@ If you really need specific version you can contact the team via GitHub Issues, 
 ### Offset Table
 |58|63.1|64|65.1|66.1|67 & 67.1|
 |----|----|----|----|----|----|
-|Stay tuned|0x1004a2a50|0x1004cde70|0x1004db500|0x1004f3750|0x10050a6d0|
-|Stay tuned|0x1004a1724|0x1004ccb44|0x1004da1d4|0x1004f2424|0x100509394|
-|Stay tuned|0x1004a1738|0x1004ccb58|0x1004da1e8|0x1004f2438|0x1005093a8|
-|Stay tuned|0x1004a173e|0x1004ccb5e|0x1004da1ee|0x1004f243e|0x1005093ae|
-|Stay tuned|0x1004a1879|0x1004ccc99|0x1004da329|0x1004f2579|0x1005094e9|
-|Stay tuned|0x1004a1896|0x1004cccb6|0x1004da346|0x1004f2596|0x100509506|
+|0x1003912c0|0x1004a2a50|0x1004cde70|0x1004db500|0x1004f3750|0x10050a6d0|
+|0x10038ff14|0x1004a1724|0x1004ccb44|0x1004da1d4|0x1004f2424|0x100509394|
+|0x10038ff2c|0x1004a1738|0x1004ccb58|0x1004da1e8|0x1004f2438|0x1005093a8|
+|0x10038ff32|0x1004a173e|0x1004ccb5e|0x1004da1ee|0x1004f243e|0x1005093ae|
+|0x10039007d|0x1004a1879|0x1004ccc99|0x1004da329|0x1004f2579|0x1005094e9|
+|0x10039009a|0x1004a1896|0x1004cccb6|0x1004da346|0x1004f2596|0x100509506|
 
 |67.2|68|68.1 & 68.2|69|69.1|
 |----|----|----|----|----|

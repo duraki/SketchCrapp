@@ -9,6 +9,14 @@ declare -a version_list
 
 # RUP Review every time when new verison update part.
 # Address parameter array and other parameters for each version.
+# Version 58
+declare -a address_param_580
+version_list+=("58")
+address_param_580+=("0x3912bf")
+address_param_580+=("0x3912c2")
+address_param_580+=("0x38ff2e")
+address_param_580+=("0x39007d")
+exe_hash_580="5669dd6d7452a96ac3523ea8fa1a41d9ce70f50f"
 # Version 63.1 
 declare -a address_param_631
 version_list+=("63.1")
@@ -132,8 +140,8 @@ EOF
 usage() {
   echo "Usage:"
   echo "./sketchcrapp [-h] [-a] <applicationPath> [-m]"
-  echo "Supported versions: v63.1, v64.0, v65.1, v66.1, v67, v67.1, v67.2, \
-v68, v68.1, v68.2, v69, v69.1"
+  echo "Supported versions: v58, v63.1, v64.0, v65.1, v66.1, v67, v67.1, v67.2,"
+  echo "v68, v68.1, v68.2, v69, v69.1"
   exit 0;
 }
 
@@ -220,6 +228,9 @@ getHashFromVersionString() {
 
   # RUP Review every time when new verison update part.
   case "$bundleVersionString" in
+    "58")
+      echo "$exe_hash_580"
+      ;;
     "63.1")
       echo "$exe_hash_631"
       ;;
@@ -344,6 +355,9 @@ repository: https://github.com/duraki/SketchCrapp"
   local testBundleVersionString=""
   # RUP Review every time when new verison update part.
   case "$appSHA1" in
+    "$exe_hash_580")
+      testBundleVersionString="58"
+      ;;
     "$exe_hash_631")
       testBundleVersionString="63.1"
       ;;
@@ -455,6 +469,9 @@ engin() {
   echo -n "[+] Patching offsets for $appVersion ... "
   # RUP Review every time when new verison update part.
   case "$appVersion" in
+    "58")
+      patch "${address_param_580[*]}" "$execPath"
+      ;;
     "63.1")
       patch "${address_param_631[*]}" "$execPath"
       ;;
@@ -523,6 +540,10 @@ https://github.com/duraki/SketchCrapp"
   echo "[+] If a dialogue shows up with message: “Sketch 3.app” can’t be opened"
   echo "[+] please right-click the application and select open, "
   echo "[+] or go to Settings -› Security and allow opening Sketch.app application."
+  echo "[+] "
+  echo "[+] If you are using old version and a dialogue shows up asking for password"
+  echo "[+] about \"com.bohemiancoding.sketch3.HockeySDK\""
+  echo "[+] please enter your login password. Choose \"Always Allow\" to not be asked again."
   echo ""
   echo "[+] SketchCrapp (A Sketch.app cracking tool)"
   echo "[+] https://github.com/duraki/SketchCrapp [by @duraki & @elijahtsai]"
