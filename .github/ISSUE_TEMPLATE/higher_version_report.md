@@ -8,7 +8,7 @@ assignees: ''
 ---
 
 **Sketch version [required]**
-Which version Sketch had release but we haven't supported?
+What is the Sketch version you want support for?
 Ex: 69.2
 
 **Additional context [optional]**

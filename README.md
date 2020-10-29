@@ -29,7 +29,7 @@ crackb0x:SketchCrapp duraki$ ./sketchcrapp.sh -h
     /___/_/\_\\__/\__/\__/_//_/\__/_/  \_,_/ .__/ .__/
                                           /_/  /_/
          Sketch.App Patch Tool (https://github.com/duraki/SketchCrapp)
-         by @duraki & @elijahtsai 
+         by @duraki & @elijahtsai
 
 Usage:
 ./sketchcrapp [-h] [-a] <applicationPath> [-m]
@@ -77,12 +77,12 @@ crackb0x:SketchCrapp duraki$ ./sketchcrapp.sh
 /Applications/Sketch.app: replacing existing signature
 [+] Cleaning up file(s) ... Cleaned
 [+] SketchCrapp process completed. Sketch.app has been patched :)
-[+] -- Notice: 
+[+] -- Notice:
 [+] If a dialogue shows up with message: “Sketch 3.app” can’t be opened
-[+] please right-click the application and select open, 
+[+] please right-click the application and select open,
 [+] or go to Settings -› Security and allow opening Sketch.app application.
-[+] 
-[+] If you are using old version and a dialogue shows up asking for password
+[+]
+[+] If you are using an old version and a dialogue shows up asking for password
 [+] about "com.bohemiancoding.sketch3.HockeySDK"
 [+] please enter your login password. Choose "Always Allow" to not be asked again.
 
@@ -97,11 +97,11 @@ If you have troubles using the script, please contact the team via GitHub Issues
 ---
 ## Version Request
 
-#### Higher Version 
+#### Higher Version
 
 If the version you are trying to patch is higher than supported, please notify the team via GitHub Issues.
 
-#### Lower Version 
+#### Lower Version
 
 If you really need specific version you can contact the team via GitHub Issues, but we can only do our best to help you.
 

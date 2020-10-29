@@ -17,7 +17,7 @@ address_param_580+=("0x3912c2")
 address_param_580+=("0x38ff2e")
 address_param_580+=("0x39007d")
 exe_hash_580="5669dd6d7452a96ac3523ea8fa1a41d9ce70f50f"
-# Version 63.1 
+# Version 63.1
 declare -a address_param_631
 version_list+=("63.1")
 address_param_631+=("0x4a2a4f")
@@ -176,7 +176,7 @@ clean() {
   echo "Cleaned"
 }
 
-# Generate self-signed certificate for codesign. Required for pass-tru 
+# Generate self-signed certificate for codesign. Required for pass-tru
 # code-signature detection by Sketch. Built-in via MacOS openssl library.
 genSelfSignCert() {
   echo "[+] Generating self-signed certificate ..."
@@ -186,22 +186,22 @@ genSelfSignCert() {
    -subj "/CN=sketchcrapp"\
    -keyform pem -keyout pk.pem \
    -outform pem -out crt.pem
-  echo "[+] Creating pkcs package..." 
+  echo "[+] Creating pkcs package..."
   openssl pkcs12 -export -out pkcs.p12 -in crt.pem -inkey pk.pem \
   -name "sketchcrapp" -nodes -passout pass:1234
 }
 
-# Import code-signature certificate to keychain. Must be included and trusted 
+# Import code-signature certificate to keychain. Must be included and trusted
 # by the OS internals.
 importSelfSignCert() {
   # Get the path of user default keychain.
   userKeyChain="$(security default-keychain -d user | sed -e 's/^[ ]*//g' -e 's/\"//g')"
-  
+
   if ! [ -f "$userKeyChain" ]; then
     echo "[-] User default Keychain does not exist: $userKeyChain"
     exit 1
   fi
-  echo "[+] Importing private key and self-signed certificate" 
+  echo "[+] Importing private key and self-signed certificate"
   security import pkcs.p12 -k "$userKeyChain" -f pkcs12 -P 1234
 }
 
@@ -212,7 +212,7 @@ importSelfSignCert() {
 signApplication() {
 
   appPath="$1"
-  
+
   echo "[+] Signing the patched *.app bundle. This may require root privilege."
   echo "[+] If asked, enter your login password. Choose \"Always Allow\" to \
 not be asked again."
@@ -223,7 +223,7 @@ not be asked again."
 # - Parameters:
 #     - First: The application bundle CFBundleShortVersionString.
 getHashFromVersionString() {
-  
+
   local bundleVersionString="$1"
 
   # RUP Review every time when new verison update part.
@@ -324,7 +324,7 @@ analysisApplication() {
 
   # Get the hash of application executable
   local appSHA1="$(shasum -a 1 "$execPath" | cut -f 1 -d ' ')"
-  
+
   local ticket=0
 
   for versionElement in "${version_list[@]}"
@@ -407,7 +407,7 @@ repository: https://github.com/duraki/SketchCrapp"
       echo "+ Passed version    : $bundleVersionString"
       echo "+ Correct hash      : $(getHashFromVersionString "$bundleVersionString")"
       echo "+ Binary SHA1       : $appSHA1"
-      echo "+ Error             : Can't find Sketch with that signature. Hash is invalid." 
+      echo "+ Error             : Can't find Sketch with that signature. Hash is invalid."
       echo "+==================================================================="
       exit 1
   esac
@@ -415,7 +415,7 @@ repository: https://github.com/duraki/SketchCrapp"
   if [ "$bundleVersionString" = "$testBundleVersionString" ]; then
     echo "OK"
     engin "$bundleVersionString" "$appPath" "$execPath"
-  else 
+  else
     echo "Error"
     echo "[FATAL] Executable SHA1 hash returned version value does not \
 equal to the CFBundleShortVersionString"
@@ -434,14 +434,14 @@ patch() {
   echo "Starting"
 
   local addressArray=(${1})
-  
+
   local execPath=${2}
-  
+
   for i in {0..3}; do
     echo "[+] Patching address at offset: ${addressArray[$i]} \
 with value: ${value_param[$i]}"
     printf "${value_param[$i]}" | dd seek="$((${addressArray[$i]}))" conv=notrunc bs=1 of="$execPath"
-    if ! [ "$?" -eq "0" ]; then 
+    if ! [ "$?" -eq "0" ]; then
       echo "[FATAL] Patch process result fail. That's all we know."
       echo "[INFO] Open a new issue and tell us about this \
 on GitHub repository: https://github.com/duraki/SketchCrapp"
@@ -459,11 +459,11 @@ on GitHub repository: https://github.com/duraki/SketchCrapp"
 engin() {
 
   local appVersion="$1"
-  
+
   local appPath="$2"
-  
+
   local execPath="$3"
-  
+
   # Version Selector.
   echo "[+] Selected Sketch.app version is $appVersion ... SketchCrapp starting ... OK"
   echo -n "[+] Patching offsets for $appVersion ... "
@@ -541,7 +541,7 @@ https://github.com/duraki/SketchCrapp"
   echo "[+] please right-click the application and select open, "
   echo "[+] or go to Settings -› Security and allow opening Sketch.app application."
   echo "[+] "
-  echo "[+] If you are using old version and a dialogue shows up asking for password"
+  echo "[+] If you are using an old version and a dialogue shows up asking for password"
   echo "[+] about \"com.bohemiancoding.sketch3.HockeySDK\""
   echo "[+] please enter your login password. Choose \"Always Allow\" to not be asked again."
   echo ""
@@ -551,7 +551,7 @@ https://github.com/duraki/SketchCrapp"
 
 # An auto function to patch latest app.
 magicFunction() {
-  
+
   # RUP Review every time when new verison update part.
   local latestBundleURLPath="https://download.sketchapp.com/sketch-69.1-107496.zip"
 
@@ -576,7 +576,7 @@ magicFunction() {
   fi
 
   echo -n "[+] Checking directory tmp existence ... "
-  
+
   if ! [ -d /tmp ]; then
     echo "Error"
     echo "Directory tmp does not exist."
@@ -593,7 +593,7 @@ magicFunction() {
     echo "[-] Are you connected to the internet? Check your network connection."
     clean
     exit 1
-  fi 
+  fi
 
   echo -n "Checking if Sketch.app exist in /tmp ... "
   if [ -d "/tmp/Sketch.app" ]; then
@@ -604,9 +604,9 @@ magicFunction() {
       clean
       exit 1
     fi
-  else 
+  else
     echo "Not exist. Continuous."
-  fi 
+  fi
 
   unzip -q "/tmp/latest.zip" -d "/tmp"
 
@@ -614,7 +614,7 @@ magicFunction() {
     echo "[-] Can't unzip downloaded archived file of the latest application version."
     clean
     exit 1
-  fi 
+  fi
 
   echo -n "[+] Checking if Sketch.app exist in /Applications ... "
   if [ -d "/Applications/Sketch.app" ]; then
@@ -625,13 +625,13 @@ magicFunction() {
       clean
       exit 1
     fi
-  else 
+  else
     echo "Not exist. Continuous."
-  fi 
+  fi
 
   echo -n "[+] Moving Sketch.app to /Applications directory ... "
 
-  mv "/tmp/Sketch.app" "/Applications" 
+  mv "/tmp/Sketch.app" "/Applications"
 
   if ! [ "$?" -eq "0" ]; then
     echo "Fail"
@@ -693,7 +693,7 @@ while getopts "ha:m" argv; do
         exit 1
       fi
       ;;
-    m) 
+    m)
       magicFunction
       ;;
     *)
