@@ -34,7 +34,7 @@ crackb0x:SketchCrapp duraki$ ./sketchcrapp.sh -h
 Usage:
 ./sketchcrapp [-h] [-a] <applicationPath> [-m]
 Supported versions: v58, v63.1, v64.0, v65.1, v66.1, v67, v67.1, v67.2,
-v68, v68.1, v68.2, v69, v69.1
+v68, v68.1, v68.2, v69, v69.1, v69.2
 ```
 
 ```
@@ -52,8 +52,8 @@ crackb0x:SketchCrapp duraki$ ./sketchcrapp.sh
 [+] Finding Info.plist ... OK
 [+] Checking Info.plist for CFBundleShortVersionString ... OK
 [+] Validating executable file ... OK
-[+] Selected Sketch.app version is 69.1 ... SketchCrapp starting ... OK
-[+] Patching offsets for 69.1 ... Starting
+[+] Selected Sketch.app version is 69.2 ... SketchCrapp starting ... OK
+[+] Patching offsets for 69.2 ... Starting
 [+] Patching address at offset: 0x5d09df with value: \00
 1+0 records in
 1+0 records out
@@ -65,11 +65,11 @@ crackb0x:SketchCrapp duraki$ ./sketchcrapp.sh
 [+] Patching address at offset: 0x5cf57e with value: \00\00
 2+0 records in
 2+0 records out
-2 bytes transferred in 0.000025 secs (79892 bytes/sec)
+2 bytes transferred in 0.000023 secs (87381 bytes/sec)
 [+] Patching address at offset: 0x5cf6ae with value: \165
 1+0 records in
 1+0 records out
-1 bytes transferred in 0.000018 secs (55188 bytes/sec)
+1 bytes transferred in 0.000018 secs (55924 bytes/sec)
 [+] SketchCrapp certificate already exists.
 [+] Skipping certificate creation ... OK
 [+] Signing the patched *.app bundle. This may require root privilege.
