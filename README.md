@@ -21,7 +21,7 @@ Sketch.App Patch Tool, brought to you by [@duraki](https://github.com/duraki) & 
 
 **Notice**→ The application should automatically detect your Sketch.App version. If not, you can pass `-a` argument for your Sketch.app Application Bundle.
 
-**Magic Trick**→ For the people like to try the new version, we got your cover. you can pass `-m` argument for the ultimate life-saving trick with automatically download from the official site and patch the bundle and ready to launch in Application folder with the latest version of Sketch.App.
+**Magic Trick**→ For the people who would like to try the new version, we got you covered. You can pass `-m` argument for the ultimate life-saving trick, which will automagically download latest Sketch app from the official website and patch the bundle, ready to be launched from the Applications folder.
 
 ```bash
 crackb0x:SketchCrapp duraki$ ./sketchcrapp.sh -h
@@ -90,6 +90,7 @@ crackb0x:SketchCrapp duraki$ ./sketchcrapp.sh
 
 [+] SketchCrapp (A Sketch.app cracking tool)
 [+] https://github.com/duraki/SketchCrapp [by @duraki & @elijahtsai]
+[+] SketchCrapp last published date: 2020-11-01 serial 001
 ```
 
 ## Issues
