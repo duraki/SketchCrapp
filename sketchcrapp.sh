@@ -136,6 +136,13 @@ banner() {
 EOF
 }
 
+# Last function to run before exit.
+finally() {
+  local status="$1"
+  echo "[+] SketchCrapp last published date: 2020-11-01 serial 001"
+  exit $status
+}
+
 # RUP Review every time when new verison update part.
 # Help messages block.
 usage() {
@@ -143,7 +150,7 @@ usage() {
   echo "./sketchcrapp [-h] [-a] <applicationPath> [-m]"
   echo "Supported versions: v58, v63.1, v64.0, v65.1, v66.1, v67, v67.1, v67.2,"
   echo "v68, v68.1, v68.2, v69, v69.1, v69.2"
-  exit 0;
+  finally 0;
 }
 
 # Clean up all related files.
@@ -163,7 +170,7 @@ clean() {
     if ! [ "$?" -eq "0" ]; then
       echo "Error"
       echo "[-] Fail to remove zip file of latest application. remove by yourself."
-      exit 1
+      finally 1
     fi
   fi
   if [ -f "/tmp/Sketch.app" ]; then
@@ -171,7 +178,7 @@ clean() {
     if ! [ "$?" -eq "0" ]; then
       echo "Error"
       echo "[-] Fail to remove application bundle. remove by yourself."
-      exit 1
+      finally 1
     fi
   fi
   echo "Cleaned"
@@ -200,7 +207,7 @@ importSelfSignCert() {
 
   if ! [ -f "$userKeyChain" ]; then
     echo "[-] User default Keychain does not exist: $userKeyChain"
-    exit 1
+    finally 1
   fi
   echo "[+] Importing private key and self-signed certificate"
   security import pkcs.p12 -k "$userKeyChain" -f pkcs12 -P 1234
@@ -294,7 +301,7 @@ analysisApplication() {
     echo "[-] Executable file does not exists under the given application folder."
     echo "[ERR] Couldn't find executable file at $execPath"
     echo "[INFO] Please make sure you pass clean app to script."
-    exit 1
+    finally 1
   fi
 
   echo "OK"
@@ -308,7 +315,7 @@ analysisApplication() {
     echo "[-] Info file does not exists under the given application folder."
     echo "[ERR] Couldn't find Info.plist at $infoPath.plist"
     echo "[INFO] Please make sure you pass clean app to script."
-    exit 1
+    finally 1
   fi
 
   echo "OK"
@@ -321,7 +328,7 @@ analysisApplication() {
   if [ -z "$bundleVersionString" ]; then
     echo "[ERR] Couldn't find value of CFBundleShortVersionString"
     echo "[INFO] Please make sure you pass clean app to script."
-    exit 1
+    finally 1
   fi
 
   echo "OK"
@@ -329,7 +336,7 @@ analysisApplication() {
   # Get the hash of application executable
   local appSHA1="$(shasum -a 1 "$execPath" | cut -f 1 -d ' ')"
 
-  local ticket=0
+  local ticketSt=0
 
   for versionElement in "${version_list[@]}"
   do
@@ -351,7 +358,7 @@ repository: https://github.com/duraki/SketchCrapp"
     echo "+ Binary SHA1       : $appSHA1"
     echo "+ Error             : Version $bundleVersionString is not supported."
     echo "+==================================================================="
-    exit 1
+    finally 1
   fi
 
   echo -n "[+] Validating executable file ... "
@@ -416,7 +423,7 @@ repository: https://github.com/duraki/SketchCrapp"
       echo "+ Binary SHA1       : $appSHA1"
       echo "+ Error             : Can't find Sketch with that signature. Hash is invalid."
       echo "+==================================================================="
-      exit 1
+      finally 1
   esac
 
   if [ "$bundleVersionString" = "$testBundleVersionString" ]; then
@@ -428,7 +435,7 @@ repository: https://github.com/duraki/SketchCrapp"
 equal to the CFBundleShortVersionString"
     echo "[INFO] Carefully review README file again, if you still have problem"
     echo "[INFO] open a new issue on GitHub repository: https://github.com/duraki/SketchCrapp"
-    exit 1
+    finally 1
   fi
 }
 
@@ -452,7 +459,7 @@ with value: ${value_param[$i]}"
       echo "[FATAL] Patch process result fail. That's all we know."
       echo "[INFO] Open a new issue and tell us about this \
 on GitHub repository: https://github.com/duraki/SketchCrapp"
-      exit 1
+      finally 1
     fi
   done
 }
@@ -528,7 +535,7 @@ https://github.com/duraki/SketchCrapp"
       echo "+ Binary SHA1       : $appSHA1"
       echo "+ Error             : patcherr››"
       echo "+==================================================================="
-      exit 1
+      finally 1
   esac
   # CodeSigning area.
   # Check if sketchcrapp certificate already exist.
@@ -572,7 +579,7 @@ magicFunction() {
     echo "[FIX] Try: brew install curl"
     echo "[FIX] Try: port install curl"
     echo "[FIX] Try: install cURL manually"
-    exit 1;
+    finally 1;
   fi
 
   # Check if missing UNZIP
@@ -582,7 +589,7 @@ magicFunction() {
     echo "[FIX] Try: brew install unzip"
     echo "[FIX] Try: port install unzip"
     echo "[FIX] Try: install UNZIP manually"
-    exit 1;
+    finally 1;
   fi
 
   echo -n "[+] Checking directory tmp existence ... "
@@ -590,7 +597,7 @@ magicFunction() {
   if ! [ -d /tmp ]; then
     echo "Error"
     echo "Directory tmp does not exist."
-    exit 1
+    finally 1
   fi
 
   echo "OK"
@@ -602,17 +609,17 @@ magicFunction() {
     echo "[-] Failed while downloading latest application version!"
     echo "[-] Are you connected to the internet? Check your network connection."
     clean
-    exit 1
+    finally 1
   fi
 
   echo -n "Checking if Sketch.app exist in /tmp ... "
   if [ -d "/tmp/Sketch.app" ]; then
     echo "Exist. Removing."
     rm -rf "/tmp/Sketch.app"
-    if ! [ "$?" -eq "0" ]; then
+    if ! [ "$?" -eq St"0" ]; then
       echo "[-] Can't remove existing Sketch.app from /tmp directory."
       clean
-      exit 1
+      finally 1
     fi
   else
     echo "Not exist. Continuous."
@@ -623,7 +630,7 @@ magicFunction() {
   if ! [ "$?" -eq "0" ]; then
     echo "[-] Can't unzip downloaded archived file of the latest application version."
     clean
-    exit 1
+    finally 1
   fi
 
   echo -n "[+] Checking if Sketch.app exist in /Applications ... "
@@ -633,7 +640,7 @@ magicFunction() {
     if ! [ "$?" -eq "0" ]; then
       echo "Fail to remove exist Sketch.app in /Applications directory."
       clean
-      exit 1
+      finally 1
     fi
   else
     echo "Not exist. Continuous."
@@ -647,7 +654,7 @@ magicFunction() {
     echo "Fail"
     echo "[-] Failed while moving /tmp/Sketch.app to /Applications directory."
     clean
-    exit 1
+    finally 1
   fi
 
   echo "Successfully."
@@ -666,7 +673,7 @@ if ! command -v openssl &> /dev/null; then
   echo "[FIX] Try: brew install openssl"
   echo "[FIX] Try: port install openssl"
   echo "[FIX] Try: install openssl manually"
-  exit 1;
+  finally 1;
 fi
 
 # If no option was given by default search /Application or ~/Application .
@@ -683,9 +690,9 @@ if [ $# -eq 0 ]; then
   else
     echo "Application not found in /Applications or ~/Applications"
     echo "Try: ./sketchcrapp -a /Custom/Path/For/Applications/Sketch.app"
-    exit 1
+    finally 1
   fi
-  exit 0
+  finally 0
 fi
 
 # Option filter (Command-Line Interface parser).
@@ -700,7 +707,7 @@ while getopts "ha:m" argv; do
         analysisApplication "$appPath"
       else
         echo "[ERR] Given directory is either invaild or not exist."
-        exit 1
+        finally 1
       fi
       ;;
     m)
@@ -708,9 +715,9 @@ while getopts "ha:m" argv; do
       ;;
     *)
       echo "Use -h for more information."
-      exit 0
+      finally 0
       ;;
   esac
 done
 
-exit 0
+finally 0
