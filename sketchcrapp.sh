@@ -570,7 +570,7 @@ https://github.com/duraki/SketchCrapp"
 magicFunction() {
 
   # RUP Review every time when new verison update part.
-  local latestBundleURLPath="https://download.sketchapp.com/sketch-69.2-107504.zip"
+  local latestBundleURLPath="https://download.sketch.com/sketch-69.2-107504.zip"
 
   # Check if missing cURL
   if ! command -v curl &> /dev/null; then
