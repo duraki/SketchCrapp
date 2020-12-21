@@ -93,7 +93,7 @@ address_param_690+=("0x5cf772")
 address_param_690+=("0x5ce44a")
 address_param_690+=("0x5ce589")
 exe_hash_690="2d4027890e2b72175c4a562f59c5d1adb2655b8c"
-# Version 69.1
+# Version 69.1 & 69.2
 declare -a address_param_691
 version_list+=("69.1")
 address_param_691+=("0x5d09df")
@@ -103,12 +103,57 @@ address_param_691+=("0x5cf6ae")
 exe_hash_691="4ce06aa34c40040244c60608a02c152186f23c32"
 version_list+=("69.2")
 exe_hash_692="a7ba7ddf8e15e1e03ae88c00ab5070dabecc06b2"
+# Version 70.2
+declare -a address_param_702
+version_list+=("70.2")
+address_param_702+=("0x5861bf")
+address_param_702+=("0x5861c2")
+address_param_702+=("0x584e0e")
+address_param_702+=("0x584f3e")
+address_param_702+=("0x66d03f")
+address_param_702+=("0x66d04f")
+address_param_702+=("0xdcd72c")
+address_param_702+=("0xdcd730")
+address_param_702+=("0xdcc3a4")
+address_param_702+=("0xdcc4c7")
+address_param_702+=("0xed1031")
+address_param_702+=("0xed1041")
+exe_hash_702="e3376ad6f58bdf1e24306bf6d94ee67b082a94db"
+# Version 70.3
+declare -a address_param_703
+version_list+=("70.3")
+address_param_703+=("0x58619f")
+address_param_703+=("0x5861a2")
+address_param_703+=("0x584dee")
+address_param_703+=("0x584f1e")
+address_param_703+=("0x66d058")
+address_param_703+=("0x66d068")
+address_param_703+=("0xdcd574")
+address_param_703+=("0xdcd578")
+address_param_703+=("0xdcc1c1")
+address_param_703+=("0xdcc30c")
+address_param_703+=("0xed0fd7")
+address_param_703+=("0xed0fe7")
+exe_hash_703="9a0e6b7721c275b75e1fb6b70b55cda7ab99c4a8"
 # Value parameter array.
+declare -a value_legacy_param
+value_legacy_param+=("\00")
+value_legacy_param+=("\00")
+value_legacy_param+=("\00\00")
+value_legacy_param+=("\165")
 declare -a value_param
-value_param+=("\00")
-value_param+=("\00")
-value_param+=("\00\00")
-value_param+=("\165")
+value_param+=("\00") # x86_1
+value_param+=("\00") # x86_2
+value_param+=("\00\00") # x86_3
+value_param+=("\165") # x86_4
+value_param+=("\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00") # x86_remove_register
+value_param+=("\40\123\153\145\164\143\150\103\162\141\160\160\40") # x86_modified_day_left
+value_param+=("\01") # aarch_1
+value_param+=("\24") # aarch_2
+value_param+=("\65\00") # aarch_3
+value_param+=("\64") # aarch_4
+value_param+=("\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00") # aarch_remove_register
+value_param+=("\40\123\153\145\164\143\150\103\162\141\160\160\40") # aarch_modified_day_left
 
 # OpenSSL configuration.
 CONFIG="
@@ -139,7 +184,7 @@ EOF
 # Last function to run before exit.
 finally() {
   local status="$1"
-  echo "[+] SketchCrapp last published date: 2020-11-01 serial 001"
+  echo "[+] SketchCrapp last published date: 2020-12-20 serial 001"
   exit $status
 }
 
@@ -149,7 +194,7 @@ usage() {
   echo "Usage:"
   echo "./sketchcrapp [-h] [-a] <applicationPath> [-m]"
   echo "Supported versions: v58, v63.1, v64.0, v65.1, v66.1, v67, v67.1, v67.2,"
-  echo "v68, v68.1, v68.2, v69, v69.1, v69.2"
+  echo "v68, v68.1, v68.2, v69, v69.1, v69.2, v70.2, v70.3"
   finally 0;
 }
 
@@ -277,6 +322,12 @@ getHashFromVersionString() {
       ;;
     "69.2")
       echo "$exe_hash_692"
+      ;;
+    "70.2")
+      echo "$exe_hash_702"
+      ;;
+    "70.3")
+      echo "$exe_hash_703"
       ;;
     *)
       echo "Input version string invaild, cannot lookup correct hash value."
@@ -408,6 +459,12 @@ repository: https://github.com/duraki/SketchCrapp"
     "$exe_hash_692")
       testBundleVersionString="69.2"
       ;;
+    "$exe_hash_702")
+      testBundleVersionString="70.2"
+      ;;
+    "$exe_hash_703")
+      testBundleVersionString="70.3"
+      ;;
     *)
       testBundleVersionString="binaryerr››"
       echo "Error"
@@ -439,13 +496,13 @@ equal to the CFBundleShortVersionString"
   fi
 }
 
-# Patch process.
+# Patch legacy process.
 # - Parameters:
 #     - First: An array of address of specific version.
 #     - Second: A path of application executable to patch.
-patch() {
+patchLegacy() {
 
-  echo "Starting"
+  echo "Starting legacy arch patch via bash&seek ..."
 
   local addressArray=(${1})
 
@@ -453,15 +510,89 @@ patch() {
 
   for i in {0..3}; do
     echo "[+] Patching address at offset: ${addressArray[$i]} \
-with value: ${value_param[$i]}"
-    printf "${value_param[$i]}" | dd seek="$((${addressArray[$i]}))" conv=notrunc bs=1 of="$execPath"
+with value: ${value_legacy_param[$i]}"
+    printf "${value_legacy_param[$i]}" | dd seek="$((${addressArray[$i]}))" conv=notrunc bs=1 of="$execPath"
     if ! [ "$?" -eq "0" ]; then
-      echo "[FATAL] Patch process result fail. That's all we know."
+      echo "[FATAL] Patch process resulted in failure. That's all we know."
       echo "[INFO] Open a new issue and tell us about this \
 on GitHub repository: https://github.com/duraki/SketchCrapp"
       finally 1
     fi
   done
+}
+
+# Patch process.
+# - Parameters:
+#     - First: An array of address of specific version.
+#     - Second: A path of application executable to patch.
+patch() {
+
+  echo "Starting modern arch patch via bash&seek ..."
+
+  local addressArray=(${1})
+
+  local execPath=${2}
+
+  for i in {0..11}; do
+    echo "[+] Patching address at offset: ${addressArray[$i]} \
+with value: ${value_param[$i]}"
+    printf "${value_param[$i]}" | dd seek="$((${addressArray[$i]}))" conv=notrunc bs=1 of="$execPath"
+    if ! [ "$?" -eq "0" ]; then
+      echo "[FATAL] Patch process resulted in failure. That's all we know."
+      echo "[INFO] Open a new issue and tell us about this \
+on GitHub repository: https://github.com/duraki/SketchCrapp"
+      finally 1
+    fi
+  done
+}
+
+# Install and register cracktag + credits
+nameTag() {
+
+  local appPath="$1"
+
+  local engLangPath="$appPath/Contents/Resources/en.lproj"
+
+  local zhLangPath="$appPath/Contents/Resources/zh-Hans.lproj"
+
+  if ! [ -d "$engLangPath" ] || ! [ -d "$zhLangPath" ]; then
+    if [ -d "$appPath" ]; then
+      rm -rf "$appPath"
+      clean
+      finally 1
+    fi
+  fi
+
+  echo '"gWf-Nl-VLs.title" = "Sketch Cloud is currently not supported by SketchCrapp.  Sorry :(";
+"h0z-lo-HfZ.ibShadowedIsNilPlaceholder" = "@0xduraki & @elijahtsai";
+"h1X-KO-1Ed.title" = "Name";
+"Ja3-jS-bo6.title" = "Crack It";
+"kCf-Hg-sTQ.ibShadowedIsNilPlaceholder" = "Cracked by @0xduraki & @elijahtsai";
+"kUG-6E-w0F.ibShadowedIsNilPlaceholder" = "sketchcrapp@github.com";
+"mSb-kZ-v2e.ibShadowedLabels[0]" = "SketchCrapp";
+"mSb-kZ-v2e.ibShadowedLabels[1]" = "github.com/duraki/SketchCrapp";
+"oEr-Dw-WUj.title" = "Forgot to crack it?";
+"pfs-Mp-bgn.title" = "Wh00ps, what did you do :)";
+"yfB-jh-Is0.placeholderString" = "Cracked by @0xduraki & @elijahtsai";' > "$engLangPath/MSRegistrationWindow.strings"
+
+  if ! [ -f "$zhLangPath/MSRegistrationWindow.strings" ]; then
+    if [ -d "$appPath" ]; then
+      rm -rf "$appPath"
+      clean
+      finally 1
+    fi
+  fi
+  /usr/bin/sed -i -e 's/"gWf-Nl-VLs.title"\ =\ [^;]*/"gWf-Nl-VLs.title" = "SketchCrapp 還沒支援 Sketch Cloud, 再等等吧 :("/g'  "$zhLangPath/MSRegistrationWindow.strings"
+  /usr/bin/sed -i -e 's/"h0z-lo-HfZ.ibShadowedIsNilPlaceholder"\ =\ [^;]*/"h0z-lo-HfZ.ibShadowedIsNilPlaceholder" = "@0xduraki \& @elijahtsai"/g'  "$zhLangPath/MSRegistrationWindow.strings"
+  /usr/bin/sed -i -e 's/"h1X-KO-1Ed.title"\ =\ [^;]*/"h1X-KO-1Ed.title" = "名稱"/g'  "$zhLangPath/MSRegistrationWindow.strings"
+  /usr/bin/sed -i -e 's/"Ja3-jS-bo6.title"\ =\ [^;]*/"Ja3-jS-bo6.title" = "破解"/g'  "$zhLangPath/MSRegistrationWindow.strings"
+  /usr/bin/sed -i -e 's/"kCf-Hg-sTQ.ibShadowedIsNilPlaceholder"\ =\ [^;]*/"kCf-Hg-sTQ.ibShadowedIsNilPlaceholder" = "由 @0xduraki \& @elijahtsai 破解"/g'  "$zhLangPath/MSRegistrationWindow.strings"
+  /usr/bin/sed -i -e 's/"kUG-6E-w0F.ibShadowedIsNilPlaceholder"\ =\ [^;]*/"kUG-6E-w0F.ibShadowedIsNilPlaceholder" = "sketchcrapp@github.com"/g'  "$zhLangPath/MSRegistrationWindow.strings"
+  /usr/bin/sed -i -e 's/"mSb-kZ-v2e.ibShadowedLabels\[0\]"\ =\ [^;]*/"mSb-kZ-v2e.ibShadowedLabels[0]" = "SketchCrapp"/g'  "$zhLangPath/MSRegistrationWindow.strings"
+  /usr/bin/sed -i -e 's/"mSb-kZ-v2e.ibShadowedLabels\[1\]"\ =\ [^;]*/"mSb-kZ-v2e.ibShadowedLabels[1]" = "github.com\/duraki\/SketchCrapp"/g'  "$zhLangPath/MSRegistrationWindow.strings"
+  /usr/bin/sed -i -e 's/"oEr-Dw-WUj.title"\ =\ [^;]*/"oEr-Dw-WUj.title" = "忘記破解了嗎?"/g'  "$zhLangPath/MSRegistrationWindow.strings"
+  /usr/bin/sed -i -e 's/"pfs-Mp-bgn.title"\ =\ [^;]*/"pfs-Mp-bgn.title" = "哇！您做了什麼！"/g'  "$zhLangPath/MSRegistrationWindow.strings"
+  /usr/bin/sed -i -e 's/"yfB-jh-Is0.placeholderString"\ =\ [^;]*/"yfB-jh-Is0.placeholderString" = "由 @0xduraki \& @elijahtsai 破解"/g'  "$zhLangPath/MSRegistrationWindow.strings"
 }
 
 # All the code and logic flow to patch the Sketch.app binary, do a code-signature
@@ -484,43 +615,49 @@ engin() {
   # RUP Review every time when new verison update part.
   case "$appVersion" in
     "58")
-      patch "${address_param_580[*]}" "$execPath"
+      patchLegacy "${address_param_580[*]}" "$execPath"
       ;;
     "63.1")
-      patch "${address_param_631[*]}" "$execPath"
+      patchLegacy "${address_param_631[*]}" "$execPath"
       ;;
     "64")
-      patch "${address_param_640[*]}" "$execPath"
+      patchLegacy "${address_param_640[*]}" "$execPath"
       ;;
     "65.1")
-      patch "${address_param_651[*]}" "$execPath"
+      patchLegacy "${address_param_651[*]}" "$execPath"
       ;;
     "66.1")
-      patch "${address_param_661[*]}" "$execPath"
+      patchLegacy "${address_param_661[*]}" "$execPath"
       ;;
     "67"|"67.1")
-      patch "${address_param_670[*]}" "$execPath"
+      patchLegacy "${address_param_670[*]}" "$execPath"
       ;;
     "67.2")
-      patch "${address_param_672[*]}" "$execPath"
+      patchLegacy "${address_param_672[*]}" "$execPath"
       ;;
     "68")
-      patch "${address_param_680[*]}" "$execPath"
+      patchLegacy "${address_param_680[*]}" "$execPath"
       ;;
     "68.1")
-      patch "${address_param_681[*]}" "$execPath"
+      patchLegacy "${address_param_681[*]}" "$execPath"
       ;;
     "68.2")
-      patch "${address_param_681[*]}" "$execPath"
+      patchLegacy "${address_param_681[*]}" "$execPath"
       ;;
     "69")
-      patch "${address_param_690[*]}" "$execPath"
+      patchLegacy "${address_param_690[*]}" "$execPath"
       ;;
     "69.1")
-      patch "${address_param_691[*]}" "$execPath"
+      patchLegacy "${address_param_691[*]}" "$execPath"
       ;;
     "69.2")
-      patch "${address_param_691[*]}" "$execPath"
+      patchLegacy "${address_param_691[*]}" "$execPath"
+      ;;
+    "70.2")
+      patch "${address_param_702[*]}" "$execPath"
+      ;;
+    "70.3")
+      patch "${address_param_703[*]}" "$execPath"
       ;;
     *)
       echo "Error"
@@ -537,6 +674,8 @@ https://github.com/duraki/SketchCrapp"
       echo "+==================================================================="
       finally 1
   esac
+  # Install name tag
+  nameTag "$appPath"
   # CodeSigning area.
   # Check if sketchcrapp certificate already exist.
   if ! security find-certificate -c "sketchcrapp" 2>&1 >/dev/null; then
@@ -570,7 +709,7 @@ https://github.com/duraki/SketchCrapp"
 magicFunction() {
 
   # RUP Review every time when new verison update part.
-  local latestBundleURLPath="https://download.sketch.com/sketch-69.2-107504.zip"
+  local latestBundleURLPath="https://download.sketch.com/sketch-70.3-109109.zip"
 
   # Check if missing cURL
   if ! command -v curl &> /dev/null; then
@@ -665,6 +804,16 @@ magicFunction() {
 # Command Line Interface initialization.
 # Script startup point. How about we start from banner shell we?
 banner
+
+# Check if missing UNZIP
+if ! command -v sed &> /dev/null; then
+  echo "SED is not installed on your system."
+  echo "This should not happen, macOS have sed built-in."
+  echo "[FIX] Try: brew install sed"
+  echo "[FIX] Try: port install sed"
+  echo "[FIX] Try: install SED manually"
+  finally 1;
+fi
 
 # Check if missing OpenSSL library
 if ! command -v openssl &> /dev/null; then
