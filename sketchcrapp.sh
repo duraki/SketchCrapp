@@ -179,7 +179,7 @@ EOF
 # Last function to run before exit.
 finally() {
   local status="$1"
-  echo "[+] SketchCrapp last published date: 2020-12-27 serial 001"
+  echo "[+] SketchCrapp last published date: 2020-12-28 serial 001"
   exit $status
 }
 
@@ -528,7 +528,7 @@ patch() {
 
   local execPath=${2}
 
-  for i in {0..11}; do
+  for i in {0..5}; do
     echo "[+] Patching address at offset: ${addressArray[$i]} \
 with value: ${value_param[$i]}"
     printf "${value_param[$i]}" | dd seek="$((${addressArray[$i]}))" conv=notrunc bs=1 of="$execPath"
