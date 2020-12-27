@@ -134,7 +134,7 @@ Checking if Sketch.app exist in /tmp ... Not exist. Continuous.
 
 [+] SketchCrapp (A Sketch.app cracking tool)
 [+] https://github.com/duraki/SketchCrapp [by @duraki & @elijahtsai]
-[+] SketchCrapp last published date: 2020-12-27 serial 001
+[+] SketchCrapp last published date: 2020-12-28 serial 001
 ```
 
 ## Issues
