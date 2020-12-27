@@ -19,9 +19,13 @@ Sketch.App Patch Tool, brought to you by [@duraki](https://github.com/duraki) & 
 * Run the script to patch Sketch.app
   * `cd $HOME/sketchcrapp && ./sketchcrapp.sh`
 
-**Notice**→ The application should automatically detect your Sketch.App version. If not, you can pass `-a` argument for your Sketch.app Application Bundle.
 
 **Magic Trick**→ For the people who would like to try the new version, we got you covered. You can pass `-m` argument for the ultimate life-saving trick, which will automagically download latest Sketch app from the official website and patch the bundle, ready to be launched from the Applications folder.
+
+## Notice
+ - Currently, the script can only patch with the Intel-based of Mac machines. But lucky for the apple silicon user you can use [Rosetta 2](https://support.apple.com/en-us/HT211861) to get the job done.
+ - The application should automatically detect your Sketch.App version. If not, you can pass `-a` argument for your Sketch.app Application Bundle.
+
 
 ```bash
 crackb0x:SketchCrapp duraki$ ./sketchcrapp.sh -h
@@ -50,7 +54,7 @@ crackb0x:SketchCrapp duraki$ ./sketchcrapp.sh -m
          by @duraki & @elijahtsai
 
 [+] Checking directory tmp existence ... OK
-[+] Fetching https://download.sketch.com/sketch-70.3-109109.zip ... 
+[+] Fetching https://download.sketch.com/sketch-70.3-109109.zip ...
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100 58.5M  100 58.5M    0     0  1098k      0  0:00:54  0:00:54 --:--:-- 1261k
@@ -119,11 +123,11 @@ Checking if Sketch.app exist in /tmp ... Not exist. Continuous.
 /Applications/Sketch.app: replacing existing signature
 [+] Cleaning up file(s) ... Cleaned
 [+] SketchCrapp process completed. Sketch.app has been patched :)
-[+] -- Notice: 
+[+] -- Notice:
 [+] If a dialogue shows up with message: “Sketch 3.app” can’t be opened
-[+] please right-click the application and select open, 
+[+] please right-click the application and select open,
 [+] or go to Settings -› Security and allow opening Sketch.app application.
-[+] 
+[+]
 [+] If you are using an old version and a dialogue shows up asking for password
 [+] about "com.bohemiancoding.sketch3.HockeySDK"
 [+] please enter your login password. Choose "Always Allow" to not be asked again.
