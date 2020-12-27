@@ -1,9 +1,4 @@
 #!/bin/bash
-# Binary pattern
-# eb ?? 41 b4 ?? 4c 89
-# 85 db 0f 85 ?? ?? 00 00 49 89 c7
-# 84 db ?? 1b 4c 89
-
 # Support version list.
 declare -a version_list
 
@@ -184,7 +179,7 @@ EOF
 # Last function to run before exit.
 finally() {
   local status="$1"
-  echo "[+] SketchCrapp last published date: 2020-12-20 serial 001"
+  echo "[+] SketchCrapp last published date: 2020-12-27 serial 001"
   exit $status
 }
 
