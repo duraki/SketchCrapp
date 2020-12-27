@@ -40,7 +40,7 @@ v68, v68.1, v68.2, v69, v69.1, v69.2, v70.2, v70.3
 ```
 
 ```
-crackb0x:SketchCrapp duraki$ ./sketchcrapp.sh
+crackb0x:SketchCrapp duraki$ ./sketchcrapp.sh -m
            __       __      __
       ___ / /_____ / /_____/ /  ___________ ____  ___
     ( _-</  '_/ -_) __/ __/ _ \/ __/ __/ _ `/ _ \/ _ \
@@ -49,29 +49,69 @@ crackb0x:SketchCrapp duraki$ ./sketchcrapp.sh
          Sketch.App Patch Tool (https://github.com/duraki/SketchCrapp)
          by @duraki & @elijahtsai
 
+[+] Checking directory tmp existence ... OK
+[+] Fetching https://download.sketch.com/sketch-70.3-109109.zip ... 
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 58.5M  100 58.5M    0     0  1098k      0  0:00:54  0:00:54 --:--:-- 1261k
+Checking if Sketch.app exist in /tmp ... Not exist. Continuous.
+[+] Checking if Sketch.app exist in /Applications ... Exist. Removing.
+[+] Moving Sketch.app to /Applications directory ... Successfully.
 [+] Analysing application bundle ... Starting
 [+] Finding executable file ... OK
 [+] Finding Info.plist ... OK
 [+] Checking Info.plist for CFBundleShortVersionString ... OK
 [+] Validating executable file ... OK
-[+] Selected Sketch.app version is 69.2 ... SketchCrapp starting ... OK
-[+] Patching offsets for 69.2 ... Starting
-[+] Patching address at offset: 0x5d09df with value: \00
+[+] Selected Sketch.app version is 70.3 ... SketchCrapp starting ... OK
+[+] Patching offsets for 70.3 ... Starting modern arch patch via bash&seek ...
+[+] Patching address at offset: 0x58619f with value: \00
 1+0 records in
 1+0 records out
-1 bytes transferred in 0.000026 secs (38480 bytes/sec)
-[+] Patching address at offset: 0x5d09e2 with value: \00
+1 bytes transferred in 0.000029 secs (34380 bytes/sec)
+[+] Patching address at offset: 0x5861a2 with value: \00
 1+0 records in
 1+0 records out
-1 bytes transferred in 0.000018 secs (55188 bytes/sec)
-[+] Patching address at offset: 0x5cf57e with value: \00\00
+1 bytes transferred in 0.000025 secs (39946 bytes/sec)
+[+] Patching address at offset: 0x584dee with value: \00\00
 2+0 records in
 2+0 records out
-2 bytes transferred in 0.000023 secs (87381 bytes/sec)
-[+] Patching address at offset: 0x5cf6ae with value: \165
+2 bytes transferred in 0.000029 secs (68759 bytes/sec)
+[+] Patching address at offset: 0x584f1e with value: \165
 1+0 records in
 1+0 records out
-1 bytes transferred in 0.000018 secs (55924 bytes/sec)
+1 bytes transferred in 0.000021 secs (47663 bytes/sec)
+[+] Patching address at offset: 0x66d058 with value: \00\00\00\00\00\00\00\00\00\00\00\00\00\00\00
+15+0 records in
+15+0 records out
+15 bytes transferred in 0.000090 secs (166882 bytes/sec)
+[+] Patching address at offset: 0x66d068 with value: \40\123\153\145\164\143\150\103\162\141\160\160\40
+13+0 records in
+13+0 records out
+13 bytes transferred in 0.000060 secs (216373 bytes/sec)
+[+] Patching address at offset: 0xdcd574 with value: \01
+1+0 records in
+1+0 records out
+1 bytes transferred in 0.000022 secs (45590 bytes/sec)
+[+] Patching address at offset: 0xdcd578 with value: \24
+1+0 records in
+1+0 records out
+1 bytes transferred in 0.000020 secs (49932 bytes/sec)
+[+] Patching address at offset: 0xdcc1c1 with value: \65\00
+2+0 records in
+2+0 records out
+2 bytes transferred in 0.000023 secs (86480 bytes/sec)
+[+] Patching address at offset: 0xdcc30c with value: \64
+1+0 records in
+1+0 records out
+1 bytes transferred in 0.000019 secs (52429 bytes/sec)
+[+] Patching address at offset: 0xed0fd7 with value: \00\00\00\00\00\00\00\00\00\00\00\00\00\00\00
+15+0 records in
+15+0 records out
+15 bytes transferred in 0.000064 secs (234756 bytes/sec)
+[+] Patching address at offset: 0xed0fe7 with value: \40\123\153\145\164\143\150\103\162\141\160\160\40
+13+0 records in
+13+0 records out
+13 bytes transferred in 0.000061 secs (212992 bytes/sec)
 [+] SketchCrapp certificate already exists.
 [+] Skipping certificate creation ... OK
 [+] Signing the patched *.app bundle. This may require root privilege.
@@ -79,18 +119,18 @@ crackb0x:SketchCrapp duraki$ ./sketchcrapp.sh
 /Applications/Sketch.app: replacing existing signature
 [+] Cleaning up file(s) ... Cleaned
 [+] SketchCrapp process completed. Sketch.app has been patched :)
-[+] -- Notice:
+[+] -- Notice: 
 [+] If a dialogue shows up with message: “Sketch 3.app” can’t be opened
-[+] please right-click the application and select open,
+[+] please right-click the application and select open, 
 [+] or go to Settings -› Security and allow opening Sketch.app application.
-[+]
+[+] 
 [+] If you are using an old version and a dialogue shows up asking for password
 [+] about "com.bohemiancoding.sketch3.HockeySDK"
 [+] please enter your login password. Choose "Always Allow" to not be asked again.
 
 [+] SketchCrapp (A Sketch.app cracking tool)
 [+] https://github.com/duraki/SketchCrapp [by @duraki & @elijahtsai]
-[+] SketchCrapp last published date: 2020-11-01 serial 001
+[+] SketchCrapp last published date: 2020-12-27 serial 001
 ```
 
 ## Issues
