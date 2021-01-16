@@ -179,7 +179,7 @@ EOF
 # Last function to run before exit.
 finally() {
   local status="$1"
-  echo "[+] SketchCrapp last published date: 2020-12-28 serial 001"
+  echo "[+] SketchCrapp last published date: 2021-01-17 serial 001"
   exit $status
 }
 
