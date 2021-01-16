@@ -125,8 +125,8 @@ address_param_703+=("0x66d058")
 address_param_703+=("0x66d068")
 address_param_703+=("0xdcd574")
 address_param_703+=("0xdcd578")
-address_param_703+=("0xdcc1c1")
-address_param_703+=("0xdcc30c")
+address_param_703+=("0xdcc1ec")
+address_param_703+=("0xdcc30f")
 address_param_703+=("0xed0fd7")
 address_param_703+=("0xed0fe7")
 exe_hash_703="9a0e6b7721c275b75e1fb6b70b55cda7ab99c4a8"
@@ -145,7 +145,7 @@ value_param+=("\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00") # x86_remove_regi
 value_param+=("\40\123\153\145\164\143\150\103\162\141\160\160\40") # x86_modified_day_left
 value_param+=("\01") # aarch_1
 value_param+=("\24") # aarch_2
-value_param+=("\65\00") # aarch_3
+value_param+=("\165\00") # aarch_3
 value_param+=("\64") # aarch_4
 value_param+=("\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00") # aarch_remove_register
 value_param+=("\40\123\153\145\164\143\150\103\162\141\160\160\40") # aarch_modified_day_left
@@ -528,7 +528,7 @@ patch() {
 
   local execPath=${2}
 
-  for i in {0..5}; do
+  for i in {0..11}; do
     echo "[+] Patching address at offset: ${addressArray[$i]} \
 with value: ${value_param[$i]}"
     printf "${value_param[$i]}" | dd seek="$((${addressArray[$i]}))" conv=notrunc bs=1 of="$execPath"
