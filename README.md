@@ -175,3 +175,9 @@ If you really need specific version you can contact the team via GitHub Issues, 
 |0x10050946e|0x10054bf8e|0x10054c02e|0x1005ce44e|0x1005cf582|
 |0x1005095a9|0x10054c0c9|0x10054c169|0x1005ce589|0x1005cf6ae|
 |0x1005095c6|0x10054c0e6|0x10054c186|0x1005ce5a6|0x1005cf6d2|
+
+### Stars Record
+|⭐️|Date|
+|:----:|:----:|
+|100|2020-11-20|
+|150|2021-01-15|
