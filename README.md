@@ -19,14 +19,13 @@ Sketch.App Patch Tool, brought to you by [@duraki](https://github.com/duraki) & 
 * Run the script to patch Sketch.app
   * `cd $HOME/sketchcrapp && ./sketchcrapp.sh`
 
-
-**Magic Trick**→ For the people who would like to try the new version, we got you covered. You can pass `-m` argument for the ultimate life-saving trick, which will automagically download latest Sketch app from the official website and patch the bundle, ready to be launched from the Applications folder.
+## Magic Trick ✨
+For the people who would like to try the new version, we got you covered. You can pass `-m` argument for the ultimate life-saving trick, which will automagically download latest Sketch app from the official website and patch the bundle, ready to be launched from the Applications folder.
 
 ## Notice
  - The application should automatically detect your Sketch.App version. If not, you can pass `-a` argument for your Sketch.app Application Bundle.
 
-
-```bash
+```
 crackb0x:SketchCrapp duraki$ ./sketchcrapp.sh -h
            __       __      __
       ___ / /_____ / /_____/ /  ___________ ____  ___
@@ -40,6 +39,7 @@ Usage:
 ./sketchcrapp [-h] [-a] <applicationPath> [-m]
 Supported versions: v58, v63.1, v64.0, v65.1, v66.1, v67, v67.1, v67.2,
 v68, v68.1, v68.2, v69, v69.1, v69.2, v70.2, v70.3
+[+] SketchCrapp last published date: 2021-01-17 serial 001
 ```
 
 ```
@@ -53,7 +53,7 @@ crackb0x:SketchCrapp duraki$ ./sketchcrapp.sh -m
          by @duraki & @elijahtsai
 
 [+] Checking directory tmp existence ... OK
-[+] Fetching https://download.sketch.com/sketch-70.3-109109.zip ... 
+[+] Fetching https://download.sketch.com/sketch-70.3-109109.zip ...
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100 58.5M  100 58.5M    0     0  2514k      0  0:00:23  0:00:23 --:--:-- 2229k
@@ -122,11 +122,11 @@ Checking if Sketch.app exist in /tmp ... Not exist. Continuous.
 /Applications/Sketch.app: replacing existing signature
 [+] Cleaning up file(s) ... Cleaned
 [+] SketchCrapp process completed. Sketch.app has been patched :)
-[+] -- Notice: 
+[+] -- Notice:
 [+] If a dialogue shows up with message: “Sketch 3.app” can’t be opened
-[+] please right-click the application and select open, 
+[+] please right-click the application and select open,
 [+] or go to Settings -› Security and allow opening Sketch.app application.
-[+] 
+[+]
 [+] If you are using an old version and a dialogue shows up asking for password
 [+] about "com.bohemiancoding.sketch3.HockeySDK"
 [+] please enter your login password. Choose "Always Allow" to not be asked again.
@@ -151,10 +151,10 @@ If the version you are trying to patch is higher than supported, please notify t
 
 If you really need specific version you can contact the team via GitHub Issues, but we can only do our best to help you.
 
-
 **Build with ❤️ by [@duraki](https://twitter.com/0xduraki) & [@elijahtsai](https://twitter.com/elijahtsai_)**
 
 **Special Fans: [@JosephShenton](https://github.com/JosephShenton) & [@Aurther-Nadeem](https://github.com/Aurther-Nadeem)**
+
 > [Original idea and thread](https://gist.github.com/Bhavdip/76c581d7ac03bdce6d226a2e8c522df4)
 
 ### Offset Table
@@ -175,3 +175,9 @@ If you really need specific version you can contact the team via GitHub Issues, 
 |0x10050946e|0x10054bf8e|0x10054c02e|0x1005ce44e|0x1005cf582|
 |0x1005095a9|0x10054c0c9|0x10054c169|0x1005ce589|0x1005cf6ae|
 |0x1005095c6|0x10054c0e6|0x10054c186|0x1005ce5a6|0x1005cf6d2|
+
+### Stars Record
+|⭐️|Date|
+|:----:|:----:|
+|100|2020-11-20|
+|150|2021-01-15|
