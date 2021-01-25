@@ -13,17 +13,22 @@ Sketch.App Patch Tool, brought to you by [@duraki](https://github.com/duraki) & 
 * Open your MacOS Terminal (`Cmd+Space`, type **Terminal**)
 * Type the commands below
 * Download or clone this repository
-  * `cd $HOME && git clone https://github.com/duraki/sketchcrapp`
+  * `cd $HOME && git clone https://github.com/duraki/SketchCrapp`
 * Make script executable
-  * `cd $HOME/sketchcrapp && chmod +x sketchcrapp.sh`
+  * `cd $HOME/SketchCrapp && chmod +x sketchcrapp.sh`
 * Run the script to patch Sketch.app
-  * `cd $HOME/sketchcrapp && ./sketchcrapp.sh`
+  * `cd $HOME/SketchCrapp && ./sketchcrapp.sh`
 
 ## Magic Trick ✨
 For the people who would like to try the new version, we got you covered. You can pass `-m` argument for the ultimate life-saving trick, which will automagically download latest Sketch app from the official website and patch the bundle, ready to be launched from the Applications folder.
 
+<p align="center">
+    <img height="100%" src="https://i.imgur.com/xq3MHJd.png">
+</p>
+
+
 ## Notice
- - The application should automatically detect your Sketch.App version. If not, you can pass `-a` argument for your Sketch.app Application Bundle.
+ - The application should automatically detect your Sketch.App version. If not, you can pass `-a` argument for your Sketch.app Application Bundle or use `-m` argument to automatically install and crack the latest version.
 
 ```
 crackb0x:SketchCrapp duraki$ ./sketchcrapp.sh -h
@@ -181,3 +186,4 @@ If you really need specific version you can contact the team via GitHub Issues, 
 |:----:|:----:|
 |100|2020-11-20|
 |150|2021-01-15|
+|200|soon 🙉|
