@@ -130,6 +130,22 @@ address_param_703+=("0xdcc30f")
 address_param_703+=("0xed0fd7")
 address_param_703+=("0xed0fe7")
 exe_hash_703="9a0e6b7721c275b75e1fb6b70b55cda7ab99c4a8"
+# Version 70.4
+declare -a address_param_704
+version_list+=("70.4")
+address_param_704+=("0x58606f")
+address_param_704+=("0x586072")
+address_param_704+=("0x584cbe")
+address_param_704+=("0x584dee")
+address_param_704+=("0x66cffb")
+address_param_704+=("0x66d00b")
+address_param_704+=("0xdcd484")
+address_param_704+=("0xdcd488")
+address_param_704+=("0xdcc0fc")
+address_param_704+=("0xdcc21f")
+address_param_704+=("0xed0fa5")
+address_param_704+=("0xed0fb5")
+exe_hash_704="6adf7ee4c29bb1a61739b8804c7ce6d94c791f36"
 # Value parameter array.
 declare -a value_legacy_param
 value_legacy_param+=("\00")
@@ -179,7 +195,7 @@ EOF
 # Last function to run before exit.
 finally() {
   local status="$1"
-  echo "[+] SketchCrapp last published date: 2021-01-17 serial 001"
+  echo "[+] SketchCrapp last published date: 2021-02-05 serial 001"
   exit $status
 }
 
@@ -189,7 +205,7 @@ usage() {
   echo "Usage:"
   echo "./sketchcrapp [-h] [-a] <applicationPath> [-m]"
   echo "Supported versions: v58, v63.1, v64.0, v65.1, v66.1, v67, v67.1, v67.2,"
-  echo "v68, v68.1, v68.2, v69, v69.1, v69.2, v70.2, v70.3"
+  echo "v68, v68.1, v68.2, v69, v69.1, v69.2, v70.2, v70.3, v70.4"
   finally 0;
 }
 
@@ -323,6 +339,9 @@ getHashFromVersionString() {
       ;;
     "70.3")
       echo "$exe_hash_703"
+      ;;
+    "70.4")
+      echo "$exe_hash_704"
       ;;
     *)
       echo "Input version string invaild, cannot lookup correct hash value."
@@ -459,6 +478,9 @@ repository: https://github.com/duraki/SketchCrapp"
       ;;
     "$exe_hash_703")
       testBundleVersionString="70.3"
+      ;;
+    "$exe_hash_704")
+      testBundleVersionString="70.4"
       ;;
     *)
       testBundleVersionString="binaryerr››"
@@ -654,6 +676,9 @@ engin() {
     "70.3")
       patch "${address_param_703[*]}" "$execPath"
       ;;
+    "70.4")
+      patch "${address_param_704[*]}" "$execPath"
+      ;;
     *)
       echo "Error"
       echo "Something went wrong, this line should never execute."
@@ -704,7 +729,7 @@ https://github.com/duraki/SketchCrapp"
 magicFunction() {
 
   # RUP Review every time when new verison update part.
-  local latestBundleURLPath="https://download.sketch.com/sketch-70.3-109109.zip"
+  local latestBundleURLPath="https://download.sketch.com/sketch-70.4-109185.zip"
 
   # Check if missing cURL
   if ! command -v curl &> /dev/null; then
