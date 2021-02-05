@@ -22,11 +22,6 @@ Sketch.App Patch Tool, brought to you by [@duraki](https://github.com/duraki) & 
 ## Magic Trick ✨
 For the people who would like to try the new version, we got you covered. You can pass `-m` argument for the ultimate life-saving trick, which will automagically download latest Sketch app from the official website and patch the bundle, ready to be launched from the Applications folder.
 
-<p align="center">
-    <img height="100%" src="https://i.imgur.com/xq3MHJd.png">
-</p>
-
-
 ## Notice
  - The application should automatically detect your Sketch.App version. If not, you can pass `-a` argument for your Sketch.app Application Bundle or use `-m` argument to automatically install and crack the latest version.
 
