@@ -1,6 +1,5 @@
-<p align="center">
-  <img height="200" src="https://i.imgur.com/laXau20.png">
-</p>
+
+!()[https://i.imgur.com/laXau20.png]
 
 ## SketchCrapp
 
