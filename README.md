@@ -1,5 +1,5 @@
 
-![banner](https://i.imgur.com/laXau20.png)
+![banner](banner.png)
 
 ## SketchCrapp
 
