@@ -22,6 +22,8 @@ Sketch.App Patch Tool, brought to you by [@duraki](https://github.com/duraki) & 
 ## Magic Trick ✨
 For the people who would like to try the new version, we got you covered. You can pass `-m` argument for the ultimate life-saving trick, which will automagically download latest Sketch app from the official website and patch the bundle, ready to be launched from the Applications folder.
 
+And do it in one command: `bash -c "$(curl -s https://raw.githubusercontent.com/duraki/SketchCrapp/master/sketchcrapp.sh -o -)" -O -m`
+
 <p align="center">
     <img height="100%" src="https://i.imgur.com/xq3MHJd.png">
 </p>
