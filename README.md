@@ -1,5 +1,5 @@
 
-![banner](https://i.imgur.com/mBOFGik.png)
+![banner](https://i.imgur.com/cl2HGy0.gif)
 
 ## SketchCrapp
 ![latest supported](https://img.shields.io/badge/latest%20supported-70.4-brightgreen?style=for-the-badge)
