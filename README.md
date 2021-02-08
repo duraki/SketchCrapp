@@ -21,6 +21,8 @@ Sketch.App Patch Tool, brought to you by [@duraki](https://github.com/duraki) & 
 ## Magic Trick ✨
 For the people who would like to try the new version, we got you covered. You can pass `-m` argument for the ultimate life-saving trick, which will automagically download latest Sketch app from the official website and patch the bundle, ready to be launched from the Applications folder.
 
+And do it in one command: `bash -c "$(curl -s https://raw.githubusercontent.com/duraki/SketchCrapp/master/sketchcrapp.sh -o -)" -O -m`
+
 ![magictrickimage](https://i.imgur.com/xq3MHJd.png)
 
 ## Notice
@@ -183,3 +185,7 @@ If you really need specific version you can contact the team via GitHub Issues, 
 |100|2020-11-20|
 |150|2021-01-15|
 |200|soon 🙉|
+
+##### Stargazers over time
+[![Stargazers over time](https://starchart.cc/duraki/SketchCrapp.svg)](https://starchart.cc/duraki/SketchCrapp)
+      
