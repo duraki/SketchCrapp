@@ -1,7 +1,11 @@
 
-![banner](banner.png)
+![banner](https://i.imgur.com/cl2HGy0.gif)
 
 ## SketchCrapp
+![latest supported](https://img.shields.io/badge/latest%20supported-70.4-brightgreen?style=for-the-badge)
+![GitHub Repo stars](https://img.shields.io/github/stars/duraki/SketchCrapp?color=brightgreen&style=for-the-badge)
+![GitHub watchers](https://img.shields.io/github/watchers/duraki/SketchCrapp?color=brightgreen&style=for-the-badge)
+![GitHub forks](https://img.shields.io/github/forks/duraki/SketchCrapp?color=brightgreen&style=for-the-badge)
 
 Sketch.App Patch Tool, brought to you by [@duraki](https://github.com/duraki) & [@elijahtsai](https://github.com/elijahtsai). This script provides you a quick and dirty way to patch Sketch.app for Unlimited Trial. You can always patch manually using Ghidra by following [this tutorial](https://duraki.github.io/posts/o/20200214-sketch.app-patch-in-ghidra.html). Offsets available [here](https://github.com/duraki/SketchCrapp/blob/master/README.md#offset-table).
 
@@ -21,9 +25,11 @@ Sketch.App Patch Tool, brought to you by [@duraki](https://github.com/duraki) & 
 ## Magic Trick ✨
 For the people who would like to try the new version, we got you covered. You can pass `-m` argument for the ultimate life-saving trick, which will automagically download latest Sketch app from the official website and patch the bundle, ready to be launched from the Applications folder.
 
-And do it in one command: `bash -c "$(curl -s https://raw.githubusercontent.com/duraki/SketchCrapp/master/sketchcrapp.sh -o -)" -O -m`
+One-liner script to install latest Sketch version and automatically patch it:<br />`bash -c "$(curl -s https://raw.githubusercontent.com/duraki/SketchCrapp/master/sketchcrapp.sh -o -)" -O -m`
 
-![magictrickimage](https://i.imgur.com/xq3MHJd.png)
+![magictrickimage](https://i.imgur.com/fmU62uM.png)
+
+<p align="center">Successful screenshot of using magic trick</p>
 
 ## Notice
  - The application should automatically detect your Sketch.App version. If not, you can pass `-a` argument for your Sketch.app Application Bundle or use `-m` argument to automatically install and crack the latest version.
