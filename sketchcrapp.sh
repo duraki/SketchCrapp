@@ -195,7 +195,7 @@ EOF
 # Last function to run before exit.
 finally() {
   local status="$1"
-  echo "[+] SketchCrapp last published date: 2021-02-05 serial 001"
+  echo "[+] SketchCrapp last published date: 2021-02-12 serial 005"
   exit $status
 }
 
@@ -257,33 +257,38 @@ genSelfSignCert() {
 
 # Import code-signature certificate to keychain. Must be included and trusted
 # by the OS internals.
+#     - First: The default keychain that under the user profile.
 importSelfSignCert() {
-  # Get the path of user default keychain.
-  userKeyChain="$(security default-keychain -d user | sed -e 's/^[ ]*//g' -e 's/\"//g')"
 
-  if ! [ -f "$userKeyChain" ]; then
-    echo "[-] User default Keychain does not exist: $userKeyChain"
-    finally 1
-  fi
+  local userDefaultKeychain="$1"
+
   echo "[+] Importing private key and self-signed certificate"
-  security import pkcs.p12 -k "$userKeyChain" -f pkcs12 -P 1234
+  security import pkcs.p12 -k "$userDefaultKeychain" -f pkcs12 -P 1234
 }
 
 # Equivalent to code-signature application in Sketch.
 # Sign Sketch with generated certificate.
 # - Parameters:
 #     - First: The application bundle path.
+#     - Second: The default keychain that under the user profile.
 signApplication() {
 
   appPath="$1"
 
+  local userDefaultKeychain="$2"
+
   echo "[+] Signing the patched *.app bundle. This may require root privilege."
   echo "[+] If asked, enter your login password. Choose \"Always Allow\" to \
 not be asked again."
-  codesign --deep --force -s "sketchcrapp" "$appPath"
+  codesign --deep --force -s "sketchcrapp" "$appPath" --keychain "$userDefaultKeychain"
+  if ! [ "$?" -eq "0" ]; then
+    echo "[-] Failed to Signing Sketch bundle."
+    clean
+    finally 1
+  fi
 }
 
-#Get binary hash from CFBundleShortVersionString
+# Get binary hash from CFBundleShortVersionString
 # - Parameters:
 #     - First: The application bundle CFBundleShortVersionString.
 getHashFromVersionString() {
@@ -696,19 +701,37 @@ https://github.com/duraki/SketchCrapp"
   esac
   # Install name tag
   nameTag "$appPath"
+
+  # Get the path of user default keychain.
+  userKeyChain="$(security default-keychain -d user | sed -e 's/^[ ]*//g' -e 's/\"//g')"
+
+  echo -n "[+] Checking user default keychain ... "
+
+  if ! [ -f "$userKeyChain" ]; then
+    echo "Not exist."
+    echo "[-] User default Keychain does not exist: $userKeyChain"
+    clean
+    finally 1
+  fi
+
+  echo "Exist."
+
   # CodeSigning area.
   # Check if sketchcrapp certificate already exist.
   if ! security find-certificate -c "sketchcrapp" 2>&1 >/dev/null; then
     # Certificate does not exist, generate one.
     genSelfSignCert
+
     # Import the certificate.
-    importSelfSignCert
+    importSelfSignCert "$userKeyChain"
   else
     echo "[+] SketchCrapp certificate already exists."
     echo "[+] Skipping certificate creation ... OK"
   fi
+
   # Sign the application.
-  signApplication "$appPath"
+  signApplication "$appPath" "$userKeyChain"
+
   # Call cleaner to do some housekeeping.
   clean
   echo "[+] SketchCrapp process completed. Sketch.app has been patched :)"
@@ -771,7 +794,7 @@ magicFunction() {
     finally 1
   fi
 
-  echo -n "Checking if Sketch.app exist in /tmp ... "
+  echo -n "[+] Checking if Sketch.app exist in /tmp ... "
   if [ -d "/tmp/Sketch.app" ]; then
     echo "Exist. Removing."
     rm -rf "/tmp/Sketch.app"
