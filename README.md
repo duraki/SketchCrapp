@@ -2,7 +2,7 @@
 ![banner](https://i.imgur.com/cl2HGy0.gif)
 
 ## SketchCrapp
-![latest supported](https://img.shields.io/badge/latest%20supported-70.4-brightgreen?style=for-the-badge)
+![latest supported](https://img.shields.io/badge/latest%20supported-70.5-brightgreen?style=for-the-badge)
 ![GitHub Repo stars](https://img.shields.io/github/stars/duraki/SketchCrapp?color=brightgreen&style=for-the-badge)
 ![GitHub watchers](https://img.shields.io/github/watchers/duraki/SketchCrapp?color=brightgreen&style=for-the-badge)
 ![GitHub forks](https://img.shields.io/github/forks/duraki/SketchCrapp?color=brightgreen&style=for-the-badge)
@@ -27,7 +27,7 @@ For the people who would like to try the new version, we got you covered. You ca
 
 One-liner script to install latest Sketch version and automatically patch it:<br />`bash -c "$(curl -s https://raw.githubusercontent.com/duraki/SketchCrapp/master/sketchcrapp.sh -o -)" -O -m`
 <br /><br />
-![magictrickimage](https://i.imgur.com/fmU62uM.png)
+![magictrickimage](https://i.imgur.com/2t1mhz6.png)
 
 <p align="center">Successful screenshot of using magic trick</p>
 
@@ -47,8 +47,8 @@ crackb0x:SketchCrapp duraki$ ./sketchcrapp.sh -h
 Usage:
 ./sketchcrapp [-h] [-a] <applicationPath> [-m]
 Supported versions: v58, v63.1, v64.0, v65.1, v66.1, v67, v67.1, v67.2,
-v68, v68.1, v68.2, v69, v69.1, v69.2, v70.2, v70.3, v70.4
-[+] SketchCrapp last published date: 2021-02-12 serial 005
+v68, v68.1, v68.2, v69, v69.1, v69.2, v70.2, v70.3, v70.4, v70.5
+[+] SketchCrapp last published date: 2021-02-17 serial 001
 ```
 
 ```
@@ -62,11 +62,10 @@ crackb0x:SketchCrapp duraki$ ./sketchcrapp.sh -m
          by @duraki & @elijahtsai
 
 [+] Checking directory tmp existence ... OK
-[+] Fetching https://download.sketch.com/sketch-70.4-109185.zip ...
+[+] Fetching https://download.sketch.com/sketch-70.5-109233.zip ...
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100 58.5M  100 58.5M    0     0  1805k      0  0:00:33  0:00:33 --:--:-- 2328k
-Checking if Sketch.app exist in /tmp ... Not exist. Continuous.
 [+] Checking if Sketch.app exist in /tmp ... Not exist. Continuous.
 [+] Checking if Sketch.app exist in /Applications ... Exist. Removing.
 [+] Moving Sketch.app to /Applications directory ... Successfully.
@@ -75,56 +74,56 @@ Checking if Sketch.app exist in /tmp ... Not exist. Continuous.
 [+] Finding Info.plist ... OK
 [+] Checking Info.plist for CFBundleShortVersionString ... OK
 [+] Validating executable file ... OK
-[+] Selected Sketch.app version is 70.4 ... SketchCrapp starting ... OK
-[+] Patching offsets for 70.4 ... Starting modern arch patch via bash&seek ...
-[+] Patching address at offset: 0x58606f with value: \00
+[+] Selected Sketch.app version is 70.5 ... SketchCrapp starting ... OK
+[+] Patching offsets for 70.5 ... Starting modern arch patch via bash&seek ...
+[+] Patching address at offset: 0x585eef with value: \00
 1+0 records in
 1+0 records out
-1 bytes transferred in 0.000023 secs (43240 bytes/sec)
-[+] Patching address at offset: 0x586072 with value: \00
+1 bytes transferred in 0.000033 secs (30394 bytes/sec)
+[+] Patching address at offset: 0x585ef2 with value: \00
 1+0 records in
 1+0 records out
-1 bytes transferred in 0.000018 secs (55188 bytes/sec)
-[+] Patching address at offset: 0x584cbe with value: \00\00
+1 bytes transferred in 0.000021 secs (47663 bytes/sec)
+[+] Patching address at offset: 0x584b3e with value: \00\00
 2+0 records in
 2+0 records out
-2 bytes transferred in 0.000025 secs (79892 bytes/sec)
-[+] Patching address at offset: 0x584dee with value: \165
+2 bytes transferred in 0.000024 secs (83056 bytes/sec)
+[+] Patching address at offset: 0x584c6e with value: \165
 1+0 records in
 1+0 records out
-1 bytes transferred in 0.000018 secs (55188 bytes/sec)
-[+] Patching address at offset: 0x66cffb with value: \00\00\00\00\00\00\00\00\00\00\00\00\00\00\00
+1 bytes transferred in 0.000019 secs (52429 bytes/sec)
+[+] Patching address at offset: 0x66ce63 with value: \00\00\00\00\00\00\00\00\00\00\00\00\00\00\00
 15+0 records in
 15+0 records out
-15 bytes transferred in 0.000062 secs (241979 bytes/sec)
-[+] Patching address at offset: 0x66d00b with value: \40\123\153\145\164\143\150\103\162\141\160\160\40
+15 bytes transferred in 0.000086 secs (174279 bytes/sec)
+[+] Patching address at offset: 0x66ce73 with value: \40\123\153\145\164\143\150\103\162\141\160\160\40
 13+0 records in
 13+0 records out
-13 bytes transferred in 0.000058 secs (224387 bytes/sec)
-[+] Patching address at offset: 0xdcd484 with value: \01
+13 bytes transferred in 0.000108 secs (120366 bytes/sec)
+[+] Patching address at offset: 0xdcd404 with value: \01
 1+0 records in
 1+0 records out
-1 bytes transferred in 0.000018 secs (55924 bytes/sec)
-[+] Patching address at offset: 0xdcd488 with value: \24
+1 bytes transferred in 0.000033 secs (30175 bytes/sec)
+[+] Patching address at offset: 0xdcd408 with value: \24
 1+0 records in
 1+0 records out
-1 bytes transferred in 0.000017 secs (59075 bytes/sec)
-[+] Patching address at offset: 0xdcc0fc with value: \165\00
+1 bytes transferred in 0.000024 secs (41528 bytes/sec)
+[+] Patching address at offset: 0xdcc07c with value: \165\00
 2+0 records in
 2+0 records out
-2 bytes transferred in 0.000021 secs (95325 bytes/sec)
-[+] Patching address at offset: 0xdcc21f with value: \64
+2 bytes transferred in 0.000024 secs (83056 bytes/sec)
+[+] Patching address at offset: 0xdcc19f with value: \64
 1+0 records in
 1+0 records out
-1 bytes transferred in 0.000018 secs (55924 bytes/sec)
-[+] Patching address at offset: 0xed0fa5 with value: \00\00\00\00\00\00\00\00\00\00\00\00\00\00\00
+1 bytes transferred in 0.000019 secs (52429 bytes/sec)
+[+] Patching address at offset: 0xed0fbc with value: \00\00\00\00\00\00\00\00\00\00\00\00\00\00\00
 15+0 records in
 15+0 records out
-15 bytes transferred in 0.000110 secs (136179 bytes/sec)
-[+] Patching address at offset: 0xed0fb5 with value: \40\123\153\145\164\143\150\103\162\141\160\160\40
+15 bytes transferred in 0.000072 secs (208326 bytes/sec)
+[+] Patching address at offset: 0xed0fcc with value: \40\123\153\145\164\143\150\103\162\141\160\160\40
 13+0 records in
 13+0 records out
-13 bytes transferred in 0.000055 secs (236043 bytes/sec)
+13 bytes transferred in 0.000063 secs (205758 bytes/sec)
 [+] Checking user default keychain ... Exist.
 [+] SketchCrapp certificate already exists.
 [+] Skipping certificate creation ... OK
@@ -144,7 +143,7 @@ Checking if Sketch.app exist in /tmp ... Not exist. Continuous.
 
 [+] SketchCrapp (A Sketch.app cracking tool)
 [+] https://github.com/duraki/SketchCrapp [by @duraki & @elijahtsai]
-[+] SketchCrapp last published date: 2021-02-12 serial 005
+[+] SketchCrapp last published date: 2021-02-17 serial 001
 ```
 
 ## Issues
