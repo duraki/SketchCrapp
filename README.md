@@ -2,7 +2,7 @@
 ![banner](https://i.imgur.com/cl2HGy0.gif)
 
 ## SketchCrapp
-![latest supported](https://img.shields.io/badge/latest%20supported-70.5-brightgreen?style=for-the-badge)
+![latest supported](https://img.shields.io/badge/latest%20supported-70.6-brightgreen?style=for-the-badge)
 ![GitHub Repo stars](https://img.shields.io/github/stars/duraki/SketchCrapp?color=brightgreen&style=for-the-badge)
 ![GitHub watchers](https://img.shields.io/github/watchers/duraki/SketchCrapp?color=brightgreen&style=for-the-badge)
 ![GitHub forks](https://img.shields.io/github/forks/duraki/SketchCrapp?color=brightgreen&style=for-the-badge)
@@ -27,7 +27,7 @@ For the people who would like to try the new version, we got you covered. You ca
 
 One-liner script to install latest Sketch version and automatically patch it:<br />`bash -c "$(curl -s https://raw.githubusercontent.com/duraki/SketchCrapp/master/sketchcrapp.sh -o -)" -O -m`
 <br /><br />
-![magictrickimage](https://i.imgur.com/2t1mhz6.png)
+![magictrickimage](https://i.imgur.com/e6JRxB5.png)
 
 <p align="center">Successful screenshot of using magic trick</p>
 
@@ -47,8 +47,8 @@ crackb0x:SketchCrapp duraki$ ./sketchcrapp.sh -h
 Usage:
 ./sketchcrapp [-h] [-a] <applicationPath> [-m]
 Supported versions: v58, v63.1, v64.0, v65.1, v66.1, v67, v67.1, v67.2,
-v68, v68.1, v68.2, v69, v69.1, v69.2, v70.2, v70.3, v70.4, v70.5
-[+] SketchCrapp last published date: 2021-02-17 serial 001
+v68, v68.1, v68.2, v69, v69.1, v69.2, v70.2, v70.3, v70.4, v70.5, v70.6
+[+] SketchCrapp last published date: 2021-02-25 serial 001
 ```
 
 ```
@@ -62,7 +62,7 @@ crackb0x:SketchCrapp duraki$ ./sketchcrapp.sh -m
          by @duraki & @elijahtsai
 
 [+] Checking directory tmp existence ... OK
-[+] Fetching https://download.sketch.com/sketch-70.5-109233.zip ...
+[+] Fetching https://download.sketch.com/sketch-70.6-109241.zip ...
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100 58.5M  100 58.5M    0     0  1805k      0  0:00:33  0:00:33 --:--:-- 2328k
@@ -74,56 +74,56 @@ crackb0x:SketchCrapp duraki$ ./sketchcrapp.sh -m
 [+] Finding Info.plist ... OK
 [+] Checking Info.plist for CFBundleShortVersionString ... OK
 [+] Validating executable file ... OK
-[+] Selected Sketch.app version is 70.5 ... SketchCrapp starting ... OK
-[+] Patching offsets for 70.5 ... Starting modern arch patch via bash&seek ...
+[+] Selected Sketch.app version is 70.6 ... SketchCrapp starting ... OK
+[+] Patching offsets for 70.6 ... Starting modern arch patch via bash&seek ...
 [+] Patching address at offset: 0x585eef with value: \00
 1+0 records in
 1+0 records out
-1 bytes transferred in 0.000033 secs (30394 bytes/sec)
+1 bytes transferred in 0.000038 secs (26379 bytes/sec)
 [+] Patching address at offset: 0x585ef2 with value: \00
 1+0 records in
 1+0 records out
-1 bytes transferred in 0.000021 secs (47663 bytes/sec)
+1 bytes transferred in 0.000032 secs (31301 bytes/sec)
 [+] Patching address at offset: 0x584b3e with value: \00\00
 2+0 records in
 2+0 records out
-2 bytes transferred in 0.000024 secs (83056 bytes/sec)
+2 bytes transferred in 0.000023 secs (87381 bytes/sec)
 [+] Patching address at offset: 0x584c6e with value: \165
 1+0 records in
 1+0 records out
-1 bytes transferred in 0.000019 secs (52429 bytes/sec)
+1 bytes transferred in 0.000017 secs (59075 bytes/sec)
 [+] Patching address at offset: 0x66ce63 with value: \00\00\00\00\00\00\00\00\00\00\00\00\00\00\00
 15+0 records in
 15+0 records out
-15 bytes transferred in 0.000086 secs (174279 bytes/sec)
+15 bytes transferred in 0.000064 secs (233883 bytes/sec)
 [+] Patching address at offset: 0x66ce73 with value: \40\123\153\145\164\143\150\103\162\141\160\160\40
 13+0 records in
 13+0 records out
-13 bytes transferred in 0.000108 secs (120366 bytes/sec)
+13 bytes transferred in 0.000058 secs (224387 bytes/sec)
 [+] Patching address at offset: 0xdcd404 with value: \01
 1+0 records in
 1+0 records out
-1 bytes transferred in 0.000033 secs (30175 bytes/sec)
+1 bytes transferred in 0.000017 secs (58254 bytes/sec)
 [+] Patching address at offset: 0xdcd408 with value: \24
 1+0 records in
 1+0 records out
-1 bytes transferred in 0.000024 secs (41528 bytes/sec)
+1 bytes transferred in 0.000017 secs (58254 bytes/sec)
 [+] Patching address at offset: 0xdcc07c with value: \165\00
 2+0 records in
 2+0 records out
-2 bytes transferred in 0.000024 secs (83056 bytes/sec)
+2 bytes transferred in 0.000032 secs (62602 bytes/sec)
 [+] Patching address at offset: 0xdcc19f with value: \64
 1+0 records in
 1+0 records out
-1 bytes transferred in 0.000019 secs (52429 bytes/sec)
+1 bytes transferred in 0.000022 secs (45100 bytes/sec)
 [+] Patching address at offset: 0xed0fbc with value: \00\00\00\00\00\00\00\00\00\00\00\00\00\00\00
 15+0 records in
 15+0 records out
-15 bytes transferred in 0.000072 secs (208326 bytes/sec)
+15 bytes transferred in 0.000075 secs (199729 bytes/sec)
 [+] Patching address at offset: 0xed0fcc with value: \40\123\153\145\164\143\150\103\162\141\160\160\40
 13+0 records in
 13+0 records out
-13 bytes transferred in 0.000063 secs (205758 bytes/sec)
+13 bytes transferred in 0.000068 secs (190650 bytes/sec)
 [+] Checking user default keychain ... Exist.
 [+] SketchCrapp certificate already exists.
 [+] Skipping certificate creation ... OK
@@ -143,7 +143,7 @@ crackb0x:SketchCrapp duraki$ ./sketchcrapp.sh -m
 
 [+] SketchCrapp (A Sketch.app cracking tool)
 [+] https://github.com/duraki/SketchCrapp [by @duraki & @elijahtsai]
-[+] SketchCrapp last published date: 2021-02-17 serial 001
+[+] SketchCrapp last published date: 2021-02-25 serial 001
 ```
 
 ## Issues
