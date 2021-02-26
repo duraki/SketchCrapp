@@ -315,7 +315,7 @@ not be asked again."
     genSelfSignCert
 
     echo "[+] Re-import identity."
-    importSelfSignCert "$userKeyChain"
+    importSelfSignCert "$userDefaultKeychain"
 
     echo "[+] Sign bundle again using sketchcrapp identity."
     codesign --deep --force -s "sketchcrapp" "$appPath" --verbose --keychain "$userDefaultKeychain"
