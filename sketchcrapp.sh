@@ -299,11 +299,26 @@ signApplication() {
   echo "[+] Signing the patched *.app bundle. This may require root privilege."
   echo "[+] If asked, enter your login password. Choose \"Always Allow\" to \
 not be asked again."
-  codesign --deep --force -s "sketchcrapp" "$appPath" --keychain "$userDefaultKeychain"
+  codesign --deep --force -s "sketchcrapp" "$appPath" --verbose --keychain "$userDefaultKeychain"
   if ! [ "$?" -eq "0" ]; then
-    echo "[-] Failed to Signing Sketch bundle."
-    clean
-    finally 1
+    echo "[-] Failed to signing Sketch bundle."
+    echo "[+] Starting fixing process."
+    echo "[+] Remove identity."
+    security delete-identity -c "sketchcrapp" -t "$userDefaultKeychain"
+    if ! [ "$?" -eq "0" ]; then
+      echo "[-] Unable to delete sketchcrapp identity."
+      clean
+      finally 1
+    fi
+
+    echo "[+] Re-create identity."
+    genSelfSignCert
+
+    echo "[+] Re-import identity."
+    importSelfSignCert "$userKeyChain"
+
+    echo "[+] Sign bundle again using sketchcrapp identity."
+    signApplication "$appPath" "$userKeyChain"
   fi
 }
 
