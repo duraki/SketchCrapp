@@ -318,7 +318,15 @@ not be asked again."
     importSelfSignCert "$userKeyChain"
 
     echo "[+] Sign bundle again using sketchcrapp identity."
-    signApplication "$appPath" "$userKeyChain"
+    codesign --deep --force -s "sketchcrapp" "$appPath" --verbose --keychain "$userDefaultKeychain"
+    if ! [ "$?" -eq "0" ]; then
+      echo "[-] Failed to signing Sketch bundle. method failed."
+      echo "[INFO] Copy the full log and open a new issue on GitHub \
+repository: https://github.com/duraki/SketchCrapp"
+      clean
+      finally 1
+    fi
+
   fi
 }
 
