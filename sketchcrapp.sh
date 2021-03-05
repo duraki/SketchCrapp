@@ -214,7 +214,7 @@ EOF
 # Last function to run before exit.
 finally() {
   local status="$1"
-  echo "[+] SketchCrapp last published date: 2021-02-27 serial 001"
+  echo "[+] SketchCrapp last published date: 2021-03-05 serial 001"
   exit $status
 }
 
@@ -301,26 +301,26 @@ signApplication() {
 not be asked again."
   codesign --deep --force -s "sketchcrapp" "$appPath" --verbose --keychain "$userDefaultKeychain"
   if ! [ "$?" -eq "0" ]; then
-    echo "[-] Failed to signing Sketch bundle."
-    echo "[+] Starting fixing process."
-    echo "[+] Remove identity."
+    echo "[-] Failed to sign Sketch bundle."
+    echo "[+] Automatic fix process started."
+    echo "[+] Removing identity ..."
     security delete-identity -c "sketchcrapp" -t "$userDefaultKeychain"
     if ! [ "$?" -eq "0" ]; then
-      echo "[-] Unable to delete sketchcrapp identity."
+      echo "[-] Unable to delete <sketchcrapp> signature identity from Keychain"
       clean
       finally 1
     fi
 
-    echo "[+] Re-create identity."
+    echo "[+] Re-creating signature identity ..."
     genSelfSignCert
 
-    echo "[+] Re-import identity."
+    echo "[+] Re-importing signature identity ..."
     importSelfSignCert "$userDefaultKeychain"
 
-    echo "[+] Sign bundle again using sketchcrapp identity."
+    echo "[+] Resigning application bundle again using signature identity ..."
     codesign --deep --force -s "sketchcrapp" "$appPath" --verbose --keychain "$userDefaultKeychain"
     if ! [ "$?" -eq "0" ]; then
-      echo "[-] Failed to signing Sketch bundle. method failed."
+      echo "[-] Failed to sign Sketch bundle. Automatic method failed."
       echo "[INFO] Copy the full log and open a new issue on GitHub \
 repository: https://github.com/duraki/SketchCrapp"
       clean
