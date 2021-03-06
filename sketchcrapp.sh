@@ -292,7 +292,7 @@ importSelfSignCert() {
 #     - Second: The default keychain that under the user profile.
 signApplication() {
 
-  appPath="$1"
+  local appPath="$1"
 
   local userDefaultKeychain="$2"
 
@@ -304,7 +304,7 @@ not be asked again."
     echo "[-] Failed to sign Sketch bundle."
     echo "[+] Automatic fix process started."
     echo "[+] Removing identity ..."
-    security delete-identity -c "sketchcrapp" -t "$userDefaultKeychain"
+    security delete-identity -c "sketchcrapp" "$userDefaultKeychain"
     if ! [ "$?" -eq "0" ]; then
       echo "[-] Unable to delete <sketchcrapp> signature identity from Keychain"
       clean
