@@ -214,7 +214,7 @@ EOF
 # Last function to run before exit.
 finally() {
   local status="$1"
-  echo "[+] SketchCrapp last published date: 2021-03-05 serial 001"
+  echo "[+] SketchCrapp last published date: 2021-03-07 serial 005"
   exit $status
 }
 
@@ -303,10 +303,10 @@ not be asked again."
   if ! [ "$?" -eq "0" ]; then
     echo "[-] Failed to sign Sketch bundle."
     echo "[+] Automatic fix process started."
-    echo "[+] Removing identity ..."
-    security delete-identity -c "sketchcrapp" "$userDefaultKeychain"
+    echo "[+] Removing certificate ..."
+    security delete-certificate -c "sketchcrapp" "$userDefaultKeychain"
     if ! [ "$?" -eq "0" ]; then
-      echo "[-] Unable to delete <sketchcrapp> signature identity from Keychain"
+      echo "[-] Unable to delete <sketchcrapp> certificate from Keychain"
       clean
       finally 1
     fi
@@ -454,7 +454,7 @@ analysisApplication() {
   # Get the hash of application executable
   local appSHA1="$(shasum -a 1 "$execPath" | cut -f 1 -d ' ')"
 
-  local ticketSt=0
+  local ticket=0
 
   for versionElement in "${version_list[@]}"
   do
@@ -774,18 +774,22 @@ https://github.com/duraki/SketchCrapp"
     finally 1
   fi
 
-  echo "Exist."
+  echo "Exist"
 
   # CodeSigning area.
   # Check if sketchcrapp certificate already exist.
-  if ! security find-certificate -c "sketchcrapp" 2>&1 >/dev/null; then
+  echo -n "[+] Checking SketchCrapp identity ... "
+  security find-identity -p codesigning | grep sketchcrapp >/dev/null
+
+  if ! [ "$?" -eq "0" ]; then
+    echo "Not Exist"
     # Certificate does not exist, generate one.
     genSelfSignCert
 
     # Import the certificate.
     importSelfSignCert "$userKeyChain"
   else
-    echo "[+] SketchCrapp certificate already exists."
+    echo "Exist"
     echo "[+] Skipping certificate creation ... OK"
   fi
 
@@ -942,6 +946,8 @@ if [ $# -eq 0 ]; then
   else
     echo "Application not found in /Applications or ~/Applications"
     echo "Try: ./sketchcrapp -a /Custom/Path/For/Applications/Sketch.app"
+    echo "To get the latest supported version of Sketch"
+    echo "Try: ./sketchcrapp -m"
     finally 1
   fi
   finally 0

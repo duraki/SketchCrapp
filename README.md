@@ -48,7 +48,7 @@ Usage:
 ./sketchcrapp [-h] [-a] <applicationPath> [-m]
 Supported versions: v58, v63.1, v64.0, v65.1, v66.1, v67, v67.1, v67.2,
 v68, v68.1, v68.2, v69, v69.1, v69.2, v70.2, v70.3, v70.4, v70.5, v70.6
-[+] SketchCrapp last published date: 2021-02-25 serial 001
+[+] SketchCrapp last published date: 2021-03-07 serial 005
 ```
 
 ```
@@ -79,57 +79,64 @@ crackb0x:SketchCrapp duraki$ ./sketchcrapp.sh -m
 [+] Patching address at offset: 0x585eef with value: \00
 1+0 records in
 1+0 records out
-1 bytes transferred in 0.000038 secs (26379 bytes/sec)
+1 bytes transferred in 0.000021 secs (47663 bytes/sec)
 [+] Patching address at offset: 0x585ef2 with value: \00
 1+0 records in
 1+0 records out
-1 bytes transferred in 0.000032 secs (31301 bytes/sec)
+1 bytes transferred in 0.000023 secs (43691 bytes/sec)
 [+] Patching address at offset: 0x584b3e with value: \00\00
 2+0 records in
 2+0 records out
-2 bytes transferred in 0.000023 secs (87381 bytes/sec)
+2 bytes transferred in 0.000028 secs (71090 bytes/sec)
 [+] Patching address at offset: 0x584c6e with value: \165
 1+0 records in
 1+0 records out
-1 bytes transferred in 0.000017 secs (59075 bytes/sec)
+1 bytes transferred in 0.000022 secs (45590 bytes/sec)
 [+] Patching address at offset: 0x66ce63 with value: \00\00\00\00\00\00\00\00\00\00\00\00\00\00\00
 15+0 records in
 15+0 records out
-15 bytes transferred in 0.000064 secs (233883 bytes/sec)
+15 bytes transferred in 0.000069 secs (217697 bytes/sec)
 [+] Patching address at offset: 0x66ce73 with value: \40\123\153\145\164\143\150\103\162\141\160\160\40
 13+0 records in
 13+0 records out
-13 bytes transferred in 0.000058 secs (224387 bytes/sec)
+13 bytes transferred in 0.000072 secs (180550 bytes/sec)
 [+] Patching address at offset: 0xdcd404 with value: \01
 1+0 records in
 1+0 records out
-1 bytes transferred in 0.000017 secs (58254 bytes/sec)
+1 bytes transferred in 0.000021 secs (47663 bytes/sec)
 [+] Patching address at offset: 0xdcd408 with value: \24
 1+0 records in
 1+0 records out
-1 bytes transferred in 0.000017 secs (58254 bytes/sec)
+1 bytes transferred in 0.000018 secs (55924 bytes/sec)
 [+] Patching address at offset: 0xdcc07c with value: \165\00
 2+0 records in
 2+0 records out
-2 bytes transferred in 0.000032 secs (62602 bytes/sec)
+2 bytes transferred in 0.000025 secs (79892 bytes/sec)
 [+] Patching address at offset: 0xdcc19f with value: \64
 1+0 records in
 1+0 records out
-1 bytes transferred in 0.000022 secs (45100 bytes/sec)
+1 bytes transferred in 0.000019 secs (53092 bytes/sec)
 [+] Patching address at offset: 0xed0fbc with value: \00\00\00\00\00\00\00\00\00\00\00\00\00\00\00
 15+0 records in
 15+0 records out
-15 bytes transferred in 0.000075 secs (199729 bytes/sec)
+15 bytes transferred in 0.000071 secs (211123 bytes/sec)
 [+] Patching address at offset: 0xed0fcc with value: \40\123\153\145\164\143\150\103\162\141\160\160\40
 13+0 records in
 13+0 records out
-13 bytes transferred in 0.000068 secs (190650 bytes/sec)
-[+] Checking user default keychain ... Exist.
-[+] SketchCrapp certificate already exists.
-[+] Skipping certificate creation ... OK
+13 bytes transferred in 0.000064 secs (203455 bytes/sec)
+[+] Checking user default keychain ... Exist
+[+] Checking SketchCrapp identity ... Not Exist
+[+] Generating self-signed certificate ...
+Generating a 521 bit EC private key
+writing new private key to 'pk.pem'
+-----
+[+] Creating pkcs package...
+[+] Importing private key and self-signed certificate
+1 identity imported.
 [+] Signing the patched *.app bundle. This may require root privilege.
 [+] If asked, enter your login password. Choose "Always Allow" to not be asked again.
 /Applications/Sketch.app: replacing existing signature
+/Applications/Sketch.app: signed app bundle with Mach-O universal (x86_64 arm64) [com.bohemiancoding.sketch3]
 [+] Cleaning up file(s) ... Cleaned
 [+] SketchCrapp process completed. Sketch.app has been patched :)
 [+] -- Notice:
@@ -143,7 +150,7 @@ crackb0x:SketchCrapp duraki$ ./sketchcrapp.sh -m
 
 [+] SketchCrapp (A Sketch.app cracking tool)
 [+] https://github.com/duraki/SketchCrapp [by @duraki & @elijahtsai]
-[+] SketchCrapp last published date: 2021-02-25 serial 001
+[+] SketchCrapp last published date: 2021-03-07 serial 005
 ```
 
 ## Issues
