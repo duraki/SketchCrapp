@@ -7,194 +7,194 @@ declare -a version_list
 # Version 58
 declare -a address_param_580
 version_list+=("58")
-address_param_580+=("0x3912bf")
-address_param_580+=("0x3912c2")
-address_param_580+=("0x38ff2e")
-address_param_580+=("0x39007d")
+address_param_580+=("3912bf")
+address_param_580+=("3912c2")
+address_param_580+=("38ff2e")
+address_param_580+=("39007d")
 exe_hash_580="5669dd6d7452a96ac3523ea8fa1a41d9ce70f50f"
 # Version 63.1
 declare -a address_param_631
 version_list+=("63.1")
-address_param_631+=("0x4a2a4f")
-address_param_631+=("0x4a2a52")
-address_param_631+=("0x4a173a")
-address_param_631+=("0x4a1879")
+address_param_631+=("4a2a4f")
+address_param_631+=("4a2a52")
+address_param_631+=("4a173a")
+address_param_631+=("4a1879")
 exe_hash_631="db9b88f3aa6abc484be104660fa911275d9f2515"
 # Version 64
 declare -a address_param_640
 version_list+=("64")
-address_param_640+=("0x4cde6f")
-address_param_640+=("0x4cde72")
-address_param_640+=("0x4ccb5a")
-address_param_640+=("0x4ccc99")
+address_param_640+=("4cde6f")
+address_param_640+=("4cde72")
+address_param_640+=("4ccb5a")
+address_param_640+=("4ccc99")
 exe_hash_640="a4d16224ebb8caf84c94a6863db183fd306002da"
 # Version 65.1
 declare -a address_param_651
 version_list+=("65.1")
-address_param_651+=("0x4db4ff")
-address_param_651+=("0x4db502")
-address_param_651+=("0x4da1ea")
-address_param_651+=("0x4da329")
+address_param_651+=("4db4ff")
+address_param_651+=("4db502")
+address_param_651+=("4da1ea")
+address_param_651+=("4da329")
 exe_hash_651="0e7cad9b81284d127d652b3a8c962315770cd905"
 # Version 66.1
 declare -a address_param_661
 version_list+=("66.1")
-address_param_661+=("0x4f374f")
-address_param_661+=("0x4f3752")
-address_param_661+=("0x4f243a")
-address_param_661+=("0x4f2579")
+address_param_661+=("4f374f")
+address_param_661+=("4f3752")
+address_param_661+=("4f243a")
+address_param_661+=("4f2579")
 exe_hash_661="97d6273be93546a9b3caa7c8e1f97fe2246e673b"
 # Version 67 & 67.1
 declare -a address_param_670
 version_list+=("67")
-address_param_670+=("0x50a6cf")
-address_param_670+=("0x50a6d2")
-address_param_670+=("0x5093aa")
-address_param_670+=("0x5094e9")
+address_param_670+=("50a6cf")
+address_param_670+=("50a6d2")
+address_param_670+=("5093aa")
+address_param_670+=("5094e9")
 exe_hash_670="b9866183ded9573aea6be0a004f31c8941059f3f"
 version_list+=("67.1")
 exe_hash_671="708e9203a8628c5cee767eb75546c6145b69df57"
 # Version 67.2
 declare -a address_param_672
 version_list+=("67.2")
-address_param_672+=("0x50a78f")
-address_param_672+=("0x50a792")
-address_param_672+=("0x50946a")
-address_param_672+=("0x5095a9")
+address_param_672+=("50a78f")
+address_param_672+=("50a792")
+address_param_672+=("50946a")
+address_param_672+=("5095a9")
 exe_hash_672="9762906ced4d5589e27b297012ce862665e65a29"
 # Version 68
 declare -a address_param_680
 version_list+=("68")
-address_param_680+=("0x54d2af")
-address_param_680+=("0x54d2b2")
-address_param_680+=("0x54bf8a")
-address_param_680+=("0x54c0c9")
+address_param_680+=("54d2af")
+address_param_680+=("54d2b2")
+address_param_680+=("54bf8a")
+address_param_680+=("54c0c9")
 exe_hash_680="ad9ccdce3ac270b2441f0efb8f3233935fb1900a"
 # Version 68.1 & 68.2
 declare -a address_param_681
 version_list+=("68.1")
-address_param_681+=("0x54d34f")
-address_param_681+=("0x54d352")
-address_param_681+=("0x54c02a")
-address_param_681+=("0x54c169")
+address_param_681+=("54d34f")
+address_param_681+=("54d352")
+address_param_681+=("54c02a")
+address_param_681+=("54c169")
 exe_hash_681="bc22987f7b3a7580aba1ac260c59d66d0a3622e7"
 version_list+=("68.2")
 exe_hash_682="651f3263305e004133253c2706fcdf5b16e20558"
 # Version 69
 declare -a address_param_690
 version_list+=("69")
-address_param_690+=("0x5cf76f")
-address_param_690+=("0x5cf772")
-address_param_690+=("0x5ce44a")
-address_param_690+=("0x5ce589")
+address_param_690+=("5cf76f")
+address_param_690+=("5cf772")
+address_param_690+=("5ce44a")
+address_param_690+=("5ce589")
 exe_hash_690="2d4027890e2b72175c4a562f59c5d1adb2655b8c"
 # Version 69.1 & 69.2
 declare -a address_param_691
 version_list+=("69.1")
-address_param_691+=("0x5d09df")
-address_param_691+=("0x5d09e2")
-address_param_691+=("0x5cf57e")
-address_param_691+=("0x5cf6ae")
+address_param_691+=("5d09df")
+address_param_691+=("5d09e2")
+address_param_691+=("5cf57e")
+address_param_691+=("5cf6ae")
 exe_hash_691="4ce06aa34c40040244c60608a02c152186f23c32"
 version_list+=("69.2")
 exe_hash_692="a7ba7ddf8e15e1e03ae88c00ab5070dabecc06b2"
 # Version 70.2
 declare -a address_param_702
 version_list+=("70.2")
-address_param_702+=("0x5861bf")
-address_param_702+=("0x5861c2")
-address_param_702+=("0x584e0e")
-address_param_702+=("0x584f3e")
-address_param_702+=("0x66d03f")
-address_param_702+=("0x66d04f")
-address_param_702+=("0xdcd72c")
-address_param_702+=("0xdcd730")
-address_param_702+=("0xdcc3a4")
-address_param_702+=("0xdcc4c7")
-address_param_702+=("0xed1031")
-address_param_702+=("0xed1041")
+address_param_702+=("5861bf")
+address_param_702+=("5861c2")
+address_param_702+=("584e0e")
+address_param_702+=("584f3e")
+address_param_702+=("66d03f")
+address_param_702+=("66d04f")
+address_param_702+=("dcd72c")
+address_param_702+=("dcd730")
+address_param_702+=("dcc3a4")
+address_param_702+=("dcc4c7")
+address_param_702+=("ed1031")
+address_param_702+=("ed1041")
 exe_hash_702="e3376ad6f58bdf1e24306bf6d94ee67b082a94db"
 # Version 70.3
 declare -a address_param_703
 version_list+=("70.3")
-address_param_703+=("0x58619f")
-address_param_703+=("0x5861a2")
-address_param_703+=("0x584dee")
-address_param_703+=("0x584f1e")
-address_param_703+=("0x66d058")
-address_param_703+=("0x66d068")
-address_param_703+=("0xdcd574")
-address_param_703+=("0xdcd578")
-address_param_703+=("0xdcc1ec")
-address_param_703+=("0xdcc30f")
-address_param_703+=("0xed0fd7")
-address_param_703+=("0xed0fe7")
+address_param_703+=("58619f")
+address_param_703+=("5861a2")
+address_param_703+=("584dee")
+address_param_703+=("584f1e")
+address_param_703+=("66d058")
+address_param_703+=("66d068")
+address_param_703+=("dcd574")
+address_param_703+=("dcd578")
+address_param_703+=("dcc1ec")
+address_param_703+=("dcc30f")
+address_param_703+=("ed0fd7")
+address_param_703+=("ed0fe7")
 exe_hash_703="9a0e6b7721c275b75e1fb6b70b55cda7ab99c4a8"
 # Version 70.4
 declare -a address_param_704
 version_list+=("70.4")
-address_param_704+=("0x58606f")
-address_param_704+=("0x586072")
-address_param_704+=("0x584cbe")
-address_param_704+=("0x584dee")
-address_param_704+=("0x66cffb")
-address_param_704+=("0x66d00b")
-address_param_704+=("0xdcd484")
-address_param_704+=("0xdcd488")
-address_param_704+=("0xdcc0fc")
-address_param_704+=("0xdcc21f")
-address_param_704+=("0xed0fa5")
-address_param_704+=("0xed0fb5")
+address_param_704+=("58606f")
+address_param_704+=("586072")
+address_param_704+=("584cbe")
+address_param_704+=("584dee")
+address_param_704+=("66cffb")
+address_param_704+=("66d00b")
+address_param_704+=("dcd484")
+address_param_704+=("dcd488")
+address_param_704+=("dcc0fc")
+address_param_704+=("dcc21f")
+address_param_704+=("ed0fa5")
+address_param_704+=("ed0fb5")
 exe_hash_704="6adf7ee4c29bb1a61739b8804c7ce6d94c791f36"
 # Version 70.5 & 70.6
 declare -a address_param_705
 version_list+=("70.5")
-address_param_705+=("0x585eef")
-address_param_705+=("0x585ef2")
-address_param_705+=("0x584b3e")
-address_param_705+=("0x584c6e")
-address_param_705+=("0x66ce63")
-address_param_705+=("0x66ce73")
-address_param_705+=("0xdcd404")
-address_param_705+=("0xdcd408")
-address_param_705+=("0xdcc07c")
-address_param_705+=("0xdcc19f")
-address_param_705+=("0xed0fbc")
-address_param_705+=("0xed0fcc")
+address_param_705+=("585eef")
+address_param_705+=("585ef2")
+address_param_705+=("584b3e")
+address_param_705+=("584c6e")
+address_param_705+=("66ce63")
+address_param_705+=("66ce73")
+address_param_705+=("dcd404")
+address_param_705+=("dcd408")
+address_param_705+=("dcc07c")
+address_param_705+=("dcc19f")
+address_param_705+=("ed0fbc")
+address_param_705+=("ed0fcc")
 exe_hash_705="2f1f2fff46d692f2ffe67cec150da4d5d67218eb"
 version_list+=("70.6")
 exe_hash_706="33d438d86cbb81bf945f30d0906395522680a03f"
 # Version 71.1
 declare -a address_param_711
 version_list+=("71.1")
-address_param_711+=("0x5d904f")
-address_param_711+=("0x5d9052")
-address_param_711+=("0x5d7c9e")
-address_param_711+=("0x5d7dce")
-address_param_711+=("0x6cb001")
-address_param_711+=("0x6cb011")
-address_param_711+=("0xe95d84")
-address_param_711+=("0xe95d88")
-address_param_711+=("0xe949f4")
-address_param_711+=("0xe94b17")
-address_param_711+=("0xfa6458")
-address_param_711+=("0xfa6468")
+address_param_711+=("5d904f")
+address_param_711+=("5d9052")
+address_param_711+=("5d7c9e")
+address_param_711+=("5d7dce")
+address_param_711+=("6cb001")
+address_param_711+=("6cb011")
+address_param_711+=("e95d84")
+address_param_711+=("e95d88")
+address_param_711+=("e949f4")
+address_param_711+=("e94b17")
+address_param_711+=("fa6458")
+address_param_711+=("fa6468")
 exe_hash_711="abd3ce2193b113c28d1bf5e28739bb303b52a556"
 # Version 71.2
 declare -a address_param_712
 version_list+=("71.2")
-address_param_712+=("0x5dccbf")
-address_param_712+=("0x5dccc2")
-address_param_712+=("0x5db90e")
-address_param_712+=("0x5dba3e")
-address_param_712+=("0x6cef41")
-address_param_712+=("0x6cef51")
-address_param_712+=("0xe89f98")
-address_param_712+=("0xe89f9c")
-address_param_712+=("0xe9859c")
-address_param_712+=("0xe986bf")
-address_param_712+=("0xfaa308")
-address_param_712+=("0xfaa318")
+address_param_712+=("5dccbf")
+address_param_712+=("5dccc2")
+address_param_712+=("5db90e")
+address_param_712+=("5dba3e")
+address_param_712+=("6cef41")
+address_param_712+=("6cef51")
+address_param_712+=("e89f98")
+address_param_712+=("e89f9c")
+address_param_712+=("e9859c")
+address_param_712+=("e986bf")
+address_param_712+=("faa308")
+address_param_712+=("faa318")
 exe_hash_712="35d64aa153bca44a4325b47211ae19ae2bf16fac"
 # Value parameter array.
 declare -a value_legacy_param
@@ -630,9 +630,9 @@ patchLegacy() {
   local execPath=${2}
 
   for i in {0..3}; do
-    echo "[+] Patching address at offset: ${addressArray[$i]} \
+    echo "[+] Patching address at offset: 0x${addressArray[$i]} \
 with value: ${value_legacy_param[$i]}"
-    printf "${value_legacy_param[$i]}" | dd seek="$((${addressArray[$i]}))" conv=notrunc bs=1 of="$execPath"
+    printf "${value_legacy_param[$i]}" | dd seek="$((0x${addressArray[$i]}))" conv=notrunc bs=1 of="$execPath"
     if ! [ "$?" -eq "0" ]; then
       echo "[FATAL] Patch process resulted in failure. That's all we know."
       echo "[INFO] Open a new issue and tell us about this \
@@ -655,9 +655,9 @@ patch() {
   local execPath=${2}
 
   for i in {0..11}; do
-    echo "[+] Patching address at offset: ${addressArray[$i]} \
+    echo "[+] Patching address at offset: 0x${addressArray[$i]} \
 with value: ${value_param[$i]}"
-    printf "${value_param[$i]}" | dd seek="$((${addressArray[$i]}))" conv=notrunc bs=1 of="$execPath"
+    printf "${value_param[$i]}" | dd seek="$((0x${addressArray[$i]}))" conv=notrunc bs=1 of="$execPath"
     if ! [ "$?" -eq "0" ]; then
       echo "[FATAL] Patch process resulted in failure. That's all we know."
       echo "[INFO] Open a new issue and tell us about this \
