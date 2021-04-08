@@ -2,7 +2,7 @@
 ![banner](https://i.imgur.com/cl2HGy0.gif)
 
 ## SketchCrapp
-![latest supported](https://img.shields.io/badge/latest%20supported-70.6-brightgreen?style=for-the-badge)
+![latest supported](https://img.shields.io/badge/latest%20supported-71.2-brightgreen?style=for-the-badge)
 ![GitHub Repo stars](https://img.shields.io/github/stars/duraki/SketchCrapp?color=brightgreen&style=for-the-badge)
 ![GitHub watchers](https://img.shields.io/github/watchers/duraki/SketchCrapp?color=brightgreen&style=for-the-badge)
 ![GitHub forks](https://img.shields.io/github/forks/duraki/SketchCrapp?color=brightgreen&style=for-the-badge)
@@ -48,7 +48,8 @@ Usage:
 ./sketchcrapp [-h] [-a] <applicationPath> [-m]
 Supported versions: v58, v63.1, v64.0, v65.1, v66.1, v67, v67.1, v67.2,
 v68, v68.1, v68.2, v69, v69.1, v69.2, v70.2, v70.3, v70.4, v70.5, v70.6
-[+] SketchCrapp last published date: 2021-03-07 serial 005
+v71.1, v71.2
+[+] SketchCrapp last published date: 2021-04-09 serial 001
 ```
 
 ```
@@ -62,7 +63,7 @@ crackb0x:SketchCrapp duraki$ ./sketchcrapp.sh -m
          by @duraki & @elijahtsai
 
 [+] Checking directory tmp existence ... OK
-[+] Fetching https://download.sketch.com/sketch-70.6-109241.zip ...
+[+] Fetching https://download.sketch.com/sketch-71.2-115329.zip ...
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100 58.5M  100 58.5M    0     0  1805k      0  0:00:33  0:00:33 --:--:-- 2328k
@@ -74,65 +75,59 @@ crackb0x:SketchCrapp duraki$ ./sketchcrapp.sh -m
 [+] Finding Info.plist ... OK
 [+] Checking Info.plist for CFBundleShortVersionString ... OK
 [+] Validating executable file ... OK
-[+] Selected Sketch.app version is 70.6 ... SketchCrapp starting ... OK
-[+] Patching offsets for 70.6 ... Starting modern arch patch via bash&seek ...
-[+] Patching address at offset: 0x585eef with value: \00
+[+] Selected Sketch.app version is 71.2 ... SketchCrapp starting ... OK
+[+] Patching offsets for 71.2 ... Starting modern arch patch via bash&seek ...
+[+] Patching address at offset: 0x5dccbf with value: \00
 1+0 records in
 1+0 records out
-1 bytes transferred in 0.000021 secs (47663 bytes/sec)
-[+] Patching address at offset: 0x585ef2 with value: \00
+1 bytes transferred in 0.000147 secs (6809 bytes/sec)
+[+] Patching address at offset: 0x5dccc2 with value: \00
 1+0 records in
 1+0 records out
-1 bytes transferred in 0.000023 secs (43691 bytes/sec)
-[+] Patching address at offset: 0x584b3e with value: \00\00
+1 bytes transferred in 0.000024 secs (41528 bytes/sec)
+[+] Patching address at offset: 0x5db90e with value: \00\00
 2+0 records in
 2+0 records out
-2 bytes transferred in 0.000028 secs (71090 bytes/sec)
-[+] Patching address at offset: 0x584c6e with value: \165
+2 bytes transferred in 0.000021 secs (95325 bytes/sec)
+[+] Patching address at offset: 0x5dba3e with value: \165
 1+0 records in
 1+0 records out
-1 bytes transferred in 0.000022 secs (45590 bytes/sec)
-[+] Patching address at offset: 0x66ce63 with value: \00\00\00\00\00\00\00\00\00\00\00\00\00\00\00
+1 bytes transferred in 0.000019 secs (52429 bytes/sec)
+[+] Patching address at offset: 0x6cef41 with value: \00\00\00\00\00\00\00\00\00\00\00\00\00\00\00
 15+0 records in
 15+0 records out
-15 bytes transferred in 0.000069 secs (217697 bytes/sec)
-[+] Patching address at offset: 0x66ce73 with value: \40\123\153\145\164\143\150\103\162\141\160\160\40
+15 bytes transferred in 0.000062 secs (241052 bytes/sec)
+[+] Patching address at offset: 0x6cef51 with value: \40\123\153\145\164\143\150\103\162\141\160\160\40
 13+0 records in
 13+0 records out
-13 bytes transferred in 0.000072 secs (180550 bytes/sec)
-[+] Patching address at offset: 0xdcd404 with value: \01
+13 bytes transferred in 0.000056 secs (232025 bytes/sec)
+[+] Patching address at offset: 0xe89f98 with value: \01
 1+0 records in
 1+0 records out
-1 bytes transferred in 0.000021 secs (47663 bytes/sec)
-[+] Patching address at offset: 0xdcd408 with value: \24
+1 bytes transferred in 0.000017 secs (58254 bytes/sec)
+[+] Patching address at offset: 0xe89f9c with value: \24
 1+0 records in
 1+0 records out
-1 bytes transferred in 0.000018 secs (55924 bytes/sec)
-[+] Patching address at offset: 0xdcc07c with value: \165\00
+1 bytes transferred in 0.000020 secs (49932 bytes/sec)
+[+] Patching address at offset: 0xe9859c with value: \165\00
 2+0 records in
 2+0 records out
-2 bytes transferred in 0.000025 secs (79892 bytes/sec)
-[+] Patching address at offset: 0xdcc19f with value: \64
+2 bytes transferred in 0.000027 secs (74235 bytes/sec)
+[+] Patching address at offset: 0xe986bf with value: \64
 1+0 records in
 1+0 records out
-1 bytes transferred in 0.000019 secs (53092 bytes/sec)
-[+] Patching address at offset: 0xed0fbc with value: \00\00\00\00\00\00\00\00\00\00\00\00\00\00\00
+1 bytes transferred in 0.000025 secs (39946 bytes/sec)
+[+] Patching address at offset: 0xfaa308 with value: \00\00\00\00\00\00\00\00\00\00\00\00\00\00\00
 15+0 records in
 15+0 records out
-15 bytes transferred in 0.000071 secs (211123 bytes/sec)
-[+] Patching address at offset: 0xed0fcc with value: \40\123\153\145\164\143\150\103\162\141\160\160\40
+15 bytes transferred in 0.000085 secs (176231 bytes/sec)
+[+] Patching address at offset: 0xfaa318 with value: \40\123\153\145\164\143\150\103\162\141\160\160\40
 13+0 records in
 13+0 records out
-13 bytes transferred in 0.000064 secs (203455 bytes/sec)
+13 bytes transferred in 0.000056 secs (232025 bytes/sec)
 [+] Checking user default keychain ... Exist
-[+] Checking SketchCrapp identity ... Not Exist
-[+] Generating self-signed certificate ...
-Generating a 521 bit EC private key
-writing new private key to 'pk.pem'
------
-[+] Creating pkcs package...
-[+] Importing private key and self-signed certificate
-1 identity imported.
+[+] Checking SketchCrapp identity ... Exist
+[+] Skipping certificate creation ... OK
 [+] Signing the patched *.app bundle. This may require root privilege.
 [+] If asked, enter your login password. Choose "Always Allow" to not be asked again.
 /Applications/Sketch.app: replacing existing signature
@@ -150,7 +145,7 @@ writing new private key to 'pk.pem'
 
 [+] SketchCrapp (A Sketch.app cracking tool)
 [+] https://github.com/duraki/SketchCrapp [by @duraki & @elijahtsai]
-[+] SketchCrapp last published date: 2021-03-07 serial 005
+[+] SketchCrapp last published date: 2021-04-09 serial 001
 ```
 
 ## Issues
