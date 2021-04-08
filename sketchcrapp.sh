@@ -164,6 +164,38 @@ address_param_705+=("0xed0fcc")
 exe_hash_705="2f1f2fff46d692f2ffe67cec150da4d5d67218eb"
 version_list+=("70.6")
 exe_hash_706="33d438d86cbb81bf945f30d0906395522680a03f"
+# Version 71.1
+declare -a address_param_711
+version_list+=("71.1")
+address_param_711+=("0x5d904f")
+address_param_711+=("0x5d9052")
+address_param_711+=("0x5d7c9e")
+address_param_711+=("0x5d7dce")
+address_param_711+=("0x6cb001")
+address_param_711+=("0x6cb011")
+address_param_711+=("0xe95d84")
+address_param_711+=("0xe95d88")
+address_param_711+=("0xe949f4")
+address_param_711+=("0xe94b17")
+address_param_711+=("0xfa6458")
+address_param_711+=("0xfa6468")
+exe_hash_711="abd3ce2193b113c28d1bf5e28739bb303b52a556"
+# Version 71.2
+declare -a address_param_712
+version_list+=("71.2")
+address_param_712+=("0x5dccbf")
+address_param_712+=("0x5dccc2")
+address_param_712+=("0x5db90e")
+address_param_712+=("0x5dba3e")
+address_param_712+=("0x6cef41")
+address_param_712+=("0x6cef51")
+address_param_712+=("0xe89f98")
+address_param_712+=("0xe89f9c")
+address_param_712+=("0xe9859c")
+address_param_712+=("0xe986bf")
+address_param_712+=("0xfaa308")
+address_param_712+=("0xfaa318")
+exe_hash_712="35d64aa153bca44a4325b47211ae19ae2bf16fac"
 # Value parameter array.
 declare -a value_legacy_param
 value_legacy_param+=("\00")
@@ -214,7 +246,7 @@ EOF
 # Last function to run before exit.
 finally() {
   local status="$1"
-  echo "[+] SketchCrapp last published date: 2021-03-07 serial 005"
+  echo "[+] SketchCrapp last published date: 2021-04-09 serial 001"
   exit $status
 }
 
@@ -225,6 +257,7 @@ usage() {
   echo "./sketchcrapp [-h] [-a] <applicationPath> [-m]"
   echo "Supported versions: v58, v63.1, v64.0, v65.1, v66.1, v67, v67.1, v67.2,"
   echo "v68, v68.1, v68.2, v69, v69.1, v69.2, v70.2, v70.3, v70.4, v70.5, v70.6"
+  echo "v71.1, v71.2"
   finally 0;
 }
 
@@ -396,6 +429,12 @@ getHashFromVersionString() {
     "70.6")
       echo "$exe_hash_706"
       ;;
+    "71.1")
+      echo "$exe_hash_711"
+      ;;
+    "71.2")
+      echo "$exe_hash_712"
+      ;;
     *)
       echo "Input version string invaild, cannot lookup correct hash value."
   esac
@@ -540,6 +579,12 @@ repository: https://github.com/duraki/SketchCrapp"
       ;;
     "$exe_hash_706")
       testBundleVersionString="70.6"
+      ;;
+    "$exe_hash_711")
+      testBundleVersionString="71.1"
+      ;;
+    "$exe_hash_712")
+      testBundleVersionString="71.2"
       ;;
     *)
       testBundleVersionString="binaryerr››"
@@ -744,6 +789,12 @@ engin() {
     "70.6")
       patch "${address_param_705[*]}" "$execPath"
       ;;
+    "71.1")
+      patch "${address_param_711[*]}" "$execPath"
+      ;;
+    "71.2")
+      patch "${address_param_712[*]}" "$execPath"
+      ;;
     *)
       echo "Error"
       echo "Something went wrong, this line should never execute."
@@ -816,7 +867,7 @@ https://github.com/duraki/SketchCrapp"
 magicFunction() {
 
   # RUP Review every time when new verison update part.
-  local latestBundleURLPath="https://download.sketch.com/sketch-70.6-109241.zip"
+  local latestBundleURLPath="https://download.sketch.com/sketch-71.2-115329.zip"
 
   # Check if missing cURL
   if ! command -v curl &> /dev/null; then
