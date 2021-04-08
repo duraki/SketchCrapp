@@ -167,8 +167,8 @@ exe_hash_706="33d438d86cbb81bf945f30d0906395522680a03f"
 # Version 71.1
 declare -a address_param_711
 version_list+=("71.1")
-address_param_711+=("0x5d905f")
-address_param_711+=("0x5d9062")
+address_param_711+=("0x5d904f")
+address_param_711+=("0x5d9052")
 address_param_711+=("0x5d7c9e")
 address_param_711+=("0x5d7dce")
 address_param_711+=("0x6cb001")
@@ -230,7 +230,7 @@ EOF
 # Last function to run before exit.
 finally() {
   local status="$1"
-  echo "[+] SketchCrapp last published date: 2021-04-03 serial 001"
+  echo "[+] SketchCrapp last published date: 2021-04-09 serial 001"
   exit $status
 }
 
@@ -241,7 +241,7 @@ usage() {
   echo "./sketchcrapp [-h] [-a] <applicationPath> [-m]"
   echo "Supported versions: v58, v63.1, v64.0, v65.1, v66.1, v67, v67.1, v67.2,"
   echo "v68, v68.1, v68.2, v69, v69.1, v69.2, v70.2, v70.3, v70.4, v70.5, v70.6"
-  echo "v71.1"
+  echo "v71.1, v71.2"
   finally 0;
 }
 
