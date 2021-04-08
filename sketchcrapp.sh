@@ -180,6 +180,22 @@ address_param_711+=("0xe94b17")
 address_param_711+=("0xfa6458")
 address_param_711+=("0xfa6468")
 exe_hash_711="abd3ce2193b113c28d1bf5e28739bb303b52a556"
+# Version 71.2
+declare -a address_param_712
+version_list+=("71.2")
+address_param_712+=("0x5dccbf")
+address_param_712+=("0x5dccc2")
+address_param_712+=("0x5db90e")
+address_param_712+=("0x5dba3e")
+address_param_712+=("0x6cef41")
+address_param_712+=("0x6cef51")
+address_param_712+=("0xe89f98")
+address_param_712+=("0xe89f9c")
+address_param_712+=("0xe9859c")
+address_param_712+=("0xe986bf")
+address_param_712+=("0xfaa308")
+address_param_712+=("0xfaa318")
+exe_hash_712="35d64aa153bca44a4325b47211ae19ae2bf16fac"
 # Value parameter array.
 declare -a value_legacy_param
 value_legacy_param+=("\00")
@@ -416,6 +432,9 @@ getHashFromVersionString() {
     "71.1")
       echo "$exe_hash_711"
       ;;
+    "71.2")
+      echo "$exe_hash_712"
+      ;;
     *)
       echo "Input version string invaild, cannot lookup correct hash value."
   esac
@@ -563,6 +582,9 @@ repository: https://github.com/duraki/SketchCrapp"
       ;;
     "$exe_hash_711")
       testBundleVersionString="71.1"
+      ;;
+    "$exe_hash_712")
+      testBundleVersionString="71.2"
       ;;
     *)
       testBundleVersionString="binaryerr››"
@@ -770,6 +792,9 @@ engin() {
     "71.1")
       patch "${address_param_711[*]}" "$execPath"
       ;;
+    "71.2")
+      patch "${address_param_712[*]}" "$execPath"
+      ;;
     *)
       echo "Error"
       echo "Something went wrong, this line should never execute."
@@ -842,7 +867,7 @@ https://github.com/duraki/SketchCrapp"
 magicFunction() {
 
   # RUP Review every time when new verison update part.
-  local latestBundleURLPath="https://download.sketch.com/sketch-71.1-115193.zip"
+  local latestBundleURLPath="https://download.sketch.com/sketch-71.2-115329.zip"
 
   # Check if missing cURL
   if ! command -v curl &> /dev/null; then
