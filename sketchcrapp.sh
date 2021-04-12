@@ -1,4 +1,8 @@
 #!/bin/bash
+# RUP Review every time when new verison update part.
+#latest supported version
+latestVersion="71.2"
+
 # Support version list.
 declare -a version_list
 
@@ -228,6 +232,8 @@ subjectKeyIdentifier = hash
 basicConstraints = critical,CA:false
 "
 
+downloadURLString=""
+
 # Banner block
 banner() {
   cat <<"EOF"
@@ -246,7 +252,7 @@ EOF
 # Last function to run before exit.
 finally() {
   local status="$1"
-  echo "[+] SketchCrapp last published date: 2021-04-09 serial 001"
+  echo "[+] SketchCrapp last published date: 2021-04-12 serial 023"
   exit $status
 }
 
@@ -254,7 +260,7 @@ finally() {
 # Help messages block.
 usage() {
   echo "Usage:"
-  echo "./sketchcrapp [-h] [-a] <applicationPath> [-m]"
+  echo "./sketchcrapp [-h] [-a] <applicationPath> [-m] [-g] <version>"
   echo "Supported versions: v58, v63.1, v64.0, v65.1, v66.1, v67, v67.1, v67.2,"
   echo "v68, v68.1, v68.2, v69, v69.1, v69.2, v70.2, v70.3, v70.4, v70.5, v70.6"
   echo "v71.1, v71.2"
@@ -273,8 +279,8 @@ clean() {
   if [ -f pkcs.p12 ]; then
     rm -f pkcs.p12
   fi
-  if [ -f "/tmp/latest.zip" ]; then
-    rm -f "/tmp/latest.zip"
+  if [ -f "/tmp/app.zip" ]; then
+    rm -f "/tmp/app.zip"
     if ! [ "$?" -eq "0" ]; then
       echo "Error"
       echo "[-] Fail to remove zip file of latest application. remove by yourself."
@@ -286,6 +292,22 @@ clean() {
     if ! [ "$?" -eq "0" ]; then
       echo "Error"
       echo "[-] Fail to remove application bundle. remove by yourself."
+      finally 1
+    fi
+  fi
+  if [ -f "/tmp/select.swift" ]; then
+    rm -f "/tmp/select.swift"
+    if ! [ "$?" -eq "0" ]; then
+      echo "Error"
+      echo "[-] Fail to remove swift script file. remove by yourself."
+      finally 1
+    fi
+  fi
+  if [ -f "/tmp/list.xml" ]; then
+    rm -f "/tmp/list.xml"
+    if ! [ "$?" -eq "0" ]; then
+      echo "Error"
+      echo "[-] Fail to remove list xml file. remove by yourself."
       finally 1
     fi
   fi
@@ -362,6 +384,128 @@ repository: https://github.com/duraki/SketchCrapp"
 
   fi
 }
+
+checkVersionSupported() {
+
+  local testVersionString="$1"
+
+  local ticket=0
+
+  for versionElement in "${version_list[@]}"
+  do
+    if [ "$testVersionString" = "$versionElement" ]; then
+      ticket=1
+    fi
+  done
+  echo $ticket
+}
+
+generateSwiftScript(){
+  echo "[+] Generating swift script ..."
+  cat <<'EOF' > /tmp/select.swift
+import Foundation
+var testString = ""
+while let line = readLine() {
+  testString += "\(line)\n"
+}
+let pattern = #".*<enclosure url[^"]"(.*)" len.*\/>.*"#
+let regex = try! NSRegularExpression(pattern: pattern)
+let stringRange = NSRange(location: 0, length: testString.utf16.count)
+let matches = regex.matches(in: testString, range: stringRange)
+var urls: [String] = []
+for match in matches {
+    var groups: String = ""
+    for rangeIndex in 1 ..< match.numberOfRanges {
+      if match.range(at: rangeIndex).location > testString.utf16.count {
+        continue
+      }
+      groups = (testString as NSString).substring(with: match.range(at: rangeIndex))
+    }
+    urls.append(groups)
+}
+for u in urls {
+  print(u)
+}
+EOF
+}
+
+getURLFromVersionString() {
+
+  local versionString="$1"
+
+  echo -n "[+] Checking if version $versionString is supported ..."
+  local isVersionSupported=$(checkVersionSupported "$versionString")
+
+  if [ "$isVersionSupported" -eq 0 ]; then
+    echo "No"
+    echo "[ERR] Version $versionString is not supported, \
+please carefully review README file again."
+    echo "[INFO] Copy the details below and open a new issue on GitHub \
+repository: https://github.com/duraki/SketchCrapp"
+    echo "+==================================================================="
+    echo "+ Issue details ‹s:sketchcrapp:VersionUserEnter›"
+    echo "+ Passed version    : $versionString"
+    echo "+ Error             : Version $versionString is not supported."
+    echo "+==================================================================="
+    clean
+    finally 1
+  else
+    echo "Yes"
+  fi
+
+  local versionListXMLURL="https://download.sketchapp.com/sketch-versions.xml"
+
+  echo "[+] Fetching $versionListXMLURL ... "
+  curl -L "$versionListXMLURL" --output "/tmp/list.xml"
+
+  if ! [ "$?" -eq "0" ]; then
+    echo "[-] Failed while downloading version list xml file!"
+    echo "[-] Are you connected to the internet? Check your network connection."
+    clean
+    finally 1
+  fi
+
+  generateSwiftScript
+
+  if ! [ -f "/tmp/select.swift" ]; then
+    echo "[-] Swift script does not exists under the /tmp folder."
+    echo "[ERR] Couldn't find select.swift at /tmp/select.swift"
+    echo "[INFO] We don't know what's going on, try to use -m to get latest patch."
+    clean
+    finally 1
+  fi
+
+  LANG=en_GB.UTF-8
+  OIFS=$IFS
+  IFS=$'\n'
+  testURL=$(cat /tmp/list.xml | \
+  sed -e 's/^[[:space:]]*//g' | \
+  sed -e 's/[[:space:]]*$//g'| \
+  tr -d '\n' | \
+  sed -e $'s/<enclos/\\\n<enclos/g' | \
+  swift "/tmp/select.swift" | \
+  grep "\-$versionString\-")
+  IFS=$OIFS
+
+  downloadURLString="$testURL"
+
+  if [ -z "$downloadURLString" ]; then
+    echo "[ERR] Version $versionString is not supported, \
+please carefully review README file again."
+    echo "[INFO] Copy the details below and open a new issue on GitHub \
+repository: https://github.com/duraki/SketchCrapp"
+    echo "+==================================================================="
+    echo "+ Issue details ‹s:sketchcrapp:UnknowDownloadURLString"
+    echo "+ Passed version    : $versionString"
+    echo "+ Error             : Version $versionString is not supported."
+    echo "+==================================================================="
+    clean
+    finally 1
+  fi
+
+  echo "[+] Download URL set to: $downloadURLString"
+}
+
 
 # Get binary hash from CFBundleShortVersionString
 # - Parameters:
@@ -493,16 +637,9 @@ analysisApplication() {
   # Get the hash of application executable
   local appSHA1="$(shasum -a 1 "$execPath" | cut -f 1 -d ' ')"
 
-  local ticket=0
+  local isVersionSupported=$(checkVersionSupported "$bundleVersionString")
 
-  for versionElement in "${version_list[@]}"
-  do
-    if [ "$bundleVersionString" = "$versionElement" ]; then
-      ticket=1
-    fi
-  done
-
-  if [ "$ticket" -eq 0 ]; then
+  if [ "$isVersionSupported" -eq 0 ]; then
     echo "[ERR] Version $bundleVersionString is not supported, \
 please carefully review README file again."
     echo "[INFO] Copy the details below and open a new issue on GitHub \
@@ -864,10 +1001,16 @@ https://github.com/duraki/SketchCrapp"
 }
 
 # An auto function to patch latest app.
-magicFunction() {
+magic() {
 
-  # RUP Review every time when new verison update part.
-  local latestBundleURLPath="https://download.sketch.com/sketch-71.2-115329.zip"
+  local testVersionString="$1"
+
+  if [ -z "$testVersionString" ]; then
+    testVersionString="$latestVersion"
+  fi
+  echo "[+] Hello, The magic show is about to start! Are you ready?"
+
+  getURLFromVersionString "$testVersionString"
 
   # Check if missing cURL
   if ! command -v curl &> /dev/null; then
@@ -898,9 +1041,10 @@ magicFunction() {
   fi
 
   echo "OK"
-  echo "[+] Fetching $latestBundleURLPath ... "
 
-  curl "$latestBundleURLPath" --output "/tmp/latest.zip"
+  echo "[+] Fetching $downloadURLString ... "
+
+  curl "$downloadURLString" --output "/tmp/app.zip"
 
   if ! [ "$?" -eq "0" ]; then
     echo "[-] Failed while downloading latest application version!"
@@ -922,7 +1066,7 @@ magicFunction() {
     echo "Not exist. Continuous."
   fi
 
-  unzip -q "/tmp/latest.zip" -d "/tmp"
+  unzip -q "/tmp/app.zip" -d "/tmp"
 
   if ! [ "$?" -eq "0" ]; then
     echo "[-] Can't unzip downloaded archived file of the latest application version."
@@ -1005,7 +1149,7 @@ if [ $# -eq 0 ]; then
 fi
 
 # Option filter (Command-Line Interface parser).
-while getopts "ha:m" argv; do
+while getopts "ha:mg:" argv; do
   case "${argv}" in
     h)
       usage
@@ -1020,7 +1164,11 @@ while getopts "ha:m" argv; do
       fi
       ;;
     m)
-      magicFunction
+      magic
+      ;;
+    g)
+      version="${OPTARG}"
+      magic "$version"
       ;;
     *)
       echo "Use -h for more information."
