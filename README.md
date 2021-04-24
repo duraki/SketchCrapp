@@ -27,7 +27,7 @@ For the people who would like to try the new version, we got you covered. You ca
 
 One-liner script to install latest Sketch version and automatically patch it:<br />`bash -c "$(curl -s https://raw.githubusercontent.com/duraki/SketchCrapp/master/sketchcrapp.sh -o -)" -O -m`
 <br /><br />
-![magictrickimage](https://i.imgur.com/e6JRxB5.png)
+![magictrickimage](https://i.imgur.com/gGr8bHi.png)
 
 <p align="center">Successful screenshot of using magic trick</p>
 
@@ -45,11 +45,11 @@ crackb0x:SketchCrapp duraki$ ./sketchcrapp.sh -h
          by @duraki & @elijahtsai
 
 Usage:
-./sketchcrapp [-h] [-a] <applicationPath> [-m]
+./sketchcrapp [-h] [-a] <applicationPath> [-m] [-g] <version>
 Supported versions: v58, v63.1, v64.0, v65.1, v66.1, v67, v67.1, v67.2,
 v68, v68.1, v68.2, v69, v69.1, v69.2, v70.2, v70.3, v70.4, v70.5, v70.6
 v71.1, v71.2
-[+] SketchCrapp last published date: 2021-04-09 serial 001
+[+] SketchCrapp last published date: 2021-04-12 serial 023
 ```
 
 ```
@@ -62,8 +62,17 @@ crackb0x:SketchCrapp duraki$ ./sketchcrapp.sh -m
          Sketch.App Patch Tool (https://github.com/duraki/SketchCrapp)
          by @duraki & @elijahtsai
 
+[+] Hello, The magic show is about to start! Are you ready?
+[+] Checking if version 71.2 is supported ...Yes
+[+] Fetching https://download.sketchapp.com/sketch-versions.xml ...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100 85817  100 85817    0     0  53435      0  0:00:01  0:00:01 --:--:--  355k
+[+] Generating swift script ...
+[+] Zip file download path: https://download.sketch.com/sketch-71.2-115329.zip
 [+] Checking directory tmp existence ... OK
-[+] Fetching https://download.sketch.com/sketch-71.2-115329.zip ...
+[+] Fetching https://download.sketch.com/sketch-71.2-115329.zip ...   
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100 58.5M  100 58.5M    0     0  1805k      0  0:00:33  0:00:33 --:--:-- 2328k
@@ -145,7 +154,7 @@ crackb0x:SketchCrapp duraki$ ./sketchcrapp.sh -m
 
 [+] SketchCrapp (A Sketch.app cracking tool)
 [+] https://github.com/duraki/SketchCrapp [by @duraki & @elijahtsai]
-[+] SketchCrapp last published date: 2021-04-09 serial 001
+[+] SketchCrapp last published date: 2021-04-12 serial 023
 ```
 
 ## Issues
@@ -196,5 +205,5 @@ If you really need specific version you can contact the team via GitHub Issues, 
 |200|2021-03-04|
 |250|soon 🙉|
 
-##### Stargazers over time
+### Stargazers over time
 [![Stargazers over time](https://starchart.cc/duraki/SketchCrapp.svg)](https://starchart.cc/duraki/SketchCrapp)
