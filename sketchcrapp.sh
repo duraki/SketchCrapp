@@ -1,7 +1,7 @@
 #!/bin/bash
 # RUP Review every time when new verison update part.
-#latest supported version
-latestVersion="71.2"
+# Latest supported version
+latestVersion="v71.2"
 
 # Support version list.
 declare -a version_list
@@ -387,21 +387,47 @@ repository: https://github.com/duraki/SketchCrapp"
 
 checkVersionSupported() {
 
-  local testVersionString="$1"
-
-  local ticket=0
+  local versionString="$1"
 
   for versionElement in "${version_list[@]}"
   do
-    if [ "$testVersionString" = "$versionElement" ]; then
-      ticket=1
+    if [ "$versionString" = "$versionElement" ]; then
+      return 0
     fi
   done
-  echo $ticket
+  return 1
 }
 
-generateSwiftScript(){
-  echo "[+] Generating swift script ..."
+generateSelectVersionScript(){
+  echo "[+] Generating swift script: target Version ..."
+  cat <<'EOF' > /tmp/select.swift
+import Foundation
+var testString = ""
+while let line = readLine() {
+  testString += "\(line)\n"
+}
+let pattern = #"v?(\d\d\d?\.\d)|v?(\d\d\d?)"#
+let regex = try! NSRegularExpression(pattern: pattern)
+let stringRange = NSRange(location: 0, length: testString.utf16.count)
+let matches = regex.matches(in: testString, range: stringRange)
+var versions: String
+versions="(null)"
+for match in matches {
+    var groups: String = ""
+    for rangeIndex in 1 ..< match.numberOfRanges {
+      if match.range(at: rangeIndex).location > testString.utf16.count {
+        continue
+      }
+      groups = (testString as NSString).substring(with: match.range(at: rangeIndex))
+    }
+    versions=groups
+}
+print(versions)
+EOF
+}
+
+generateSelectURLScript(){
+  echo "[+] Generating swift script: target URL ..."
   cat <<'EOF' > /tmp/select.swift
 import Foundation
 var testString = ""
@@ -433,24 +459,31 @@ getURLFromVersionString() {
 
   local versionString="$1"
 
-  echo -n "[+] Checking if version $versionString is supported ..."
-  local isVersionSupported=$(checkVersionSupported "$versionString")
+  local testVersionString=""
 
-  if [ "$isVersionSupported" -eq 0 ]; then
-    echo "No"
-    echo "[ERR] Version $versionString is not supported, \
+  echo "[+] Checking if version $versionString is supported ..."
+
+  if [ -z "$versionString" ]; then
+    versionString="(null)"
+  else
+    generateSelectVersionScript
+    testVersionString=$(echo $versionString | swift "/tmp/select.swift")
+    checkVersionSupported "$testVersionString"
+  fi
+
+  if ! [ "$?" -eq "0" ] || [ -z $testVersionString ]; then
+    echo "[ERR] Version $testVersionString is not supported, \
 please carefully review README file again."
     echo "[INFO] Copy the details below and open a new issue on GitHub \
 repository: https://github.com/duraki/SketchCrapp"
     echo "+==================================================================="
     echo "+ Issue details ‹s:sketchcrapp:VersionUserEnter›"
     echo "+ Passed version    : $versionString"
-    echo "+ Error             : Version $versionString is not supported."
+    echo "+ Normalize version : $testVersionString"
+    echo "+ Error             : Version $testVersionString is not supported."
     echo "+==================================================================="
     clean
     finally 1
-  else
-    echo "Yes"
   fi
 
   local versionListXMLURL="https://download.sketchapp.com/sketch-versions.xml"
@@ -465,7 +498,7 @@ repository: https://github.com/duraki/SketchCrapp"
     finally 1
   fi
 
-  generateSwiftScript
+  generateSelectURLScript
 
   if ! [ -f "/tmp/select.swift" ]; then
     echo "[-] Swift script does not exists under the /tmp folder."
