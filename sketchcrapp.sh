@@ -252,7 +252,7 @@ EOF
 # Last function to run before exit.
 finally() {
   local status="$1"
-  echo "[+] SketchCrapp last published date: 2021-04-12 serial 023"
+  echo "[+] SketchCrapp last published date: 2021-05-05 serial 001"
   exit $status
 }
 
@@ -671,9 +671,9 @@ analysisApplication() {
   # Get the hash of application executable
   local appSHA1="$(shasum -a 1 "$execPath" | cut -f 1 -d ' ')"
 
-  local isVersionSupported=$(checkVersionSupported "$bundleVersionString")
+  checkVersionSupported "$bundleVersionString"
 
-  if [ "$isVersionSupported" -eq 0 ]; then
+  if ! [ "$?" -eq "0" ]; then
     echo "[ERR] Version $bundleVersionString is not supported, \
 please carefully review README file again."
     echo "[INFO] Copy the details below and open a new issue on GitHub \
