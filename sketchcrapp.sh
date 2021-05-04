@@ -406,7 +406,7 @@ var testString = ""
 while let line = readLine() {
   testString += "\(line)\n"
 }
-let pattern = #"v?(\d\d\d?\.\d)|v?(\d\d\d?)"#
+let pattern = #"v?(?:(\d\.\d\.\d)|(\d\d?\d?\.\d)|(\d\d))"#
 let regex = try! NSRegularExpression(pattern: pattern)
 let stringRange = NSRange(location: 0, length: testString.utf16.count)
 let matches = regex.matches(in: testString, range: stringRange)
@@ -517,7 +517,7 @@ repository: https://github.com/duraki/SketchCrapp"
   tr -d '\n' | \
   sed -e $'s/<enclos/\\\n<enclos/g' | \
   swift "/tmp/select.swift" | \
-  grep "\-$versionString\-")
+  grep "\-$testVersionString\-")
   IFS=$OIFS
 
   downloadURLString="$testURL"
@@ -530,6 +530,7 @@ repository: https://github.com/duraki/SketchCrapp"
     echo "+==================================================================="
     echo "+ Issue details ‹s:sketchcrapp:UnknowDownloadURLString"
     echo "+ Passed version    : $versionString"
+    echo "+ Normalize version : $testVersionString"
     echo "+ Error             : Version $versionString is not supported."
     echo "+==================================================================="
     clean
