@@ -35,7 +35,7 @@ One-liner script to install latest Sketch version and automatically patch it:<br
 
  * `-h` Show the help message and supported version
  * `-a <applicationPath>` Application path meaning where is your app try to drag it into terminal.app window to let it autocomplete for you.
- * `-m` see the [Magic Trick](#magic-trick)
+ * `-m` See the [Magic Trick](#magic-trick-) and tell no one because it's magic trick. 
  * `-g <version>` tell us what version you would like to patch. to see what version we supported try to use `-h` and copy the tag from it.
 
 ## Notice
