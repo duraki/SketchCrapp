@@ -212,7 +212,8 @@ If you really need specific version you can contact the team via GitHub Issues, 
 |100|2020-11-20|
 |150|2021-01-15|
 |200|2021-03-04|
-|250|soon 🙉|
+|250|2021-05-15|
+|300|soon 🙉|
 
 ## Stargazers over time
 [![Stargazers over time](https://starchart.cc/duraki/SketchCrapp.svg)](https://starchart.cc/duraki/SketchCrapp)
