@@ -27,7 +27,7 @@ For the people who would like to try the new version, we got you covered. You ca
 
 One-liner script to install latest Sketch version and automatically patch it:<br />`bash -c "$(curl -s https://raw.githubusercontent.com/duraki/SketchCrapp/master/sketchcrapp.sh -o -)" -O -m`
 <br /><br />
-![magictrickimage](https://i.imgur.com/Fa6ezhU.png)
+![magictrickimage](https://i.imgur.com/346CQK9.png)
 
 <p align="center">Successful screenshot of using magic trick</p>
 
@@ -35,7 +35,7 @@ One-liner script to install latest Sketch version and automatically patch it:<br
 
  * `-h` Show the help message and supported version
  * `-a <applicationPath>` Application path meaning where is your app try to drag it into terminal.app window to let it autocomplete for you.
- * `-m` See the [Magic Trick](#magic-trick-) and tell no one because it's magic trick. 
+ * `-m` See the [Magic Trick](#magic-trick-) and tell no one because it's magic trick.
  * `-g <version>` tell us what version you would like to patch. to see what version we supported try to use `-h` and copy the tag from it.
 
 ## Notice
@@ -56,7 +56,7 @@ Usage:
 Supported versions: v58, v63.1, v64.0, v65.1, v66.1, v67, v67.1, v67.2,
 v68, v68.1, v68.2, v69, v69.1, v69.2, v70.2, v70.3, v70.4, v70.5, v70.6
 v71.1, v71.2
-[+] SketchCrapp last published date: 2021-05-05 serial 001
+[+] SketchCrapp last published date: 2021-06-17 serial 020
 ```
 
 ```
@@ -93,58 +93,59 @@ crackb0x:SketchCrapp duraki$ ./sketchcrapp.sh -m
 [+] Checking Info.plist for CFBundleShortVersionString ... OK
 [+] Validating executable file ... OK
 [+] Selected Sketch.app version is 71.2 ... SketchCrapp starting ... OK
-[+] Patching offsets for 71.2 ... Starting modern arch patch via bash&seek ...
+[+] Patching offsets for 71.2 ...
+Starting patch via bash&seek ...
 [+] Patching address at offset: 0x5dccbf with value: \00
 1+0 records in
 1+0 records out
-1 bytes transferred in 0.000028 secs (35545 bytes/sec)
+1 bytes transferred in 0.000025 secs (39946 bytes/sec)
 [+] Patching address at offset: 0x5dccc2 with value: \00
 1+0 records in
 1+0 records out
-1 bytes transferred in 0.000023 secs (43691 bytes/sec)
+1 bytes transferred in 0.000037 secs (27060 bytes/sec)
 [+] Patching address at offset: 0x5db90e with value: \00\00
 2+0 records in
 2+0 records out
-2 bytes transferred in 0.000024 secs (83056 bytes/sec)
+2 bytes transferred in 0.000026 secs (76960 bytes/sec)
 [+] Patching address at offset: 0x5dba3e with value: \165
 1+0 records in
 1+0 records out
-1 bytes transferred in 0.000020 secs (49932 bytes/sec)
+1 bytes transferred in 0.000022 secs (45590 bytes/sec)
 [+] Patching address at offset: 0x6cef41 with value: \00\00\00\00\00\00\00\00\00\00\00\00\00\00\00
 15+0 records in
 15+0 records out
-15 bytes transferred in 0.000061 secs (245760 bytes/sec)
+15 bytes transferred in 0.000066 secs (227128 bytes/sec)
 [+] Patching address at offset: 0x6cef51 with value: \40\123\153\145\164\143\150\103\162\141\160\160\40
 13+0 records in
 13+0 records out
-13 bytes transferred in 0.000058 secs (223467 bytes/sec)
-[+] Patching address at offset: 0xe89f98 with value: \01
+13 bytes transferred in 0.000061 secs (213827 bytes/sec)
+[+] Patching address at offset: 0xe9992c with value: \01
 1+0 records in
 1+0 records out
-1 bytes transferred in 0.000020 secs (49932 bytes/sec)
-[+] Patching address at offset: 0xe89f9c with value: \24
+1 bytes transferred in 0.000022 secs (45590 bytes/sec)
+[+] Patching address at offset: 0xe99930 with value: \24
 1+0 records in
 1+0 records out
-1 bytes transferred in 0.000031 secs (32264 bytes/sec)
+1 bytes transferred in 0.000017 secs (59075 bytes/sec)
 [+] Patching address at offset: 0xe9859c with value: \165\00
 2+0 records in
 2+0 records out
-2 bytes transferred in 0.000023 secs (87381 bytes/sec)
+2 bytes transferred in 0.000020 secs (99864 bytes/sec)
 [+] Patching address at offset: 0xe986bf with value: \64
 1+0 records in
 1+0 records out
-1 bytes transferred in 0.000018 secs (55924 bytes/sec)
+1 bytes transferred in 0.000017 secs (59075 bytes/sec)
 [+] Patching address at offset: 0xfaa308 with value: \00\00\00\00\00\00\00\00\00\00\00\00\00\00\00
 15+0 records in
 15+0 records out
-15 bytes transferred in 0.000066 secs (227951 bytes/sec)
+15 bytes transferred in 0.000065 secs (231304 bytes/sec)
 [+] Patching address at offset: 0xfaa318 with value: \40\123\153\145\164\143\150\103\162\141\160\160\40
 13+0 records in
 13+0 records out
-13 bytes transferred in 0.000054 secs (241265 bytes/sec)
+13 bytes transferred in 0.000061 secs (213827 bytes/sec)
 [+] Checking user default keychain ... Exist
 [+] Checking SketchCrapp identity ... Exist
-[+] Skipping certificate creation ... OK
+[+] Skipping certificate creation
 [+] Signing the patched *.app bundle. This may require root privilege.
 [+] If asked, enter your login password. Choose "Always Allow" to not be asked again.
 /Applications/Sketch.app: replacing existing signature
@@ -162,7 +163,7 @@ crackb0x:SketchCrapp duraki$ ./sketchcrapp.sh -m
 
 [+] SketchCrapp (A Sketch.app cracking tool)
 [+] https://github.com/duraki/SketchCrapp [by @duraki & @elijahtsai]
-[+] SketchCrapp last published date: 2021-05-05 serial 001
+[+] SketchCrapp last published date: 2021-06-17 serial 020
 ```
 
 ## Issues

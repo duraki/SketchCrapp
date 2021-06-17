@@ -193,8 +193,8 @@ address_param_712+=("5db90e")
 address_param_712+=("5dba3e")
 address_param_712+=("6cef41")
 address_param_712+=("6cef51")
-address_param_712+=("e89f98")
-address_param_712+=("e89f9c")
+address_param_712+=("e9992c")
+address_param_712+=("e99930")
 address_param_712+=("e9859c")
 address_param_712+=("e986bf")
 address_param_712+=("faa308")
@@ -252,7 +252,8 @@ EOF
 # Last function to run before exit.
 finally() {
   local status="$1"
-  echo "[+] SketchCrapp last published date: 2021-05-05 serial 001"
+  local pds="2021-06-17 serial 020"
+  printf "[+] SketchCrapp last published date: \e[38;5;14m$pds\e[0m\n"
   exit $status
 }
 
@@ -269,7 +270,7 @@ usage() {
 
 # Clean up all related files.
 clean() {
-  echo -n "[+] Cleaning up file(s) ... "
+  printf "[+] Cleaning up file(s) ... "
   if [ -f pk.pem ]; then
     rm -f pk.pem
   fi
@@ -282,7 +283,7 @@ clean() {
   if [ -f "/tmp/app.zip" ]; then
     rm -f "/tmp/app.zip"
     if ! [ "$?" -eq "0" ]; then
-      echo "Error"
+      printf "\e[38;5;9mError\e[0m\n"
       echo "[-] Fail to remove zip file of latest application. remove by yourself."
       finally 1
     fi
@@ -290,7 +291,7 @@ clean() {
   if [ -f "/tmp/Sketch.app" ]; then
     rm -f "/tmp/Sketch.app"
     if ! [ "$?" -eq "0" ]; then
-      echo "Error"
+      printf "\e[38;5;9mError\e[0m\n"
       echo "[-] Fail to remove application bundle. remove by yourself."
       finally 1
     fi
@@ -298,7 +299,7 @@ clean() {
   if [ -f "/tmp/select.swift" ]; then
     rm -f "/tmp/select.swift"
     if ! [ "$?" -eq "0" ]; then
-      echo "Error"
+      printf "\e[38;5;9mError\e[0m\n"
       echo "[-] Fail to remove swift script file. remove by yourself."
       finally 1
     fi
@@ -306,12 +307,12 @@ clean() {
   if [ -f "/tmp/list.xml" ]; then
     rm -f "/tmp/list.xml"
     if ! [ "$?" -eq "0" ]; then
-      echo "Error"
+      printf "\e[38;5;9mError\e[0m\n"
       echo "[-] Fail to remove list xml file. remove by yourself."
       finally 1
     fi
   fi
-  echo "Cleaned"
+  printf "\e[38;5;10mCleaned\e[0m\n"
 }
 
 # Generate self-signed certificate for codesign. Required for pass-tru
@@ -375,9 +376,9 @@ not be asked again."
     echo "[+] Resigning application bundle again using signature identity ..."
     codesign --deep --force -s "sketchcrapp" "$appPath" --verbose --keychain "$userDefaultKeychain"
     if ! [ "$?" -eq "0" ]; then
-      echo "[-] Failed to sign Sketch bundle. Automatic method failed."
-      echo "[INFO] Copy the full log and open a new issue on GitHub \
-repository: https://github.com/duraki/SketchCrapp"
+      printf "[\e[38;5;9mERR\e[0m] Failed to sign Sketch bundle. Automatic method failed.\n"
+      printf "[\e[38;5;11mINFO\e[0m] Copy the full log and open a new issue on GitHub \
+repository: https://github.com/duraki/SketchCrapp\n"
       clean
       finally 1
     fi
@@ -472,10 +473,10 @@ getURLFromVersionString() {
   fi
 
   if ! [ "$?" -eq "0" ] || [ -z $testVersionString ]; then
-    echo "[ERR] Version $testVersionString is not supported, \
-please carefully review README file again."
-    echo "[INFO] Copy the details below and open a new issue on GitHub \
-repository: https://github.com/duraki/SketchCrapp"
+    printf "[\e[38;5;9mERR\e[0m] Version $testVersionString is not supported, \
+please carefully review README file again.\n"
+    printf "[\e[38;5;11mINFO\e[0m] Copy the details below and open a new issue on GitHub \
+repository: https://github.com/duraki/SketchCrapp\n"
     echo "+==================================================================="
     echo "+ Issue details ‹s:sketchcrapp:VersionUserEnter›"
     echo "+ Passed version    : $versionString"
@@ -492,8 +493,8 @@ repository: https://github.com/duraki/SketchCrapp"
   curl -L "$versionListXMLURL" --output "/tmp/list.xml"
 
   if ! [ "$?" -eq "0" ]; then
-    echo "[-] Failed while downloading version list xml file!"
-    echo "[-] Are you connected to the internet? Check your network connection."
+    printf "[\e[38;5;9mERR\e[0m] Failed while downloading version list xml file!\n"
+    printf "[\e[38;5;11mINFO\e[0m] Are you connected to the internet? Check your network connection.\n"
     clean
     finally 1
   fi
@@ -502,8 +503,8 @@ repository: https://github.com/duraki/SketchCrapp"
 
   if ! [ -f "/tmp/select.swift" ]; then
     echo "[-] Swift script does not exists under the /tmp folder."
-    echo "[ERR] Couldn't find select.swift at /tmp/select.swift"
-    echo "[INFO] We don't know what's going on, try to use -m to get latest patch."
+    printf "[\e[38;5;9mERR\e[0m] Couldn't find select.swift at /tmp/select.swift\n"
+    printf "[\e[38;5;11mINFO\e[0m] We don't know what's going on, try to use -m to get latest patch.\n"
     clean
     finally 1
   fi
@@ -523,10 +524,10 @@ repository: https://github.com/duraki/SketchCrapp"
   downloadURLString="$testURL"
 
   if [ -z "$downloadURLString" ]; then
-    echo "[ERR] Version $versionString is not supported, \
-please carefully review README file again."
-    echo "[INFO] Copy the details below and open a new issue on GitHub \
-repository: https://github.com/duraki/SketchCrapp"
+    printf "[\e[38;5;9mERR\e[0m] Version $versionString is not supported, \
+please carefully review README file again.\n"
+    printf "[\e[38;5;11mINFO\e[0m] Copy the details below and open a new issue on GitHub \
+repository: https://github.com/duraki/SketchCrapp\n"
     echo "+==================================================================="
     echo "+ Issue details ‹s:sketchcrapp:UnknowDownloadURLString"
     echo "+ Passed version    : $versionString"
@@ -627,46 +628,49 @@ analysisApplication() {
 
   local appPath="$1"
 
-  echo -n "[+] Finding executable file ... "
+  printf "[+] Finding executable file ... "
 
   # Get the path of application executable.
   local execPath="$appPath/Contents/MacOS/Sketch"
 
   if ! [ -f "$execPath" ]; then
+    printf "\e[38;5;9mError\e[0m\n"
     echo "[-] Executable file does not exists under the given application folder."
-    echo "[ERR] Couldn't find executable file at $execPath"
-    echo "[INFO] Please make sure you pass clean app to script."
+    printf "[\e[38;5;9mERR\e[0m] Couldn't find executable file at $execPath\n"
+    printf "[\e[38;5;11mINFO\e[0m] Please make sure you pass clean app to script.\n"
     finally 1
   fi
 
-  echo "OK"
+  printf "\e[38;5;10mOK\e[0m\n"
 
-  echo -n "[+] Finding Info.plist ... "
+  printf "[+] Finding Info.plist ... "
 
   # Get the path of application info plist.
   local infoPath="$appPath/Contents/Info"
 
   if ! [ -f "$infoPath.plist" ]; then
+    printf "\e[38;5;9mError\e[0m\n"
     echo "[-] Info file does not exists under the given application folder."
-    echo "[ERR] Couldn't find Info.plist at $infoPath.plist"
-    echo "[INFO] Please make sure you pass clean app to script."
+    printf "[\e[38;5;9mERR\e[0m] Couldn't find Info.plist at $infoPath.plist\n"
+    printf "[\e[38;5;11mINFO\e[0m] Please make sure you pass clean app to script.\n"
     finally 1
   fi
 
-  echo "OK"
+  printf "\e[38;5;10mOK\e[0m\n"
 
-  echo -n "[+] Checking Info.plist for CFBundleShortVersionString ... "
+  printf "[+] Checking Info.plist for CFBundleShortVersionString ... "
 
   # Get the CFBundleShortVersionString from info plist.
   local bundleVersionString="$(defaults read $infoPath CFBundleShortVersionString)"
 
   if [ -z "$bundleVersionString" ]; then
-    echo "[ERR] Couldn't find value of CFBundleShortVersionString"
-    echo "[INFO] Please make sure you pass clean app to script."
+    printf "\e[38;5;9mError\e[0m\n"
+    printf "[\e[38;5;9mERR\e[0m] Couldn't find value of CFBundleShortVersionString\n"
+    printf "[\e[38;5;11mINFO\e[0m] Please make sure you pass clean app to script.\n"
     finally 1
   fi
 
-  echo "OK"
+  printf "\e[38;5;10mOK\e[0m\n"
 
   # Get the hash of application executable
   local appSHA1="$(shasum -a 1 "$execPath" | cut -f 1 -d ' ')"
@@ -674,10 +678,10 @@ analysisApplication() {
   checkVersionSupported "$bundleVersionString"
 
   if ! [ "$?" -eq "0" ]; then
-    echo "[ERR] Version $bundleVersionString is not supported, \
-please carefully review README file again."
-    echo "[INFO] Copy the details below and open a new issue on GitHub \
-repository: https://github.com/duraki/SketchCrapp"
+    printf "[\e[38;5;9mERR\e[0m] Version $bundleVersionString is not supported, \
+please carefully review README file again.\n"
+    printf "[\e[38;5;11mINFO\e[0m] Copy the details below and open a new issue on GitHub \
+repository: https://github.com/duraki/SketchCrapp\n"
     echo "+==================================================================="
     echo "+ Issue details ‹s:sketchcrapp›"
     echo "+ Application Path  : $appPath"
@@ -689,7 +693,7 @@ repository: https://github.com/duraki/SketchCrapp"
     finally 1
   fi
 
-  echo -n "[+] Validating executable file ... "
+  printf "[+] Validating executable file ... "
 
   local testBundleVersionString=""
   # RUP Review every time when new verison update part.
@@ -759,11 +763,11 @@ repository: https://github.com/duraki/SketchCrapp"
       ;;
     *)
       testBundleVersionString="binaryerr››"
-      echo "Error"
-      echo "[ERR] Can't find Sketch with that signature. Hash is invalid."
-      echo "[INFO] Carefully review README file again"
-      echo "[INFO] If you still have problem copy the details below and open a new issue"
-      echo "[INFO] on GitHub repository: https://github.com/duraki/SketchCrapp"
+      printf "\e[38;5;9mError\e[0m\n"
+      printf "[\e[38;5;9mERR\e[0m] Can't find Sketch with that signature. Hash is invalid.\n"
+      printf "[\e[38;5;11mINFO\e[0m] Carefully review README file again\n"
+      printf "[\e[38;5;11mINFO\e[0m] If you still have problem copy the details below and open a new issue\n"
+      printf "[\e[38;5;11mINFO\e[0m] on GitHub repository: https://github.com/duraki/SketchCrapp\n"
       echo "+==================================================================="
       echo "+ Application Path  : $appPath"
       echo "+ Application Binary: $execPath"
@@ -776,14 +780,14 @@ repository: https://github.com/duraki/SketchCrapp"
   esac
 
   if [ "$bundleVersionString" = "$testBundleVersionString" ]; then
-    echo "OK"
+    printf "\e[38;5;10mOK\e[0m\n"
     engin "$bundleVersionString" "$appPath" "$execPath"
   else
-    echo "Error"
-    echo "[FATAL] Executable SHA1 hash returned version value does not \
-equal to the CFBundleShortVersionString"
-    echo "[INFO] Carefully review README file again, if you still have problem"
-    echo "[INFO] open a new issue on GitHub repository: https://github.com/duraki/SketchCrapp"
+    printf "\e[38;5;9mError\e[0m\n"
+    printf "[\e[38;5;9mFATAL\e[0m] Executable SHA1 hash returned version value does not \
+equal to the CFBundleShortVersionString\n"
+    printf "[\e[38;5;11mINFO\e[0m] Carefully review README file again, if you still have problem\n"
+    printf "[\e[38;5;11mINFO\e[0m] open a new issue on GitHub repository: https://github.com/duraki/SketchCrapp\n"
     finally 1
   fi
 }
@@ -805,9 +809,9 @@ patchLegacy() {
 with value: ${value_legacy_param[$i]}"
     printf "${value_legacy_param[$i]}" | dd seek="$((0x${addressArray[$i]}))" conv=notrunc bs=1 of="$execPath"
     if ! [ "$?" -eq "0" ]; then
-      echo "[FATAL] Patch process resulted in failure. That's all we know."
-      echo "[INFO] Open a new issue and tell us about this \
-on GitHub repository: https://github.com/duraki/SketchCrapp"
+      printf "[\e[38;5;9mFATAL\e[0m] Patch process resulted in failure. That's all we know.\n"
+      printf "[\e[38;5;11mINFO\e[0m] Open a new issue and tell us about this \
+on GitHub repository: https://github.com/duraki/SketchCrapp\n"
       finally 1
     fi
   done
@@ -819,7 +823,7 @@ on GitHub repository: https://github.com/duraki/SketchCrapp"
 #     - Second: A path of application executable to patch.
 patch() {
 
-  echo "Starting modern arch patch via bash&seek ..."
+  echo "Starting patch via bash&seek ..."
 
   local addressArray=(${1})
 
@@ -830,9 +834,9 @@ patch() {
 with value: ${value_param[$i]}"
     printf "${value_param[$i]}" | dd seek="$((0x${addressArray[$i]}))" conv=notrunc bs=1 of="$execPath"
     if ! [ "$?" -eq "0" ]; then
-      echo "[FATAL] Patch process resulted in failure. That's all we know."
-      echo "[INFO] Open a new issue and tell us about this \
-on GitHub repository: https://github.com/duraki/SketchCrapp"
+      printf "[\e[38;5;9mFATAL\e[0m] Patch process resulted in failure. That's all we know.\n"
+      printf "[\e[38;5;11mINFO\e[0m] Open a new issue and tell us about this \
+on GitHub repository: https://github.com/duraki/SketchCrapp\n"
       finally 1
     fi
   done
@@ -903,7 +907,7 @@ engin() {
 
   # Version Selector.
   echo "[+] Selected Sketch.app version is $appVersion ... SketchCrapp starting ... OK"
-  echo -n "[+] Patching offsets for $appVersion ... "
+  echo "[+] Patching offsets for $appVersion ... "
   # RUP Review every time when new verison update part.
   case "$appVersion" in
     "58")
@@ -967,10 +971,9 @@ engin() {
       patch "${address_param_712[*]}" "$execPath"
       ;;
     *)
-      echo "Error"
-      echo "Something went wrong, this line should never execute."
-      echo "[INFO] Copy the details below and open a new issue on GitHub repository: \
-https://github.com/duraki/SketchCrapp"
+      printf "[\e[38;5;9mERR\e[0m] Something went wrong, this line should never execute.\n"
+      printf "[\e[38;5;11mINFO\e[0m] Copy the details below and open a new issue on GitHub repository: \
+https://github.com/duraki/SketchCrapp\n"
       echo "+==================================================================="
       echo "+ Issue details ‹s:sketchcrapp›"
       echo "+ Application Path  : $appPath"
@@ -987,32 +990,32 @@ https://github.com/duraki/SketchCrapp"
   # Get the path of user default keychain.
   userKeyChain="$(security default-keychain -d user | sed -e 's/^[ ]*//g' -e 's/\"//g')"
 
-  echo -n "[+] Checking user default keychain ... "
+  printf "[+] Checking user default keychain ... "
 
   if ! [ -f "$userKeyChain" ]; then
-    echo "Not exist."
+    printf "\e[38;5;9mNot exist\e[0m\n"
     echo "[-] User default Keychain does not exist: $userKeyChain"
     clean
     finally 1
   fi
 
-  echo "Exist"
+  printf "\e[38;5;10mExist\e[0m\n"
 
   # CodeSigning area.
   # Check if sketchcrapp certificate already exist.
-  echo -n "[+] Checking SketchCrapp identity ... "
+  printf "[+] Checking SketchCrapp identity ... "
   security find-identity -p codesigning | grep sketchcrapp >/dev/null
 
   if ! [ "$?" -eq "0" ]; then
-    echo "Not Exist"
+    printf "\e[38;5;11mNot exist\e[0m\n"
     # Certificate does not exist, generate one.
     genSelfSignCert
 
     # Import the certificate.
     importSelfSignCert "$userKeyChain"
   else
-    echo "Exist"
-    echo "[+] Skipping certificate creation ... OK"
+    printf "\e[38;5;10mExist\e[0m\n"
+    echo "[+] Skipping certificate creation"
   fi
 
   # Sign the application.
@@ -1020,8 +1023,8 @@ https://github.com/duraki/SketchCrapp"
 
   # Call cleaner to do some housekeeping.
   clean
-  echo "[+] SketchCrapp process completed. Sketch.app has been patched :)"
-  echo "[+] -- Notice: "
+  printf "[+] SketchCrapp process \e[38;5;10mcompleted\e[0m. Sketch.app has been patched :)\n"
+  printf "[+] \e[38;5;11m-- Notice: \e[0m\n"
   echo "[+] If a dialogue shows up with message: “Sketch 3.app” can’t be opened"
   echo "[+] please right-click the application and select open, "
   echo "[+] or go to Settings -› Security and allow opening Sketch.app application."
@@ -1050,9 +1053,9 @@ magic() {
   if ! command -v curl &> /dev/null; then
     echo "cURL is not installed on your system."
     echo "This should not happen, macOS have cURL built-in."
-    echo "[FIX] Try: brew install curl"
-    echo "[FIX] Try: port install curl"
-    echo "[FIX] Try: install cURL manually"
+    printf "[\e[38;5;11mFIX\e[0m] Try: brew install curl\n"
+    printf "[\e[38;5;11mFIX\e[0m] Try: port install curl\n"
+    printf "[\e[38;5;11mFIX\e[0m] Try: install cURL manually\n"
     finally 1;
   fi
 
@@ -1060,21 +1063,21 @@ magic() {
   if ! command -v unzip &> /dev/null; then
     echo "UNZIP is not installed on your system."
     echo "This should not happen, macOS have UNZIP built-in."
-    echo "[FIX] Try: brew install unzip"
-    echo "[FIX] Try: port install unzip"
-    echo "[FIX] Try: install UNZIP manually"
+    printf "[\e[38;5;11mFIX\e[0m] Try: brew install unzip\n"
+    printf "[\e[38;5;11mFIX\e[0m] Try: port install unzip\n"
+    printf "[\e[38;5;11mFIX\e[0m] Try: install UNZIP manually\n"
     finally 1;
   fi
 
-  echo -n "[+] Checking directory tmp existence ... "
+  printf "[+] Checking directory tmp existence ... "
 
   if ! [ -d /tmp ]; then
-    echo "Error"
+    printf "\e[38;5;9mError\e[0m\n"
     echo "Directory tmp does not exist."
     finally 1
   fi
 
-  echo "OK"
+  printf "\e[38;5;10mOK\e[0m\n"
 
   echo "[+] Fetching $downloadURLString ... "
 
@@ -1121,18 +1124,19 @@ magic() {
     echo "Not exist. Continuous."
   fi
 
-  echo -n "[+] Moving Sketch.app to /Applications directory ... "
+  printf "[+] Moving Sketch.app to /Applications directory ... "
 
-  mv "/tmp/Sketch.app" "/Applications"
+  reason="$(mv "/tmp/Sketch.app" "/Applications" 2>&1)"
 
   if ! [ "$?" -eq "0" ]; then
-    echo "Fail"
+    printf "\e[38;5;9mFail\e[0m\n"
     echo "[-] Failed while moving /tmp/Sketch.app to /Applications directory."
+    printf "[\e[38;5;11mINFO\e[0m] Reason: $reason\n"
     clean
     finally 1
   fi
 
-  echo "Successfully."
+  printf "\e[38;5;10mSuccessfully.\e[0m\n"
 
   analysisApplication "/Applications/Sketch.app"
 }
@@ -1145,9 +1149,9 @@ banner
 if ! command -v sed &> /dev/null; then
   echo "SED is not installed on your system."
   echo "This should not happen, macOS have sed built-in."
-  echo "[FIX] Try: brew install sed"
-  echo "[FIX] Try: port install sed"
-  echo "[FIX] Try: install SED manually"
+  printf "[\e[38;5;11mFIX\e[0m] Try: brew install sed\n"
+  printf "[\e[38;5;11mFIX\e[0m] Try: port install sed\n"
+  printf "[\e[38;5;11mFIX\e[0m] Try: install SED manually\n"
   finally 1;
 fi
 
@@ -1155,9 +1159,9 @@ fi
 if ! command -v openssl &> /dev/null; then
   echo "OpenSSL is not installed on your system."
   echo "This should not happen, macOS have OpenSSL built-in."
-  echo "[FIX] Try: brew install openssl"
-  echo "[FIX] Try: port install openssl"
-  echo "[FIX] Try: install openssl manually"
+  printf "[\e[38;5;11mFIX\e[0m] Try: brew install openssl\n"
+  printf "[\e[38;5;11mFIX\e[0m] Try: port install openssl\n"
+  printf "[\e[38;5;11mFIX\e[0m] Try: install openssl manually\n"
   finally 1;
 fi
 
@@ -1173,7 +1177,7 @@ if [ $# -eq 0 ]; then
     echo "[+] Selected Sketch.app path is <$HOME/Applications> (auto-detected) ... OK"
     analysisApplication "$HOME/Applications/Sketch.app"
   else
-    echo "Application not found in /Applications or ~/Applications"
+    printf "[\e[38;5;9mERR\e[0m] Application not found in /Applications or ~/Applications\n"
     echo "Try: ./sketchcrapp -a /Custom/Path/For/Applications/Sketch.app"
     echo "To get the latest supported version of Sketch"
     echo "Try: ./sketchcrapp -m"
@@ -1193,7 +1197,7 @@ while getopts "ha:mg:" argv; do
       if [ -d "$appPath" ]; then
         analysisApplication "$appPath"
       else
-        echo "[ERR] Given directory is either invaild or not exist."
+        printf "[\e[38;5;9mERR\e[0m] Given directory is either invaild or not exist.\n"
         finally 1
       fi
       ;;
