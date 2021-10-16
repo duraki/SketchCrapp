@@ -44,7 +44,7 @@ bash -c "$(curl -s https://raw.githubusercontent.com/duraki/SketchCrapp/master/s
  * `-h` Show the help message and supported version
  * `-a <applicationPath>` Application path meaning where is your app try to drag it into terminal.app window to let it autocomplete for you.
  * `-m` See the [Magic Trick](#magic-trick-) and tell no one because it's magic trick.
- * `-g <version>` tell us what version you would like to patch. to see what version we supported try to use `-h` and copy the tag from it.
+ * `-g <version>` Tell us what version you would like to patch. to see what version we supported try to use `-h` and copy the tag from it.
 
 ## Notice
  - The application should automatically detect your Sketch.App version. If not, you can pass `-a` argument for your Sketch.app Application Bundle or use `-m` argument to automatically install and crack the latest version.
@@ -61,10 +61,10 @@ crackb0x:SketchCrapp duraki$ ./sketchcrapp.sh -h
 
 Usage:
 ./sketchcrapp [-h] [-a] <applicationPath> [-m] [-g] <version>
-Supported versions: v58, v63.1, v64.0, v65.1, v66.1, v67, v67.1, v67.2,
-v68, v68.1, v68.2, v69, v69.1, v69.2, v70.2, v70.3, v70.4, v70.5, v70.6
-v71.1, v71.2
-[+] SketchCrapp last published date: 2021-06-17 serial 020
+Supported versions: v53, v58, v63.1, v64.0, v65.1, v66.1, v67, v67.1
+v67.2, v68, v68.1, v68.2, v69, v69.1, v69.2, v70.2, v70.3, v70.4, v70.5
+v70.6, v71.1, v71.2
+[+] SketchCrapp last published date: 2021-10-16 serial 001
 ```
 
 ```
@@ -171,7 +171,7 @@ Starting patch via bash&seek ...
 
 [+] SketchCrapp (A Sketch.app cracking tool)
 [+] https://github.com/duraki/SketchCrapp [by @duraki & @elijahtsai]
-[+] SketchCrapp last published date: 2021-06-17 serial 020
+[+] SketchCrapp last published date: 2021-10-16 serial 001
 ```
 
 ## Issues
