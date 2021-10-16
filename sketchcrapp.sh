@@ -9,6 +9,13 @@ declare -a version_list
 # RUP Review every time when new verison update part.
 # Address parameter array and other parameters for each version.
 # Version 53
+declare -a address_param_513
+version_list+=("51.3")
+address_param_513+=("3bc0e7")
+address_param_513+=("3bab6d")
+address_param_513+=("3bacbc")
+exe_hash_513="21aed0fe8e29e9eaf9a1194b316ae6ee0ec342f7"
+# Version 53
 declare -a address_param_530
 version_list+=("53")
 address_param_530+=("4143c2")
@@ -209,6 +216,11 @@ address_param_712+=("faa308")
 address_param_712+=("faa318")
 exe_hash_712="35d64aa153bca44a4325b47211ae19ae2bf16fac"
 # Value old parameter array.
+declare -a value_ancient_param
+value_ancient_param+=("\00")
+value_ancient_param+=("\00\00")
+value_ancient_param+=("\165")
+# Value old parameter array.
 declare -a value_old_param
 value_old_param+=("\00")
 value_old_param+=("\00\00")
@@ -233,6 +245,8 @@ value_param+=("\165\00") # aarch_3
 value_param+=("\64") # aarch_4
 value_param+=("\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00") # aarch_remove_register
 value_param+=("\40\123\153\145\164\143\150\103\162\141\160\160\40") # aarch_modified_day_left
+declare -a nametag_ancient_ver
+nametag_ancient_ver+=("51.3")
 declare -a nametag_old_ver
 nametag_old_ver+=("53")
 
@@ -268,7 +282,7 @@ EOF
 # Last function to run before exit.
 finally() {
   local status="$1"
-  local pds="2021-10-16 serial 001"
+  local pds="2021-10-16 serial 002"
   printf "[+] SketchCrapp last published date: \e[38;5;14m$pds\e[0m\n"
   exit $status
 }
@@ -278,9 +292,9 @@ finally() {
 usage() {
   echo "Usage:"
   echo "./sketchcrapp [-h] [-a] <applicationPath> [-m] [-g] <version>"
-  echo "Supported versions: v53, v58, v63.1, v64.0, v65.1, v66.1, v67, v67.1"
-  echo "v67.2, v68, v68.1, v68.2, v69, v69.1, v69.2, v70.2, v70.3, v70.4, v70.5"
-  echo "v70.6, v71.1, v71.2"
+  echo "Supported versions: v51.3, v53, v58, v63.1, v64.0, v65.1, v66.1, v67"
+  echo "v67.1, v67.2, v68, v68.1, v68.2, v69, v69.1, v69.2, v70.2, v70.3, v70.4"
+  echo "v70.5, v70.6, v71.1, v71.2"
   finally 0;
 }
 
@@ -567,6 +581,9 @@ getHashFromVersionString() {
 
   # RUP Review every time when new verison update part.
   case "$bundleVersionString" in
+    "51.3")
+      echo "$exe_hash_513"
+      ;;
     "53")
       echo "$exe_hash_530"
       ;;
@@ -717,6 +734,9 @@ repository: https://github.com/duraki/SketchCrapp\n"
   local testBundleVersionString=""
   # RUP Review every time when new verison update part.
   case "$appSHA1" in
+    "$exe_hash_513")
+      testBundleVersionString="51.3"
+      ;;
     "$exe_hash_530")
       testBundleVersionString="53"
       ;;
@@ -814,13 +834,38 @@ equal to the CFBundleShortVersionString\n"
   fi
 }
 
-# Patch Old process.
+# Patch ancient process.
+# - Parameters:
+#     - First: An array of address of specific version.
+#     - Second: A path of application executable to patch.
+patchAncient() {
+
+  echo "Starting ancient arch patch via bash&seek ..."
+
+  local addressArray=(${1})
+
+  local execPath=${2}
+
+  for i in {0..2}; do
+    echo "[+] Patching address at offset: 0x${addressArray[$i]} \
+with value: ${value_ancient_param[$i]}"
+    printf "${value_ancient_param[$i]}" | dd seek="$((0x${addressArray[$i]}))" conv=notrunc bs=1 of="$execPath"
+    if ! [ "$?" -eq "0" ]; then
+      printf "[\e[38;5;9mFATAL\e[0m] Patch process resulted in failure. That's all we know.\n"
+      printf "[\e[38;5;11mINFO\e[0m] Open a new issue and tell us about this \
+on GitHub repository: https://github.com/duraki/SketchCrapp\n"
+      finally 1
+    fi
+  done
+}
+
+# Patch old process.
 # - Parameters:
 #     - First: An array of address of specific version.
 #     - Second: A path of application executable to patch.
 patchOld() {
 
-  echo "Starting legacy arch patch via bash&seek ..."
+  echo "Starting old arch patch via bash&seek ..."
 
   local addressArray=(${1})
 
@@ -889,6 +934,40 @@ on GitHub repository: https://github.com/duraki/SketchCrapp\n"
   done
 }
 
+# Install and register cracktag + credits for ancient version
+nameTagAncient() {
+
+  local appPath="$1"
+
+  local LangPath="$appPath/Contents/Resources/"
+
+  if ! [ -d "$LangPath" ]; then
+    if [ -d "$appPath" ]; then
+      rm -rf "$appPath"
+      clean
+      finally 1
+    fi
+  fi
+
+  local LangFilePath="$LangPath/Localizable.strings"
+
+  if ! [ -f "$LangFilePath" ]; then
+    if [ -d "$appPath" ]; then
+      rm -rf "$appPath"
+      clean
+      finally 1
+    fi
+  fi
+
+  local LangFilePathBak="$LangPath/Localizable.strings.bak"
+
+  mv "$LangFilePath" "$LangFilePathBak"
+
+  cat "$LangFilePathBak" | iconv -f UTF-16LE -t UTF-8 | sed -e "s/1 Day Left/SketchCrapp/g" -e "s/ - Register Now//g" | iconv -f UTF-8 -t UTF-16LE > "$LangFilePath"
+
+  rm -f "$LangFilePathBak"
+}
+
 # Install and register cracktag + credits for older version
 nameTagOld() {
 
@@ -922,7 +1001,6 @@ nameTagOld() {
 
   rm -f "$LangFilePathBak"
 }
-
 
 # Install and register cracktag + credits
 nameTag() {
@@ -992,6 +1070,9 @@ engin() {
   echo "[+] Patching offsets for $appVersion ... "
   # RUP Review every time when new verison update part.
   case "$appVersion" in
+    "51.3")
+      patchAncient "${address_param_513[*]}" "$execPath"
+      ;;
     "53")
       patchOld "${address_param_530[*]}" "$execPath"
       ;;
@@ -1070,8 +1151,10 @@ https://github.com/duraki/SketchCrapp\n"
       finally 1
   esac
 
-  if [[ "${nametag_old_ver[*]}" =~ "$appVersion" ]]; then
-    # Install name tag
+  # Install name tag
+  if [[ "${nametag_ancient_ver[*]}" =~ "$appVersion" ]]; then
+    nameTagAncient "$appPath"
+  elif [[ "${nametag_old_ver[*]}" =~ "$appVersion" ]]; then
     nameTagOld "$appPath"
   else
     nameTag "$appPath"

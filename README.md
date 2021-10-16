@@ -61,10 +61,10 @@ crackb0x:SketchCrapp duraki$ ./sketchcrapp.sh -h
 
 Usage:
 ./sketchcrapp [-h] [-a] <applicationPath> [-m] [-g] <version>
-Supported versions: v53, v58, v63.1, v64.0, v65.1, v66.1, v67, v67.1
-v67.2, v68, v68.1, v68.2, v69, v69.1, v69.2, v70.2, v70.3, v70.4, v70.5
-v70.6, v71.1, v71.2
-[+] SketchCrapp last published date: 2021-10-16 serial 001
+Supported versions: v51.3, v53, v58, v63.1, v64.0, v65.1, v66.1, v67
+v67.1, v67.2, v68, v68.1, v68.2, v69, v69.1, v69.2, v70.2, v70.3, v70.4
+v70.5, v70.6, v71.1, v71.2
+[+] SketchCrapp last published date: 2021-10-16 serial 002
 ```
 
 ```
@@ -171,7 +171,7 @@ Starting patch via bash&seek ...
 
 [+] SketchCrapp (A Sketch.app cracking tool)
 [+] https://github.com/duraki/SketchCrapp [by @duraki & @elijahtsai]
-[+] SketchCrapp last published date: 2021-10-16 serial 001
+[+] SketchCrapp last published date: 2021-10-16 serial 002
 ```
 
 ## Issues
