@@ -356,7 +356,7 @@ genSelfSignCert() {
    -keyform pem -keyout pk.pem \
    -outform pem -out crt.pem
   echo "[+] Creating pkcs package..."
-  openssl pkcs12 -export -out pkcs.p12 -in crt.pem -inkey pk.pem \
+  openssl pkcs12 -export -legacy -out pkcs.p12 -in crt.pem -inkey pk.pem \
   -name "sketchcrapp" -nodes -passout pass:1234
 }
 
