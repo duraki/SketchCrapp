@@ -356,7 +356,9 @@ genSelfSignCert() {
    -keyform pem -keyout pk.pem \
    -outform pem -out crt.pem
   echo "[+] Creating pkcs package..."
-  openssl pkcs12 -export -legacy -out pkcs.p12 -in crt.pem -inkey pk.pem \
+  opensslMajorVersion=$(openssl version | cut -d' ' -f2 | cut -d'.' -f1)
+  opensslLegacyFlag=$([ "$opensslMajorVersion" -gt 2 ] && echo "-legacy")
+  openssl pkcs12 -export $opensslLegacy -out pkcs.p12 -in crt.pem -inkey pk.pem \
   -name "sketchcrapp" -nodes -passout pass:1234
 }
 
